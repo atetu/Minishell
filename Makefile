@@ -6,7 +6,7 @@
 #    By: atetu <atetu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 08:26:20 by thgermai          #+#    #+#              #
-#    Updated: 2020/08/03 12:01:09 by atetu            ###   ########.fr        #
+#    Updated: 2020/08/13 16:49:40 by atetu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ OBJS = $(addprefix $(OBJSDIR)/, $(SRCS:.c=.o))
 DPDCS = $(OBJS:.o=.d)
 INCLUDES = -I includes/ -I libft/
 LIB = libft/libft.a
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3
 LOGFILE = $(LOGPATH) `date +'%y.%m.%d %H:%M:%S'`
 MSG = ---
 

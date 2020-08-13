@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:27:19 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/13 11:46:40 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/13 18:49:54 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void			prompt(char **env)
 	char		*args;
 	t_list		**list;
 	char 		**split_args;
-	int			i;
+//	int			i;
 	int			go_on; //ici
 
 	go_on = 0;   //ici
@@ -118,14 +118,17 @@ void			prompt(char **env)
 	list = tab_to_list(env);
 	args = NULL;
 	split_args = NULL;
-	i = -1;
+//	i = -1;
 	while (1)
 	{
 		g_pids = NULL;
 		print();
 		if (get_next_line(0, &args, &go_on) == 0)
+		{
 			if (!(control_d()))
-				exit(exit_nb);
+				exit(exit_status);
+		}
+		printf("args: %s\n", args);fflush(stdout);
 		if (ft_strlen(args))
 			if (parse_args(args, list) == -1)
 				break ;
@@ -134,5 +137,6 @@ void			prompt(char **env)
 //	ft_lstclear(list, &free);
 	clear_all(list);  // pour norme nouvelle fonction
 //	system("leaks minishell");
-	exit(exit_nb);
+	ft_printf("exit\n");
+	exit(exit_status);
 }

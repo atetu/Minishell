@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 21:54:49 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/13 14:35:07 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/13 17:30:18 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void handle_env_var(t_call *call)
 	char	buf[512];   // pour stocker variable globale
 	
 	free(g_oldpwd);  //ICI
-	g_oldpwd = ft_strdup(NULL);  // ICI on copie pwd dans oldpwd
+	g_oldpwd = ft_strdup(g_pwd);  // ICI on copie pwd dans oldpwd
 	free(g_pwd);
 	g_pwd = ft_strdup(getcwd(buf, 512));  // ICI on met le nouveau chemin dans pwd
 	if (find_value("PWD=", call->env, 1) || find_value("PWD=", call->env, 2)) //on verifie presence dans var env et dans var exportet si presence on modifie
@@ -141,7 +141,7 @@ int check_numeric_argument(char *func, int *neg)
 	}
 	return (1);
 }
-/*
+
 int			check_sec_round_arg(char *func, int arg, int neg)
 {
 	unsigned long long res;
@@ -151,76 +151,57 @@ int			check_sec_round_arg(char *func, int arg, int neg)
 	if (arg > 2)
 	{
 		ft_printf_e("bash: line 1: exit: too many arguments\n");
-		exit_nb = 1;
+		exit_status = 1;
 		return (EXIT_FAILURE);
 	}
 	res = ft_atoll(func);
 	if (res > (max + 1))
 	{
-		ft_printf_e("bash: line 1: exit: %s: numeric argument required\n", func[1]);
-		exit_nb = 255;
+		ft_printf_e("bash: line 1: exit: %s: numeric argument required\n", func);
+		exit_status = 255;
 	}
 	else
 	{
 		if (neg == 0)
-			exit_nb = res % 256;
+			exit_status = res % 256;
 		else
-			exit_nb = -(res % 256) + 256;
+			exit_status = -(res % 256) + 256;
 	}
 	return (EXIT_SUCCESS);
 }
-*/
+
+void numeric_error(char *func)
+{
+	ft_printf_e("bash: line 1: exit: %s: numeric argument required\n", func); // message d'erreur du test mais pas dans mon bash....
+	exit_status = 255;
+}
+
 int				ft_builtin_exit(char **func, int *exit_info)
 {
 	int i;
 	int j;
 	int arg;
 	int neg;
-	unsigned long long res;
-	unsigned long long max;
 	
 	i = -1;
 	j = -1;
 	arg = 0;
 	neg = 0;
-	max = 9223372036854775807;
 	while (func[++j])
 		arg++;
 	if (arg >= 2)
 	{
 		if (check_numeric_argument(func[1], &neg))
 		{
-		//	if (check_sec_round_arg(func[1], arg, neg))
-		//		return (EXIT_FAILURE);
-			if (arg > 2)
-			{
-				ft_printf_e("bash: line 1: exit: too many arguments\n");
-				exit_nb = 1;
+			if (check_sec_round_arg(func[1], arg, neg))
 				return (EXIT_FAILURE);
-			}
-			res = ft_atoll(func[1]);
-			if (res > (max + 1))
-			{
-				ft_printf_e("bash: line 1: exit: %s: numeric argument required\n", func[1]);
-				exit_nb = 255;
-			}
-			else
-			{
-				if (neg == 0)
-					exit_nb = res % 256;
-				else
-					exit_nb = -(res % 256) + 256;
-			}
 		}
 		else
-		{
-			ft_printf_e("bash: line 1: exit: %s: numeric argument required\n", func[1]); // message d'erreur du test mais pas dans mon bash....
-			exit_nb = 255;
-		}
+			numeric_error(func[1]);
 	}
 	if (g_pids)
 		while (g_pids[++i])
 			kill(g_pids[i], 2);
 	*exit_info = 1;
-	return (EXIT_SUCCESS);
+	return (exit_status);
 }

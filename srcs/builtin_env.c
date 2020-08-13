@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 17:24:16 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/13 14:01:54 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/13 15:34:30 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int				ft_env(t_call *call, char **func)
 		while (current)
 		{
 			key = get_key((char *)current->content);
-			if (key [ft_strlen(key) - 1] == '=')
+			if (((char *)current->content)[ft_strlen(key) - 1] == '=')
 			{
 				write(1, (char *)current->content,
 					ft_strlen((char*)current->content));
@@ -94,10 +94,10 @@ int				ft_env1(t_call *call)
 	{
 		write(1, "declare -x ", 11);
 		key = get_key((char *)current->content);
-		write(1, key, ft_strlen(key));   //enleve le -1
-		//if (ft_strlen(find_value(key, sorted_list) + ft_strlen(key)))
+		write(1, key, ft_strlen(key) - 1);   //enleve le -1
+	//	if (ft_strlen(find_value(key, sorted_list) + ft_strlen(key)))
 		if (ft_strchr((char *)current->content, '='))  // ATTENTION PAR RAPPOT A VERSION THOMAS
-			ft_printf("\"%s\"\n", find_value(key, call->env, 1) + ft_strlen(key));   //enleve le =
+			ft_printf("=\"%s\"\n", find_value(key, call->env, 1) + ft_strlen(key));   //enleve le =
 		else
 			write(1, "\n", 1);
 		free(key);

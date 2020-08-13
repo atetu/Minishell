@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 16:15:55 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/13 14:59:27 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/13 16:16:43 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int		get_fd(char *str, int option)
 
 static int		check_input(t_call *call, int i)
 {
-	if (call->str[i] == '<' && !is_valide(call->str, i, 1))
+	if (call->str[i] == '<' && !is_valide(call->str, i, 1) && !is_backslash(call->str, i -1))// && is_backslash(call->str, i-1))
 	{
 		if (call->in != -1)
 			close(call->in);
@@ -59,7 +59,7 @@ static int		check_input(t_call *call, int i)
 
 static int		check_output(t_call *call, int i)
 {
-	if (call->str[i] == '>' && !is_valide(call->str, i, 1))
+	if (call->str[i] == '>' && !is_valide(call->str, i, 1) && !is_backslash(call->str, i -1))
 	{
 		if (call->out != -1)
 			close(call->out);
@@ -91,7 +91,7 @@ static void		get_args(t_call *call)
 	while (call->str[++i])
 	{
 		if ((call->str[i] == '>' || call->str[i] == '<')
-			&& !is_valide(call->str, i, 1))
+			&& !is_valide(call->str, i, 1) && !is_backslash(call->str, i -1))
 		{
 			if (start == i)
 				str = NULL;
