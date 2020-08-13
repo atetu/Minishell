@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 16:15:55 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/13 14:49:14 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/13 14:59:27 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int		get_fd(char *str, int option)
 	free(file_name);
 	return (fd);
 }
-/*
+
 static int		check_input(t_call *call, int i)
 {
 	if (call->str[i] == '<' && !is_valide(call->str, i, 1))
@@ -151,7 +151,7 @@ void			parse_call(t_call *call, t_list **env)
 		call->out = 1;
 	get_args(call);
 }
-*/
+/*
 static int		check_input_output(t_call *call, int i)
 {
 	while (call->str[++i])
@@ -245,3 +245,4 @@ void			parse_call(t_call *call, t_list **env)
 		call->out = 1;
 	get_args(call);
 }
+*/
