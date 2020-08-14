@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 10:53:30 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/13 10:16:58 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/14 16:07:55 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int					exit_status;
 int					exit_nb;
 char				*g_pwd;//ICI stocke pwd de toute facon
 char				*g_oldpwd; //ICI stocke oldpwd
+int					g_ret;
 //char				*var_path;
 
 ///////////////////////////////////////////////////////////////

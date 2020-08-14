@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:48:42 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/11 10:37:46 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/14 10:51:08 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int *exit_info) //ICI
 	fds[1] = dup(1);
 	duplicate_fd(call);
 	exit_status = execute(call, func, var_env, exit_info); //ici
+	exit_nb = exit_status;    // ICI pour exit
 	clean_array(func);
 	free(var_env);
 	dup2(fds[0], 0);

@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/01 15:24:14 by atetu             #+#    #+#             */
-/*   Updated: 2020/08/11 16:32:40 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/14 10:54:57 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static int		get_n_semicolon(char *args, int option)
 			if (args[j] == '>' || args[j] == '<')  // ICI
 			{
 				exit_status = 258;  // a revoir???
+				exit_nb = 2;  /// ICICIICICICI exit
 				ft_printf_e("bash: line 1: syntax error near unexpected token ';'\n");  // JUSTE POUR LEs TESTS
 			//	ft_printf_e("minihell: syntax error near unexpected token ';'\n");
 				return (-1);

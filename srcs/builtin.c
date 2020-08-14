@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 21:54:49 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/13 17:30:18 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/14 16:08:32 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,20 +152,21 @@ int			check_sec_round_arg(char *func, int arg, int neg)
 	{
 		ft_printf_e("bash: line 1: exit: too many arguments\n");
 		exit_status = 1;
+		exit_nb = exit_status;
 		return (EXIT_FAILURE);
 	}
 	res = ft_atoll(func);
 	if (res > (max + 1))
 	{
 		ft_printf_e("bash: line 1: exit: %s: numeric argument required\n", func);
-		exit_status = 255;
+		exit_nb = 255;
 	}
 	else
 	{
 		if (neg == 0)
-			exit_status = res % 256;
+			exit_nb = res % 256;
 		else
-			exit_status = -(res % 256) + 256;
+			exit_nb = -(res % 256) + 256;
 	}
 	return (EXIT_SUCCESS);
 }
@@ -173,35 +174,40 @@ int			check_sec_round_arg(char *func, int arg, int neg)
 void numeric_error(char *func)
 {
 	ft_printf_e("bash: line 1: exit: %s: numeric argument required\n", func); // message d'erreur du test mais pas dans mon bash....
-	exit_status = 255;
+	exit_nb = 255;
 }
 
 int				ft_builtin_exit(char **func, int *exit_info)
 {
 	int i;
-	int j;
 	int arg;
 	int neg;
 	
 	i = -1;
-	j = -1;
 	arg = 0;
 	neg = 0;
-	while (func[++j])
+	while (func[++i])
 		arg++;
+	if (g_ret != 2)
+		ft_printf("exit\n");   
 	if (arg >= 2)
 	{
 		if (check_numeric_argument(func[1], &neg))
-		{
+		{	
 			if (check_sec_round_arg(func[1], arg, neg))
+			{
+			//	printf("nb : %d\n", exit_nb);fflush(stdout);
 				return (EXIT_FAILURE);
+			}
 		}
 		else
 			numeric_error(func[1]);
 	}
+	i = -1;
 	if (g_pids)
 		while (g_pids[++i])
 			kill(g_pids[i], 2);
 	*exit_info = 1;
-	return (exit_status);
+	
+	return (exit_nb);
 }

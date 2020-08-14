@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:27:19 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/13 18:49:54 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/14 16:45:07 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ void			wait_pids(pid_t *pids, int size, t_call *calls)
 	{
 		waitpid(pids[i], &status, 0);
 		if (WIFEXITED(status))
+		{	
 			exit_status = WEXITSTATUS(status);
+			exit_nb = exit_status;  //ICI exit
+		}
 	}
 }
 
@@ -112,6 +115,7 @@ void			prompt(char **env)
 	char 		**split_args;
 //	int			i;
 	int			go_on; //ici
+//	int ret;
 
 	go_on = 0;   //ici
 	exit_nb = 0;
@@ -123,20 +127,26 @@ void			prompt(char **env)
 	{
 		g_pids = NULL;
 		print();
-		if (get_next_line(0, &args, &go_on) == 0)
+		g_ret = get_next_line(0, &args, &go_on);
+		//printf("g_ret: %d", g_ret); fflush(stdout);
+		if (g_ret == 0)		
 		{
-			if (!(control_d()))
-				exit(exit_status);
+			control_d();
+			exit_nb = exit_status;
+			ft_printf("exit\n");  // selon moi a indiquer mais eeur avec le testeur
+			break;
 		}
-		printf("args: %s\n", args);fflush(stdout);
 		if (ft_strlen(args))
 			if (parse_args(args, list) == -1)
 				break ;
+		if (g_ret == 2)
+			break;
 		free(args);
 	}
 //	ft_lstclear(list, &free);
+	free(args);  // dans l'hypothese ou control_d
 	clear_all(list);  // pour norme nouvelle fonction
 //	system("leaks minishell");
-	ft_printf("exit\n");
-	exit(exit_status);
+//	ft_printf("exit nb : %d\n", exit_nb);
+	exit(exit_nb);
 }
