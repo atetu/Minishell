@@ -20,7 +20,8 @@ static char		*get_name_var(char *str)
 	if (str[0] != '$')
 		return (NULL);
 	while (str[i] && str[i] != ' ' && str[i] != '|'
-		&& str[i] != ';' && str[i] != '\'' && str[i] != '"' && str[i] != '=')
+		&& str[i] != ';' && str[i] != '\'' && str[i] != '"' && str[i] != '='
+		&& str[i] != ':' && str[i] != '/')   //ajout pour export PATH=$PWD;$PATH et pour $PWD/prog
 		i++;
 	return (ft_substr(str, 1, i - 1));
 }
@@ -51,13 +52,17 @@ static char		*replace_var(char *str, int index, t_list **env, int option)
 	int			i;
 
 	temp = ft_substr(str, 0, index);
+//	printf("temp : %s\n", temp);fflush(stdout);
 	if (!option)
 	{
 		var_name = get_name_var(str + index);
+	//	printf("var_name: %s\n", var_name);fflush(stdout);
 		var = find_value(var_name, env, 1);
+		//printf("var: %s\n", var);fflush(stdout);
 		if (var)
 			temp = ft_strjoin_f1(temp, var + ft_strlen(var_name) + 1);
 		free(var_name);
+	//	printf("temp 2 : %s\n", temp);fflush(stdout);
 	}
 	if (option)
 		temp = ft_strjoin_f12(temp, ft_itoa(exit_status));
@@ -65,8 +70,8 @@ static char		*replace_var(char *str, int index, t_list **env, int option)
 	if (str[i + 1] && !(ft_isalpha(str[i + 1])) && str[i + 1] != '_' && str[i + 1] != '=')   //ICI
 		i = i + 2;														//ICI
 	else																//ICI
-		while (str[i] && str[i] != '"' && str[i] != '\'' &&
-			str[i] != ' ' && str[i] != '|' && str[i] != ';' && str[i] != '=')
+		while (str[i] && str[i] != '"' && str[i] != '\'' && str[i] != ' ' 
+		&& str[i] != '|' && str[i] != ';' && str[i] != '=' && str[i] != ':' && str[i] != '/')   // : pour export PATH=$PWD:$Path   / pour $PWD\prog
 			i++;
 	temp = ft_strjoin_f1(temp, str + i);
 	free(str);
@@ -92,12 +97,15 @@ char			*parse_var(char *str, char *func, t_list **env)   //ICI
 	int			n;
 
 	n = get_n_var(str);
+//	printf("var: %d\n", n);fflush(stdout);
 	i = -1;
+//	printf("str start: %s\n", str);fflush(stdout);
 	while (n > 0 && str[++i])
 	{
 		if (str[i] == '$' && !is_valide(str, i, 0) && (i == 0 ||
 		(i > 0 && !is_backslash(str, i - 1))) && (str[i + 1] && str[i + 1] != ' ')) //ICI
 		{
+//			printf("str $: %s\n", &(str[i]));fflush(stdout);
 			if (str[i + 1] && str[i + 1] == '=')
 				;
 			else if (str[i + 1] && str[i + 1] == '?')
@@ -111,7 +119,9 @@ char			*parse_var(char *str, char *func, t_list **env)   //ICI
 			else
 				str = replace_var(str, i, env, 0);
 			n--;
+//			printf("str after : %s\n", str);fflush(stdout);
 		}
 	}
+//	printf("str end: %s\n", str);fflush(stdout);
 	return (str);
 }

@@ -32,6 +32,7 @@ SRCS = main.c\
 		parse_var.c\
 		prompt.c\
 		prompt_utiles.c\
+		shlvl.c\
 		signal.c\
 		utiles.c\
 		utiles_convert.c

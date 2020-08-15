@@ -66,25 +66,20 @@ int				ft_exit_ret(int ret, char **buffer, char **stock)
 		if (*stock)
 			free(*stock);
 	}
-//	ft_printf("resultat: %d", ret);
 	return (ret);
 }
 
-static void		loop(int *go_on, int ret, char **buffer, char **stock)
+static int		loop(int *go_on, int ret, char **buffer, char **stock)
 {
 	*go_on = 0;
 	(*buffer)[ret] = '\0';
 	*stock = ft_strjoin_gnl(*stock, *buffer);
-//	if ((ret - 1) < 0)
-//	{
-	//	*go_on = 1;
-//		write(1, "  \b\b", 4);
-//	}
-	 if ((*buffer)[ret - 1] != '\n')
+	if ((*buffer)[ret - 1] != '\n')
 	{
 		*go_on = 1;
 		write(1, "  \b\b", 4);
 	}
+	return (1);
 }
 
 int				get_next_line(int fd, char **line, int *go_on)
@@ -100,29 +95,18 @@ int				get_next_line(int fd, char **line, int *go_on)
 	if (!stock[fd])
 		stock[fd] = (char *)ft_calloc(sizeof(char), 1);
 	while (!ft_strchr(buffer, '\n') && ((ret = read(fd, buffer, //ret = 0 et *go_on : cas ou on a tape qqch dans le prompt puis ctrl d -> assimile a EOF mais doit effacer le Ctrl d et continuer
-	BUFFER_SIZE)) > 0 || (ret == 0 && stock[fd] && stock[fd][0] != 0) || (ret == 0 && *go_on)))   // ret = 0 et stock[fd] cas ou on envoie une chaine finie avec EOF pour distinguer du ctrl d ("echo exit 55 la" | ./minishell)
-	{																		
-	//	ft_printf("ret: %d\n", ret);
+	BUFFER_SIZE)) > 0 || (ret == 0 && *go_on)))
+	{
 		if (ret == -1)
 			return (ft_exit_ret(-1, &buffer, &stock[fd]));
 		loop(go_on, ret, &buffer, &stock[fd]);
-	//	if (ret == 0 && *go_on == 0)   // cas d'une chaine finie avec EOF on arrete et envoie un ret different pour tout arreter une fois dans le prompt
-//		{
-	//		ret = 2;
-	//		break;
-	//	}
-	//	if (ft_strchr(stock[fd], '\n'))
-	//		break;
 	}
 	i = 0;
 	while (stock[fd][i] && stock[fd][i] != '\n')
 		i++;
 	*line = ft_substr(stock[fd], 0, i);
 	stock[fd] = ft_refresh_stock(stock[fd], i);
-	if (ret == 2)
-		return (ft_exit_ret(2, &buffer, &stock[fd]));
 	if (ret || stock[fd])
 		return (ft_exit_ret(1, &buffer, &stock[fd]));
-	
 	return (ft_exit_ret(0, &buffer, &stock[fd]));
 }

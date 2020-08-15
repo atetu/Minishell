@@ -135,6 +135,8 @@ void				control_c(int sig);
 int					control_d(void);
 void				control_quit(int sig);
 
+// shlvl.c
+void				handle_shlvl(t_list **list);
 #endif
 
 /*

@@ -36,57 +36,48 @@ char			**list_to_tab(t_list **lst)
 	return (tab);
 }
 
+static int		is_pwd_oldpwd(char *env, t_list **list, int *is_pwd, int *is_oldpwd)
+{
+	if (!(ft_strncmp(env, "OLDPWD=", 7)))
+	{
+		ft_lstadd_back(list, ft_lstnew(ft_strdup("OLDPWD")));
+		*is_oldpwd = 1;
+		return (1);
+	}
+	if (!(ft_strncmp(env, "PWD=", 4)))
+	{
+		ft_lstadd_back(list, ft_lstnew(ft_strjoin("PWD=", g_pwd)));
+		*is_pwd = 1;
+		return (1);
+	}
+	return (0);
+}
+
 t_list			**tab_to_list(char **env)
 {
 	int			i;
 	t_list		**list;
-	t_list		**tmp;
-	t_list *current;
-	int lev ;
-	char *lev_str;
-//	char *dest;
+	int is_oldpwd;
+	int is_pwd;
 
 	i = -1;
-	lev =0;
+	is_oldpwd = 0;
+	is_pwd = 0;
 	if (!(list = malloc(sizeof(t_list *))))
 	{
 		ft_printf_e("Minishell: error: malloc failed\n");
 		exit(EXIT_FAILURE);
 	}
 	*list = NULL;
-	while (env[++i])
+	while (env[++i])   // si aucune var d'env n'est envoyee au lancement du bash, PWD, OLDPWD et SHLVL sont creees. Seule SHLVL reprend la valeur envoyee le cas echeant au bash
 	{
-		if (!(ft_strncmp(env[i], "OLDPWD=", 7)))
-			ft_lstadd_back(list, ft_lstnew(ft_strdup("OLDPWD")));
-		else
+		if (!(is_pwd_oldpwd(env[i], list, &is_pwd, &is_oldpwd)))
 			ft_lstadd_back(list, ft_lstnew(ft_strdup(env[i])));
 	}
-	tmp = list;
-	current = *tmp;
-	while (current)
-	{
-		if (!(strncmp((char *)current->content, "SHLVL=", 6)))
-		{
-			lev = ft_atoi(ft_substr((char*)current->content, 6, (ft_strlen((char*)current->content) - 6)));
-			if (lev < 0)
-			{
-				free(current->content);
-				current->content = (void *) ft_strdup("SHLVL=0");
-			}
-			else if (lev == 0)
-				current->content = (void *) ft_strdup("SHLVL=1");
-			else if (lev > 0)
-			{
-				lev++;
-				lev_str = ft_itoa(lev);
-				current->content = (void *) ft_strjoin("SHLVL=", lev_str);
-			}
-			lev = 1;
-			break;
-		}
-		current = current->next;
-	}
-	if (lev ==0)
-		ft_lstadd_back(list, ft_lstnew(ft_strdup("SHLVL=1")));
+	if (!is_oldpwd)
+		ft_lstadd_back(list, ft_lstnew(ft_strdup("OLDPWD")));
+	if (!is_pwd)
+		ft_lstadd_back(list, ft_lstnew(ft_strjoin("PWD=", g_pwd)));
+	handle_shlvl(list);
 	return (list);
 }
