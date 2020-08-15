@@ -19,6 +19,7 @@ int				main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	g_pids = NULL;
+	exit_nb = 0;
 	if (signal(SIGINT, control_c) == SIG_ERR)
 	{
 		ft_printf_e("%s\n", "Could not set signal handler");

@@ -45,3 +45,12 @@ void			clean_array(char **array)
 		free(array);
 	}
 }
+
+void			clear_all(char *args, t_list **list)
+{
+	if (args)
+		free(args);
+	ft_lstclear(list, &free);
+	free(g_pwd);
+	free(g_oldpwd);
+}

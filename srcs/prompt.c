@@ -51,10 +51,8 @@ static int		exec_input(char *str, t_list **env)
 	int			pipes[get_n_pipes(str, 0)][2];
 	int			i;
 	int			exit_info; //ICI
-//	int			ret;   //ICI
 
 	i = -1;
-//	ret = 0;   //icic
 	exit_info = 0; //ici
 	if (!(g_pids = malloc(sizeof(pid_t) * (get_n_pipes(str, 0) + 2))))
 	{
@@ -65,13 +63,10 @@ static int		exec_input(char *str, t_list **env)
 	parse_pipes(str, calls);
 	while (calls[++i].str)
 		parse_call(&calls[i], env);
-//	if (ret != -1)
-//	{
 	if (i > 1)
 		manage_pipes(calls, pipes, str, &exit_info);
 	else
 		exec2(&calls[0], &exit_info);
-//	}
 	clean_calls(calls);
 	free(g_pids);
 	if (exit_info == 1)
@@ -101,52 +96,30 @@ static int		parse_args(char *args, t_list **list)
 	return (ret);
 }
 
-void			clear_all(t_list **list)
-{
-	ft_lstclear(list, &free);
-	free(g_pwd);
-	free(g_oldpwd);
-}
-
 void			prompt(char **env)
 {
 	char		*args;
 	t_list		**list;
 	char 		**split_args;
-//	int			i;
-	int			go_on; //ici
-//	int ret;
+	int			go_on;
 
-	go_on = 0;   //ici
-	exit_nb = 0;
+	go_on = 0;
 	list = tab_to_list(env);
 	args = NULL;
 	split_args = NULL;
-//	i = -1;
 	while (1)
 	{
 		g_pids = NULL;
 		print();
-		g_ret = get_next_line(0, &args, &go_on);
-		//printf("g_ret: %d", g_ret); fflush(stdout);
-		if (g_ret == 0)		
-		{
-			control_d();
-			exit_nb = exit_status;
-			ft_printf("exit\n");  // selon moi a indiquer mais eeur avec le testeur
-			break;
-		}
+		if (!(get_next_line(0, &args, &go_on)))
+			if (control_d())
+				break;
 		if (ft_strlen(args))
 			if (parse_args(args, list) == -1)
 				break ;
-		if (g_ret == 2)
-			break;
 		free(args);
 	}
-//	ft_lstclear(list, &free);
-	free(args);  // dans l'hypothese ou control_d
-	clear_all(list);  // pour norme nouvelle fonction
+	clear_all(args, list);  // pour norme nouvelle fonction
 //	system("leaks minishell");
-//	ft_printf("exit nb : %d\n", exit_nb);
 	exit(exit_nb);
 }

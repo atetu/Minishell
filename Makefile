@@ -17,6 +17,7 @@ SRCS = main.c\
 		builtin.c\
 		builtin_env.c\
 		builtin_env_utiles.c\
+		builtin_exit.c\
 		clean.c\
 		execute.c\
 		execute_utiles.c\

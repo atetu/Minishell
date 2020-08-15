@@ -26,7 +26,7 @@ void			control_c(int sig)
 	else
 	{
 		i = -1;
-		while(++i)
+		while (++i)
 			kill(g_pids[i], sig);
 		write(1, "\n", 1);
 		exit_status = 130;
@@ -35,26 +35,8 @@ void			control_c(int sig)
 
 int				control_d(void)
 {
-//	int i;
-//
-//	i = -1;
-//	if (!g_pids)
-//	{
-   // 	write(1, "\b   \b\b", 6);
-	//	ft_printf("exit\n");
-	//	exit_status = 0;
-	//	exit_nb = exit_status;
-      //  return(0);
-//	}
-//	else
-//	{
-//		printf("idi");fflush(stdout);
-	//	while(++i)
-	//		kill(g_pids[i], 2);
-	//	ft_printf("exit\n");
-	//	exit_status = 0;
-	//	return (0);
-//	}
+	exit_nb = exit_status;
+	//	ft_printf("exit\n");  // selon moi a indiquer mais erreur avec le testeur
 	return (1);
 }
 
@@ -66,7 +48,7 @@ void			control_quit(int sig)
 	if (g_pids) // variable globale a modifier quand fd = 0
 	{
 		ft_printf("Quit: %d\n", sig);
-		while(++i)
+		while (++i)
 			kill(g_pids[i], 2);
 		exit_status = 131;
 		exit_nb = exit_status;

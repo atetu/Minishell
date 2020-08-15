@@ -128,6 +128,7 @@ int					is_backslash(char *str, int index);
 void				close_pipes(int	pipes[][2], int size);
 void				clean_calls(t_call *calls);
 void				clean_array(char **array);
+void				clear_all(char *args, t_list **list);
 
 // Signal.c
 void				control_c(int sig);
