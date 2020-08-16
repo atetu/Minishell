@@ -68,6 +68,8 @@ static int		check_sec_round_arg(char *func, int arg, int neg)
 	if (arg > 2)
 	{
 		ft_printf_e("bash: line 1: exit: too many arguments\n");
+	//	ft_printf_e("bash: ligne 1 : exit: trop d'arguments\n"); // VM Testeur
+	//	ft_printf_e("minishell : exit: trop d'arguments\n"); // VM sans testeur
 		exit_status = 1;
 		exit_nb = exit_status;
 		return (EXIT_FAILURE);
@@ -76,7 +78,10 @@ static int		check_sec_round_arg(char *func, int arg, int neg)
 	if (res > (max + 1))
 	{
 		ft_printf_e("bash: line 1: exit: %s: numeric argument required\n", func);
+		//	exit_nb = 255;ft_printf_e("bash: ligne 1 : exit: %s: argument numerique necessaire\n", func); // TESTEUR VM
+//	exit_nb = 255;ft_printf_e("minishell: exit: %s: argument numerique necessaire\n", func); // VM
 		exit_nb = 255;
+		//exit_nb = 2; //VM
 	}
 	else
 	{
@@ -90,8 +95,11 @@ static int		check_sec_round_arg(char *func, int arg, int neg)
 
 static void		numeric_error(char *func)
 {
-	ft_printf_e("bash: line 1: exit: %s: numeric argument required\n", func); // message d'erreur du test mais pas dans mon bash....
-	exit_nb = 255;
+	
+	exit_nb = 255;ft_printf_e("bash: line 1: exit: %s: numeric argument required\n", func); // TESTEUR
+//	exit_nb = 255;ft_printf_e("bash: ligne 1 : exit: %s: argument numerique necessaire\n", func); // TESTEUR VM
+//	exit_nb = 255;ft_printf_e("minishell: exit: %s: argument numerique necessaire\n", func); // VM
+//exit_nb = 2; //VM
 }
 
 int				ft_builtin_exit(char **func, int *exit_info)

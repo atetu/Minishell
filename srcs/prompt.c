@@ -32,12 +32,13 @@ void			wait_pids(pid_t *pids, int size, t_call *calls)
 
 static void		manage_pipes(t_call *calls, int pipes[][2], char *str, int *exit_info)
 {
-	int i;
+	int i; 
+	//int n_pipes;  a ajouter pour VM
 
-	create_pipes(calls, pipes);
+	create_pipes(calls, pipes);    // n_pipes = ....
 	i = -1;
 	while (calls[++i].str)
-		connect_pipes(calls, pipes);
+		connect_pipes(calls, pipes);   // 3e arg: n_pipes
 	i = -1;
 	while (calls[++i].str)
 		g_pids[i] = exec1(&calls[i], pipes, get_n_pipes(str, 0), exit_info);

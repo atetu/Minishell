@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-void			create_pipes(t_call *calls, int pipes[][2])
+void			create_pipes(t_call *calls, int pipes[][2])  // DANS VM int creat_pipes
 {
 	int			i;
 	int			size;
@@ -22,7 +22,7 @@ void			create_pipes(t_call *calls, int pipes[][2])
 		i++;
 	size = --i;
 	if (size == 0)
-		return ;
+		return ;              // return (0);
 	i = -1;
 	while (++i < size)
 	{
@@ -31,10 +31,10 @@ void			create_pipes(t_call *calls, int pipes[][2])
 			ft_printf_e("Error: pipe creation failed\n");
 			exit(0);
 		}
-	}
+	}                      // return (size);
 }
 
-void			connect_pipes(t_call *calls, int pipes[][2])
+void			connect_pipes(t_call *calls, int pipes[][2])   //3e arg : int n_pipes
 {
 	int			i;
 
@@ -47,7 +47,7 @@ void			connect_pipes(t_call *calls, int pipes[][2])
 			calls[i].in = pipes[i - 1][0];
 		if (calls[i].out != 1)
 			;
-		else if (calls[i].out == 1 && pipes[i + 1][0])
+		else if (calls[i].out == 1 && pipes[i + 1][0])    // && i < n_pipes && pipes[i][0]
 			calls[i].out = pipes[i][1];
 	}
 }

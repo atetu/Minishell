@@ -64,6 +64,8 @@ int				ft_cd(char **func, t_call *call)
 	{
 		ft_printf_e("bash: line 1: cd: %s: %s\n", func[1], strerror(errno));  // JUSTE POUR LES TESTS
 	//	ft_printf_e("minishell: cd: %s: %s\n", func[1], strerror(errno));
+	//  ft_printf_e("bash: ligne 1 : cd: %s: Aucun fichier ou dossier de ce type\n", func[1]);i // VM Testeur
+	//  ft_printf_e("minishell: cd: %s: Aucun fichier ou dossier de ce type\n", func[1]);i // VM Testeur
 		return (EXIT_FAILURE);
 	}
 	else if (!func[1])

@@ -38,8 +38,20 @@ char			**list_to_tab(t_list **lst)
 
 static int		is_pwd_oldpwd(char *env, t_list **list, int *is_pwd, int *is_oldpwd)
 {
-	if (!(ft_strncmp(env, "OLDPWD=", 7)))
+	//char *tmp;  // tous les commentaires pour la version VM
+
+//	tmp = NULL;
+	if (!(ft_strncmp(env, "OLDPWD=", 7)))   // dans VM garde le oldpwd qu'on lui envoie a condition que ce soit un vrai chemin
 	{
+	//	tmp = ft_substr(env, 7, ft_strlen(env) - 7);
+	//	if (chdir(tmp)==0)
+	//	{
+	//		chdir(g_pwd);
+	//		ft_lstadd_back(list, ft_lstnew(ft_strdup(env)));
+		//	*is_oldpwd = 1;
+	//		free(g_oldpwd);
+		//	g_oldpwd = tmp;
+	//	}
 		ft_lstadd_back(list, ft_lstnew(ft_strdup("OLDPWD")));
 		*is_oldpwd = 1;
 		return (1);
@@ -51,6 +63,16 @@ static int		is_pwd_oldpwd(char *env, t_list **list, int *is_pwd, int *is_oldpwd)
 		return (1);
 	}
 	return (0);
+}
+
+static void		add_remaining_var(t_list **list, int is_oldpwd, int is_pwd)
+{
+	if (!is_oldpwd)
+		ft_lstadd_back(list, ft_lstnew(ft_strdup("OLDPWD")));
+	if (!is_pwd)
+		ft_lstadd_back(list, ft_lstnew(ft_strjoin("PWD=", g_pwd)));
+//	ft_lstadd_back(list, ft_lstnew(ft_strdup("LESSCLOSE=/usr/bin/lesspipe %s %s"));  VAR A AJPOUTER DANS LA VM
+//	ft_lstadd_back(list, ft_lstnew(ft_strdup("LESSOPEN=| usr/bin/lesspipe %s"));
 }
 
 t_list			**tab_to_list(char **env)
@@ -71,13 +93,11 @@ t_list			**tab_to_list(char **env)
 	*list = NULL;
 	while (env[++i])   // si aucune var d'env n'est envoyee au lancement du bash, PWD, OLDPWD et SHLVL sont creees. Seule SHLVL reprend la valeur envoyee le cas echeant au bash
 	{
-		if (!(is_pwd_oldpwd(env[i], list, &is_pwd, &is_oldpwd)))
+		if (!(is_pwd_oldpwd(env[i], list, &is_pwd, &is_oldpwd))
+			&& ft_strncmp(env[i], "_=", 2)) // derniere condition pour var _= qui semble supprimee dans le bash
 			ft_lstadd_back(list, ft_lstnew(ft_strdup(env[i])));
 	}
-	if (!is_oldpwd)
-		ft_lstadd_back(list, ft_lstnew(ft_strdup("OLDPWD")));
-	if (!is_pwd)
-		ft_lstadd_back(list, ft_lstnew(ft_strjoin("PWD=", g_pwd)));
+	add_remaining_var(list, is_oldpwd, is_pwd);
 	handle_shlvl(list);
 	return (list);
 }

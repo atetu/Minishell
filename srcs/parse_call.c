@@ -134,11 +134,9 @@ static int		get_in_and_out(t_call *call, int *input, int *output)
 
 void			parse_call(t_call *call, t_list **env)
 {
-	int			i;
 	int			input;
 	int			output;
 
-	i = -1;
 	input = 0;
 	output = 0;
 	call->env = env;
