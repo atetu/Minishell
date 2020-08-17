@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:40:46 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/12 14:09:44 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/17 16:58:10 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ static void		add_remaining_var(t_list **list, int is_oldpwd, int is_pwd)
 		ft_lstadd_back(list, ft_lstnew(ft_strdup("OLDPWD")));
 	if (!is_pwd)
 		ft_lstadd_back(list, ft_lstnew(ft_strjoin("PWD=", g_pwd)));
+	ft_lstadd_back(list, ft_lstnew(ft_strdup("/bin/bash"));
 //	ft_lstadd_back(list, ft_lstnew(ft_strdup("LESSCLOSE=/usr/bin/lesspipe %s %s"));  VAR A AJPOUTER DANS LA VM
 //	ft_lstadd_back(list, ft_lstnew(ft_strdup("LESSOPEN=| usr/bin/lesspipe %s"));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shlvl.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alicetetu <atetu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 18:30:08 by alicetetu         #+#    #+#             */
-/*   Updated: 2020/08/15 18:30:10 by alicetetu        ###   ########.fr       */
+/*   Updated: 2020/08/17 16:17:18 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static void	check_shlvl_nb(char *shlvl_str, t_list *current)
 	}
 	else if (shlvl_nb > 0)
 	{
+		free(current->content);	
 		shlvl_nb++;
 		tmp = ft_itoa(shlvl_nb);
 		current->content = (void *) ft_strjoin("SHLVL=", tmp);
@@ -99,3 +100,4 @@ void handle_shlvl(t_list **list)
 	if (!is_shlvl)
 		ft_lstadd_back(list, ft_lstnew(ft_strdup("SHLVL=1")));
 }
+exit
