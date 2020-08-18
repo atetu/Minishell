@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:40:46 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/17 16:58:10 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/18 13:44:55 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void		add_remaining_var(t_list **list, int is_oldpwd, int is_pwd)
 		ft_lstadd_back(list, ft_lstnew(ft_strdup("OLDPWD")));
 	if (!is_pwd)
 		ft_lstadd_back(list, ft_lstnew(ft_strjoin("PWD=", g_pwd)));
-	ft_lstadd_back(list, ft_lstnew(ft_strdup("/bin/bash"));
+	ft_lstadd_back(list, ft_lstnew(ft_strdup("_=/bin/bash")));  // ICICI  A DISCUTER ./minishell?
 //	ft_lstadd_back(list, ft_lstnew(ft_strdup("LESSCLOSE=/usr/bin/lesspipe %s %s"));  VAR A AJPOUTER DANS LA VM
 //	ft_lstadd_back(list, ft_lstnew(ft_strdup("LESSOPEN=| usr/bin/lesspipe %s"));
 }
@@ -94,8 +94,7 @@ t_list			**tab_to_list(char **env)
 	*list = NULL;
 	while (env[++i])   // si aucune var d'env n'est envoyee au lancement du bash, PWD, OLDPWD et SHLVL sont creees. Seule SHLVL reprend la valeur envoyee le cas echeant au bash
 	{
-		if (!(is_pwd_oldpwd(env[i], list, &is_pwd, &is_oldpwd))
-			&& ft_strncmp(env[i], "_=", 2)) // derniere condition pour var _= qui semble supprimee dans le bash
+		if (!(is_pwd_oldpwd(env[i], list, &is_pwd, &is_oldpwd)) && ft_strncmp(env[i], "_=", 2)) // derniere condition pour var _= qui semble supprimee dans le bash
 			ft_lstadd_back(list, ft_lstnew(ft_strdup(env[i])));
 	}
 	add_remaining_var(list, is_oldpwd, is_pwd);

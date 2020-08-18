@@ -6,19 +6,24 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 21:54:49 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/14 16:08:32 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/18 15:49:47 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int				ft_echo(char **func)
+int				ft_echo(char **func, t_call *call)
 {
 	int			i;
 	int			space;
 
-	i = 0;
+(void )call;
+//	i = -1;
 	space = 1;
+//	while (func[++i])
+	//	;
+//	add_env(call, "_=", func[i - 1], 1);  //ICI
+	i = 0;
 	while (func[++i])
 	{
 		if (ft_strncmp(func[i], "-n", 3) == 0)
@@ -57,9 +62,11 @@ void	handle_env_var(t_call *call)
 int				ft_cd(char **func, t_call *call)
 {
 	int		i;
-	char	*dir;
 
-	i = 0;
+	i = -1;  // icic
+	//while (func[++i])   // icic
+	//	;
+	//add_env(call, "_=", func[i - 1], 1);  //ICI
 	if (func[1] && chdir(func[1]) == -1)
 	{
 		ft_printf_e("bash: line 1: cd: %s: %s\n", func[1], strerror(errno));  // JUSTE POUR LES TESTS
@@ -72,8 +79,7 @@ int				ft_cd(char **func, t_call *call)
 	{
 		if (call->env)
 		{
-			dir = find_user(NULL, call->env);
-			if (chdir(dir) == -1)
+			if (chdir(g_home) == -1)
 				return (EXIT_FAILURE);
 		}
 	}

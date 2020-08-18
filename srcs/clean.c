@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:25:17 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/11 16:24:24 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/18 16:44:12 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void			clean_array(char **array)
 	int			i;
 
 	i = -1;
-	if (array)  // ICI
+	if (array)
 	{
 		while (array[++i])
 			free(array[i]);
@@ -53,4 +53,6 @@ void			clear_all(char *args, t_list **list)
 	ft_lstclear(list, &free);
 	free(g_pwd);
 	free(g_oldpwd);
+	free(g_home);
+	free(g_last);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_semicolons.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/01 15:24:14 by atetu             #+#    #+#             */
-/*   Updated: 2020/08/14 10:54:57 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/17 22:13:56 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,27 @@ static int		get_n_semicolon(char *args, int option)
 {
 	int			i;
 	int			n_semicolon;
-	int			j; // ICI
+	int			j;
 
 	i = 0;
 	n_semicolon = 0;
 	while (args[++i])
 	{
 		if (args[i] == ';' && !is_valide(args, i, 1) && (i == 0 ||
-		(i > 0 && !is_backslash(args, i - 1)))) //ICI)
+		(i > 0 && !is_backslash(args, i - 1))))
 		{
 			if (option == 1)
 				return (i);
-			if (i > 0)   /// ICIC
+			if (i > 0)
 			{
 				j = i -1;
 				while (j >=0 && args[j] == ' ')
 					j--;
 			}
-			if (args[j] == '>' || args[j] == '<')  // ICI
+			if (args[j] == '>' || args[j] == '<')
 			{
-				exit_status = 258;  // a revoir???
-				exit_nb = 2;  /// ICICIICICICI exit
+				g_exit_status = 258;
+				g_exit_nb = 2;
 				ft_printf_e("bash: line 1: syntax error near unexpected token ';'\n");  // JUSTE POUR LEs TESTS
 			//	ft_printf_e("minihell: syntax error near unexpected token ';'\n");
 				return (-1);
@@ -61,7 +61,7 @@ char			**parse_semicolon(char *str)
 	last_i = 0;
 	i = 0;
 	j = 0;
-	if ((n_semicolons = get_n_semicolon(str, 0)) == -1)   //ICIC
+	if ((n_semicolons = get_n_semicolon(str, 0)) == -1)
 		return (NULL);
 	if (!(tab = malloc(sizeof(char *) * (n_semicolons + 2))))
 		return (NULL);

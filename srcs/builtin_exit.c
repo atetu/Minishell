@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alicetetu <atetu@student.42.fr>            +#+  +:+       +#+        */
+/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 11:31:57 by alicetetu         #+#    #+#             */
-/*   Updated: 2020/08/15 11:32:00 by alicetetu        ###   ########.fr       */
+/*   Updated: 2020/08/17 14:49:18 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,43 +63,43 @@ static int		check_sec_round_arg(char *func, int arg, int neg)
 {
 	unsigned long long res;
 	unsigned long long max;
-	
+
 	max = 9223372036854775807;
 	if (arg > 2)
 	{
 		ft_printf_e("bash: line 1: exit: too many arguments\n");
 	//	ft_printf_e("bash: ligne 1 : exit: trop d'arguments\n"); // VM Testeur
 	//	ft_printf_e("minishell : exit: trop d'arguments\n"); // VM sans testeur
-		exit_status = 1;
-		exit_nb = exit_status;
+		g_exit_status = 1;
+		g_exit_nb = g_exit_status;
 		return (EXIT_FAILURE);
 	}
 	res = ft_atoll(func);
 	if (res > (max + 1))
 	{
 		ft_printf_e("bash: line 1: exit: %s: numeric argument required\n", func);
-		//	exit_nb = 255;ft_printf_e("bash: ligne 1 : exit: %s: argument numerique necessaire\n", func); // TESTEUR VM
-//	exit_nb = 255;ft_printf_e("minishell: exit: %s: argument numerique necessaire\n", func); // VM
-		exit_nb = 255;
-		//exit_nb = 2; //VM
+		//	g_exit_nb = 255;ft_printf_e("bash: ligne 1 : exit: %s: argument numerique necessaire\n", func); // TESTEUR VM
+//	g_exit_nb = 255;ft_printf_e("minishell: exit: %s: argument numerique necessaire\n", func); // VM
+		g_exit_nb = 255;
+		//g_exit_nb = 2; //VM
 	}
 	else
 	{
 		if (neg == 0)
-			exit_nb = res % 256;
+			g_exit_nb = res % 256;
 		else
-			exit_nb = -(res % 256) + 256;
+			g_exit_nb = -(res % 256) + 256;
 	}
 	return (EXIT_SUCCESS);
 }
 
 static void		numeric_error(char *func)
 {
-	
-	exit_nb = 255;ft_printf_e("bash: line 1: exit: %s: numeric argument required\n", func); // TESTEUR
-//	exit_nb = 255;ft_printf_e("bash: ligne 1 : exit: %s: argument numerique necessaire\n", func); // TESTEUR VM
-//	exit_nb = 255;ft_printf_e("minishell: exit: %s: argument numerique necessaire\n", func); // VM
-//exit_nb = 2; //VM
+
+	g_exit_nb = 255;ft_printf_e("bash: line 1: exit: %s: numeric argument required\n", func); // TESTEUR
+//	g_exit_nb = 255;ft_printf_e("bash: ligne 1 : exit: %s: argument numerique necessaire\n", func); // TESTEUR VM
+//	g_exit_nb = 255;ft_printf_e("minishell: exit: %s: argument numerique necessaire\n", func); // VM
+//g_exit_nb = 2; //VM
 }
 
 int				ft_builtin_exit(char **func, int *exit_info)
@@ -128,5 +128,5 @@ int				ft_builtin_exit(char **func, int *exit_info)
 		while (g_pids[++i])
 			kill(g_pids[i], 2);
 	*exit_info = 1;
-	return (exit_nb);
+	return (g_exit_nb);
 }

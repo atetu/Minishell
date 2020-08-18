@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 10:44:15 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/13 10:52:48 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/18 15:28:40 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 int				main(int ac, char **av, char **env)
 {
 	char buf[512];  //ICI
-	
+
 	(void)ac;
 	(void)av;
 	g_pids = NULL;
-	exit_nb = 0;
+	g_exit_nb = 0;
 	if (signal(SIGINT, control_c) == SIG_ERR)
 	{
 		ft_printf_e("%s\n", "Could not set signal handler");
@@ -32,6 +32,7 @@ int				main(int ac, char **av, char **env)
 	}
 	g_pwd = ft_strdup(getcwd(buf, 512));  // a free
 	g_oldpwd = ft_strdup("");  //a free
+	g_last = NULL;
 	prompt(env);
 	return (0);
 }

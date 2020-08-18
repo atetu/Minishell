@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 23:43:21 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/13 16:07:32 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/18 13:43:43 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ char			*find_value(char *str, t_list **env, int opt)    // opt 1 = chercher key 
 	char		*tmp;
 
 	current = *env;
+	
 	while (current)
 	{
 		if (str[ft_strlen(str) - 1] == '=')
@@ -37,8 +38,12 @@ char			*find_value(char *str, t_list **env, int opt)    // opt 1 = chercher key 
 				return ((char *)current->content);
 			tmp = ft_substr(str, 0, ft_strlen(str) - 1);
 			if (!ft_strncmp(tmp, (char *)current->content, ft_strlen(tmp)) &&
-			((char *)current->content)[ft_strlen(tmp)] == '\0' && opt ==2)
+			((char *)current->content)[ft_strlen(tmp)] == '\0' && opt == 2)
+			{
+				free(tmp);
 				return ((char *)current->content);
+			}
+			free(tmp);
 		}
 		else
 		{
@@ -81,10 +86,10 @@ int				is_valide(char *str, int index, int option)
 	in_dquote = 0;
 	while (str[i] && i < index)
 	{
-		if (str[i] == '"' && (i == 0 || (i > 0 && (str[i - 1] != '\\')))
+		if (str[i] == '"' && (i == 0 || (i > 0 && (str[i - 1] != -1)))
 			&& !in_quote)
 			in_dquote == 1 ? in_dquote-- : in_dquote++;
-		else if (str[i] == '\'' && (i == 0 || (i > 0 && (str[i - 1] != '\\')))
+		else if (str[i] == '\'' && (i == 0 || (i > 0 && (str[i - 1] != -1)))
 			&& !in_dquote)
 			in_quote == 1 ? in_quote-- : in_quote++;
 		i++;
@@ -96,7 +101,7 @@ int				is_valide(char *str, int index, int option)
 	return (EXIT_FAILURE);
 }
 
-int				is_backslash(char *str, int index)    //ICI
+int				is_backslash(char *str, int index)
 {
 	int			backslash;
 

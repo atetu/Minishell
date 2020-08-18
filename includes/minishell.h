@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 10:53:30 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/14 16:07:55 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/18 15:33:20 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,13 @@ typedef	struct		s_call
 
 // variables globales
 pid_t				*g_pids;  //ALICE
-int					exit_status;
-int					exit_nb;
+int					g_exit_status;
+int					g_exit_nb;
 char				*g_pwd;//ICI stocke pwd de toute facon
 char				*g_oldpwd; //ICI stocke oldpwd
 int					g_ret;
+char				*g_home;
+char				*g_last;
 //char				*var_path;
 
 ///////////////////////////////////////////////////////////////
@@ -64,23 +66,16 @@ void				parse_pipes(char *str, t_call *calls);
 int					get_n_pipes(char *args, int option);
 
 // Parse_call.c
-void				parse_call(t_call *call, t_list **env);   
-
-// Parse_func.c
-char				**parse_func(char *str, t_list **env);
+void				parse_call(t_call *call, t_list **env);
 
 // Parse_var.c
-char				*parse_var(char *str, char *func, t_list **env);  // ICI
+// char				*parse_var(char *str, char *func, t_list **env);  // ICI
 
 // Parse_quotes.c
-char				*parse_quotes(char *str);
+// char				*parse_quotes(char *str);
 
 // Parse_exec.c
 char				*parse_exec(t_call *call, char *bin);
-
-// Parse_tilde.c
-char     			*find_user(char *str, t_list **env); //ICI
-char				*parse_tilde(char *str, t_list **env);  //ICI
 
 // Execute.c
 pid_t				exec1(t_call *call, int pipes[][2], int size,
@@ -93,7 +88,7 @@ int					execute(t_call *call, char **func, char **env, int *exit_info);
 void				exec_knonw(t_call *call, char **func, char **var_env, int *exit_info);
 
 // Builtin.c
-int	 				ft_echo(char **func);
+int	 				ft_echo(char **func, t_call *call);
 int 				ft_cd(char **func, t_call *call);
 int					ft_pwd(void);
 int					ft_builtin_exit(char **func, int *exit_info);
@@ -137,6 +132,9 @@ void				control_quit(int sig);
 
 // shlvl.c
 void				handle_shlvl(t_list **list);
+
+// parse_test.c
+char				**parse(char *str, t_list **env);
 #endif
 
 /*

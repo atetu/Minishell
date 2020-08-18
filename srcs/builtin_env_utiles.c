@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env_utiles.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:52:48 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/13 15:08:27 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/17 22:15:13 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ char			*get_key(char *str)
 			break ;
 	if (str[i] == '=')
 		return (ft_substr(str, 0, i + 1));
-	return (ft_strjoin_f1(ft_substr(str, 0, i), "="));   //ICI
-//	return (ft_substr(str, 0, i));
+	return (ft_strjoin_f1(ft_substr(str, 0, i), "="));
 }
 
 int				replace_env_var(void **content, void *var, char *tmp)
@@ -49,7 +48,7 @@ int				add_env(t_call *call, char *key, char *value, int option)
 		while (current)
 		{
 			tmp = ft_substr(key, 0, ft_strlen(key) - 1);
-			if ((!ft_strncmp(key, (char *)current->content, ft_strlen(key))) ||  
+			if ((!ft_strncmp(key, (char *)current->content, ft_strlen(key))) ||
 			(!ft_strncmp(tmp, (char *)current->content, ft_strlen(tmp)) &&     // la pour ajouter var env si var seulement present dans export, donc sans =
 			((char *)current->content)[ft_strlen(tmp)] == '\0'))
 				if (replace_env_var(&current->content, (void *)var, tmp))
@@ -120,30 +119,24 @@ t_list			**sort_var_env(t_list **env)
 	char		*key2;
 	t_list		*current;
 	t_list		*next;
-//	int i;
-//	i =1;
 
-	list = copy_list(env); // Copie la liste pour travailler sur un nouvelle sans perdre l'original
-	current = *list;		// sinon on perd l'ordre quand on veux appeler env
+	list = copy_list(env);
+	current = *list;
 	while (current->next)
 	{
 		next = current->next;
 		key1 = get_key((char *)current->content);
 		key2 = get_key((char *)next->content);
-	//	if (i ==2)
-//			printf("key1: %s\nkey2: %s\n", key1, key2);
 		if (ft_strncmp(key1, key2,
-			ft_strlen(key1) > ft_strlen(key2) ? ft_strlen(key1) : ft_strlen(key2)) > 0) // Si difference entre les keys on inverse
+			ft_strlen(key1) > ft_strlen(key2) ? ft_strlen(key1) : ft_strlen(key2)) > 0)
 		{
-			swap(current, next); // swap le contenu des elements sur la copy de la liste
+			swap(current, next);
 			current = *list;
-	//		if (i==1)
-	//			printf("current: %s \nnext : %s\n", current->content, next->content);
 		}
+		else
+			current = current->next;
 		free(key1);
 		free(key2);
-		current = current->next;
-	//	i++;
 	}
 	return (list);
 }

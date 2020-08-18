@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:48:42 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/14 10:51:08 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/18 16:43:54 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int *exit_info) //ICI
 	fds[0] = dup(0);
 	fds[1] = dup(1);
 	duplicate_fd(call);
-	exit_status = execute(call, func, var_env, exit_info); //ici
-	exit_nb = exit_status;    // ICI pour exit
+	g_exit_status = execute(call, func, var_env, exit_info); //ici
+	g_exit_nb = g_exit_status;    // ICI pour exit
 	clean_array(func);
 	free(var_env);
 	dup2(fds[0], 0);
@@ -46,14 +46,24 @@ void			duplicate_fd(t_call *call)
 
 int				execute(t_call *call, char **func, char **env, int *exit_info)
 {//ATTENTION J'AI CHANGE TOUS LES NOMBRES
+	int i;
+	
+	if (!ft_strncmp(func[0], "export", 7))
+		return (ft_export(call, func));
+	i = -1;
+	while (func[++i])   // icic
+		;
+	if (g_last)
+		free(g_last);
+	g_last = ft_strdup(func[i -1]);  //ICI
 	if (!ft_strncmp(func[0], "echo", 5))
-		return (ft_echo(func));
+		return (ft_echo(func, call));
 	else if (!ft_strncmp(func[0], "cd", 3))
 		return (ft_cd(func, call));
 	else if (!ft_strncmp(func[0], "pwd", 4))
 		return (ft_pwd());
-	else if (!ft_strncmp(func[0], "export", 7))
-		return (ft_export(call, func));
+//	else if (!ft_strncmp(func[0], "export", 7))
+//		return (ft_export(call, func));
 	else if (!ft_strncmp(func[0], "unset", 6))
 		return (ft_unset(call, func));
 	else if (!ft_strncmp(func[0], "env", 400))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 16:10:54 by atetu             #+#    #+#             */
-/*   Updated: 2020/08/14 15:43:18 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/17 14:49:18 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void			control_c(int sig)
 	if (!g_pids)
 	{
 		write(1, "\b\b  \b\b\n", 7);
-		exit_status = 1;
+		g_exit_status = 1;
 		print();
 	}
 	else
@@ -29,13 +29,13 @@ void			control_c(int sig)
 		while (++i)
 			kill(g_pids[i], sig);
 		write(1, "\n", 1);
-		exit_status = 130;
+		g_exit_status = 130;
 	}
 }
 
 int				control_d(void)
 {
-	exit_nb = exit_status;
+	g_exit_nb = g_exit_status;
 	//	ft_printf("exit\n");  // selon moi a indiquer mais erreur avec le testeur
 	return (1);
 }
@@ -50,13 +50,13 @@ void			control_quit(int sig)
 		ft_printf("Quit: %d\n", sig);
 		while (++i)
 			kill(g_pids[i], 2);
-		exit_status = 131;
-		exit_nb = exit_status;
+		g_exit_status = 131;
+		g_exit_nb = g_exit_status;
 	}
 	else
 	{
 		write(1, "\b\b  \b\b", 6);
-		exit_status = 0;
-		exit_nb = 127;
+		g_exit_status = 0;
+		g_exit_nb = 127;
 	}
 }

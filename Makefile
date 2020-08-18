@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: atetu <atetu@student.42.fr>                +#+  +:+       +#+         #
+#    By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 08:26:20 by thgermai          #+#    #+#              #
-#    Updated: 2020/08/13 16:49:40 by atetu            ###   ########.fr        #
+#    Updated: 2020/08/17 14:54:26 by thgermai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,18 +24,15 @@ SRCS = main.c\
 		handle_pipes.c\
 		parse_call.c\
 		parse_exec.c\
-		parse_func.c\
 		parse_pipes.c\
-		parse_quotes.c\
 		parse_semicolons.c\
-		parse_tilde.c\
-		parse_var.c\
 		prompt.c\
 		prompt_utiles.c\
 		shlvl.c\
 		signal.c\
 		utiles.c\
-		utiles_convert.c
+		utiles_convert.c\
+		parse_test.c
 OBJS = $(addprefix $(OBJSDIR)/, $(SRCS:.c=.o))
 DPDCS = $(OBJS:.o=.d)
 INCLUDES = -I includes/ -I libft/

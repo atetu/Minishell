@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:27:19 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/14 16:45:07 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/18 15:52:48 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,21 @@ void			wait_pids(pid_t *pids, int size, t_call *calls)
 	int			status;
 
 	i = -1;
-	(void)calls; // a delete
+	(void)calls;
 	while (++i < size && pids[i] != -1)
 	{
 		waitpid(pids[i], &status, 0);
 		if (WIFEXITED(status))
-		{	
-			exit_status = WEXITSTATUS(status);
-			exit_nb = exit_status;  //ICI exit
+		{
+			g_exit_status = WEXITSTATUS(status);
+			g_exit_nb = g_exit_status;
 		}
 	}
 }
 
 static void		manage_pipes(t_call *calls, int pipes[][2], char *str, int *exit_info)
 {
-	int i; 
+	int i;
 	//int n_pipes;  a ajouter pour VM
 
 	create_pipes(calls, pipes);    // n_pipes = ....
@@ -51,10 +51,10 @@ static int		exec_input(char *str, t_list **env)
 	t_call		calls[get_n_pipes(str, 0) + 2];
 	int			pipes[get_n_pipes(str, 0)][2];
 	int			i;
-	int			exit_info; //ICI
+	int			exit_info;
 
 	i = -1;
-	exit_info = 0; //ici
+	exit_info = 0;
 	if (!(g_pids = malloc(sizeof(pid_t) * (get_n_pipes(str, 0) + 2))))
 	{
 		ft_printf_e("Minishell: error: malloc failed\n");
@@ -106,6 +106,7 @@ void			prompt(char **env)
 
 	go_on = 0;
 	list = tab_to_list(env);
+	g_home = ft_strdup(find_value("HOME=", list, 1) + 5);
 	args = NULL;
 	split_args = NULL;
 	while (1)
@@ -120,7 +121,7 @@ void			prompt(char **env)
 				break ;
 		free(args);
 	}
-	clear_all(args, list);  // pour norme nouvelle fonction
-//	system("leaks minishell");
-	exit(exit_nb);
+	clear_all(args, list);
+	// system("leaks minishell");
+	exit(g_exit_nb);
 }

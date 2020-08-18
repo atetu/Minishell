@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   shlvl.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/15 18:30:08 by alicetetu         #+#    #+#             */
-/*   Updated: 2020/08/17 16:17:18 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/17 15:36:44 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	pass_sign(char *shlvl_str, int *i, int *j)
+static void		pass_sign(char *shlvl_str, int *i, int *j)
 {
 	if (shlvl_str[*i] == '-' || shlvl_str[*i] == '+')
 	{
@@ -22,7 +22,7 @@ static void	pass_sign(char *shlvl_str, int *i, int *j)
 	}
 }
 
-static void	check_shlvl_nb(char *shlvl_str, t_list *current)
+static void		check_shlvl_nb(char *shlvl_str, t_list *current)
 {
 	int shlvl_nb;
 	char *tmp;
@@ -32,19 +32,19 @@ static void	check_shlvl_nb(char *shlvl_str, t_list *current)
 	if (shlvl_nb < 0)
 	{
 		free(current->content);
-		current->content = (void *) ft_strdup("SHLVL=0");
+		current->content = (void *)ft_strdup("SHLVL=0");
 	}
 	else if (shlvl_nb == 0)
 	{
-		free(current->content);	
-		current->content = (void *) ft_strdup("SHLVL=1");
+		free(current->content);
+		current->content = (void *)ft_strdup("SHLVL=1");
 	}
 	else if (shlvl_nb > 0)
 	{
-		free(current->content);	
 		shlvl_nb++;
 		tmp = ft_itoa(shlvl_nb);
-		current->content = (void *) ft_strjoin("SHLVL=", tmp);
+		free(current->content);
+		current->content = (void *)ft_strjoin("SHLVL=", tmp);
 		if (tmp)
 			free(tmp);
 	}
@@ -57,7 +57,6 @@ static int		adapt_shlvl_var(t_list *current)
 	int		i;
 	int		j;
 
-	shlvl_str = NULL;
 	tmp = NULL;
 	shlvl_str = ft_substr((char*)current->content, 6,
 		(ft_strlen((char*)current->content) - 6));
@@ -68,13 +67,12 @@ static int		adapt_shlvl_var(t_list *current)
 		i++;
 	if (shlvl_str[i] == '\0')
 		check_shlvl_nb(&(shlvl_str[j]), current);
-	else 
+	else
 	{
 		free(current->content);
-		current->content = (void *) ft_strdup("SHLVL=1");
+		current->content = (void *)ft_strdup("SHLVL=1");
 	}
-	if (shlvl_str)
-		free(shlvl_str);
+	free(shlvl_str);
 	return (1);
 }
 
@@ -83,8 +81,7 @@ void handle_shlvl(t_list **list)
 	t_list	**tmp;
 	t_list	*current;
 	int		is_shlvl;
-//	char	*lev_str;
-	
+
 	tmp = list;
 	current = *tmp;
 	is_shlvl = 0;
@@ -100,4 +97,3 @@ void handle_shlvl(t_list **list)
 	if (!is_shlvl)
 		ft_lstadd_back(list, ft_lstnew(ft_strdup("SHLVL=1")));
 }
-exit
