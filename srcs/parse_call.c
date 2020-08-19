@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_call.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 16:15:55 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/17 21:54:43 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/08/19 13:36:14 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,9 @@ static void		get_args(t_call *call)
 	while (call->str[++i] == ' ')
 		;
 	start = i;
-	i--;
+	if (i != -1)
+		i--;
+	//printf("ici");fflush(stdout);
 	while (call->str[++i])
 	{
 		if ((call->str[i] == '>' || call->str[i] == '<')
@@ -99,6 +101,7 @@ static void		get_args(t_call *call)
 				str = ft_substr(call->str, 0, i);
 			free(call->str);
 			call->str = str;
+			//	printf("ici");fflush(stdout);
 			return ;
 		}
 	}
@@ -143,10 +146,12 @@ void			parse_call(t_call *call, t_list **env)
 	call->env = env;
 	call->in = -1;
 	call->out = -1;
+	//printf("s: %s\n", call->str);
 	get_in_and_out(call, &input, &output);
 	if (!input)
 		call->in = 0;
 	if (!output)
 		call->out = 1;
+	//printf("ici");fflush(stdout);
 	get_args(call);
 }

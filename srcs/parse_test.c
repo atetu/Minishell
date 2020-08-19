@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 14:48:07 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/19 12:23:44 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/19 13:49:11 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,6 +294,7 @@ static int		get_n_args(char *str)
 
 	count = 0;
 	i = -1;
+	
 	while (str[++i] == ' ')
 		;
 	while (str[++i])
@@ -313,6 +314,8 @@ char			**parse(char *str, t_list **env)
 	int			n_args;
 
 	n = 0;
+	if (!str || !ft_strlen(str))    //ICI
+		return (NULL);				//IIC
 	n_args = get_n_args(str) + 1;
 	if (!(tab = malloc(sizeof(char *) * (n_args + 1))))
 		return (NULL);

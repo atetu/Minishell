@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:47:56 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/19 11:51:36 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/19 13:49:26 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void			exec2(t_call *call, int *exit_info)
 //	printf("la");fflush(stdout);
 	if (!(func = parse(call->str, call->env)))
 		return ;
+	//printf("la");fflush(stdout);
 	var_env = list_to_tab(call->env);
 	if (known_func(func[0]))
 	{
