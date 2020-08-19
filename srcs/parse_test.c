@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 14:48:07 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/19 11:37:31 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/19 12:23:44 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,8 @@ static char		*fill_var1(char *str, int index, t_list **env)
 		if (!(new_str = malloc(sizeof(char) * (ft_strlen(str) - 2))))  //ALICE
 			return (NULL);   //ALICE
 		ft_strlcpy(new_str, str, index + 1);   //ALICE
-		ft_strlcpy(new_str + ft_strlen(new_str), after_var, 3); // ALICE
+		after_var = str + index + 2;
+		ft_strlcpy(new_str + ft_strlen(new_str), after_var, ft_strlen(after_var) + 1); // ALICE
 	}
 	
 	else //ALICE
