@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 10:44:15 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/18 15:28:40 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/19 11:37:40 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int				main(int ac, char **av, char **env)
 	}
 	g_pwd = ft_strdup(getcwd(buf, 512));  // a free
 	g_oldpwd = ft_strdup("");  //a free
-	g_last = NULL;
+	g_last = ft_strdup("/bin/bash");   //alice
 	prompt(env);
 	return (0);
 }

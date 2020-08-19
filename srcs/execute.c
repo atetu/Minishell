@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:47:56 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/18 16:34:30 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/19 11:51:36 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ pid_t			exec1(t_call *call, int pipes[][2], int size, int *exit_info)
 	int			i;
 	pid_t		pid;
 	char		**env_var;
+	int ret;
 
+//	printf("ici");fflush(stdout);
 	i = -1;
 	env_var = list_to_tab(call->env);
 	if (!(func = parse(call->str, call->env)))
@@ -30,7 +32,10 @@ pid_t			exec1(t_call *call, int pipes[][2], int size, int *exit_info)
 	{
 		duplicate_fd(call);
 		close_pipes(pipes, size);
-		exit(execute(call, func, env_var, exit_info));
+		//exit(execute(call, func, env_var, exit_info));
+		ret = execute(call, func, env_var, exit_info);
+		add_env(call, "_=", ft_strdup("/usr/bin/env"), 1); // icic
+		exit(ret);
 	}
 	clean_array(func);
 	free(env_var);
@@ -46,6 +51,7 @@ void			exec2(t_call *call, int *exit_info)
 	char		**var_env;
 	pid_t		pid;
 
+//	printf("la");fflush(stdout);
 	if (!(func = parse(call->str, call->env)))
 		return ;
 	var_env = list_to_tab(call->env);

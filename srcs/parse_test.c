@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_test.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 14:48:07 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/17 22:44:02 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/08/19 11:37:31 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ static char		*get_var_name(char *str) // parse the name from the arguments
 	i = -1;
 	if (str[0] == '?')
 		return (ft_strdup("?="));
+	if (str[0] == '_' && (!str[1] || (str[1] && str[1] == ' ')))   //ALICE
+		return (ft_strdup("$_"));									//ALICE
 	if (!ft_isalpha(str[0])) // check if str[0] is aplha (error if digit)
 		return (ft_strdup("\0"));
 	while (str[++i])
@@ -123,19 +125,33 @@ static char		*fill_var1(char *str, int index, t_list **env)
 	char		*new_str;
 	char		*after_var;
 
+	var_value = NULL; //ALICE
 	var_name = get_var_name(&str[index + 1]);
-	if (var_name[0] == '?' && ft_strlen(var_name) == 2)
-		var_value = ft_itoa(g_exit_status);
-	else if (find_value(var_name, env, 1))
-		var_value = ft_strdup(find_value(var_name, env, 1) + ft_strlen(var_name));
-	else
-		var_value = ft_strdup("\0");
-	if (!(new_str = malloc(sizeof(char) * (ft_strlen(str) - ft_strlen(var_name) + ft_strlen(var_value)))))
-		return (NULL);
-	ft_strlcpy(new_str, str, index + 1);
-	ft_strlcpy(new_str + ft_strlen(new_str), var_value, ft_strlen(var_value) + 1);
-	after_var = str + index + ft_strlen(var_name);
-	ft_strlcpy(new_str + ft_strlen(new_str), after_var, ft_strlen(after_var) + 1);
+	if (!(ft_strncmp(var_name, "", 1)))    //ALICE
+	{
+		if (!(new_str = malloc(sizeof(char) * (ft_strlen(str) - 2))))  //ALICE
+			return (NULL);   //ALICE
+		ft_strlcpy(new_str, str, index + 1);   //ALICE
+		ft_strlcpy(new_str + ft_strlen(new_str), after_var, 3); // ALICE
+	}
+	
+	else //ALICE
+	{
+		if (var_name[0] == '?' && ft_strlen(var_name) == 2)
+			var_value = ft_itoa(g_exit_status);
+		else if (!(ft_strncmp(var_name, "$_", 3)))
+			var_value = ft_strdup(g_last);
+		else if (find_value(var_name, env, 1))
+			var_value = ft_strdup(find_value(var_name, env, 1) + ft_strlen(var_name));
+		else
+			var_value = ft_strdup("\0");
+		if (!(new_str = malloc(sizeof(char) * (ft_strlen(str) - ft_strlen(var_name) + ft_strlen(var_value)))))
+			return (NULL);
+		ft_strlcpy(new_str, str, index + 1);
+		ft_strlcpy(new_str + ft_strlen(new_str), var_value, ft_strlen(var_value) + 1);
+		after_var = str + index + ft_strlen(var_name);
+		ft_strlcpy(new_str + ft_strlen(new_str), after_var, ft_strlen(after_var) + 1);
+	}
 	free(var_name);
 	free(var_value);
 	free(str);

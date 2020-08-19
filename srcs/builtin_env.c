@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 17:24:16 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/18 16:40:22 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/19 11:53:44 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 void 			unset_env_var(char *key)
 {
 	if (!(ft_strncmp(key, "PWD=", 5)))
-		{
-			free(g_pwd);
-			g_pwd = ft_strdup("");
-		}
-		if (!(ft_strncmp(key, "OLDPWD=", 8)))
-		{
-			free(g_oldpwd);
-			g_oldpwd = ft_strdup("");
-		}
+	{
+		free(g_pwd);
+		g_pwd = ft_strdup("");
+	}
+	if (!(ft_strncmp(key, "OLDPWD=", 8)))
+	{
+		free(g_oldpwd);
+		g_oldpwd = ft_strdup("");
+	}
 }
 
 int				ft_unset(t_call *call, char **func)
@@ -47,10 +47,13 @@ int				ft_unset(t_call *call, char **func)
 		}
 		key = ft_strjoin(func[i], "=");
 		unset_env_var(key);
-		if (find_value(key, call->env, 1))   // on cherche a la fois dans var env et dans var export
-			delete_element(call, key);
-		if (find_value(key, call->env, 2))
-			delete_element(call, func[i]);
+		if (ft_strncmp(key, "_=", 3))
+		{
+			if (find_value(key, call->env, 1))   // on cherche a la fois dans var env et dans var export
+				delete_element(call, key);
+			if (find_value(key, call->env, 2))
+				delete_element(call, func[i]);
+		}
 		free(key);
 	}
 	return (EXIT_SUCCESS);
