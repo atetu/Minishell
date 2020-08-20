@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 10:53:30 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/20 11:03:35 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/20 12:37:24 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <errno.h>
 # include <string.h>
 # include <signal.h>
+# include <dirent.h>
 
 // temporary lib
 # include <stdio.h>
