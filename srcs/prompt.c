@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:27:19 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/19 13:49:17 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/20 11:47:02 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void			wait_pids(pid_t *pids, int size, t_call *calls)
 			g_exit_status = WEXITSTATUS(status);
 			g_exit_nb = g_exit_status;
 		}
+	//	printf("ici");
 	}
 }
 
@@ -41,9 +42,13 @@ static void		manage_pipes(t_call *calls, int pipes[][2], char *str, int *exit_in
 		connect_pipes(calls, pipes);   // 3e arg: n_pipes
 	i = -1;
 	while (calls[++i].str)
+	{
 		g_pids[i] = exec1(&calls[i], pipes, get_n_pipes(str, 0), exit_info);
+		//printf("la\n");fflush(stdout);
+	}
 	close_pipes(pipes, get_n_pipes(str, 0));
 	wait_pids(g_pids, get_n_pipes(str, 0) + 1, calls);
+//	ft_printf(" \b");  // WHY?????   echo test | cat < error | echo cha
 }
 
 static int		exec_input(char *str, t_list **env)

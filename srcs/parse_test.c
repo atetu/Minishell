@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_test.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 14:48:07 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/19 13:49:11 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/19 15:11:27 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,8 @@ static char		*get_var_name(char *str) // parse the name from the arguments
 	i = -1;
 	if (str[0] == '?')
 		return (ft_strdup("?="));
-	if (str[0] == '_' && (!str[1] || (str[1] && str[1] == ' ')))   //ALICE
-		return (ft_strdup("$_"));									//ALICE
-	if (!ft_isalpha(str[0])) // check if str[0] is aplha (error if digit)
-		return (ft_strdup("\0"));
+	if (!ft_isalpha(str[0]) && str[0] != '_') // check if str[0] is aplha (error if digit)
+		return (ft_strdup("00"));
 	while (str[++i])
 		if (!ft_isalnum(str[i]) && str[i] != '_')
 			break ;
@@ -125,34 +123,24 @@ static char		*fill_var1(char *str, int index, t_list **env)
 	char		*new_str;
 	char		*after_var;
 
-	var_value = NULL; //ALICE
-	var_name = get_var_name(&str[index + 1]);
-	if (!(ft_strncmp(var_name, "", 1)))    //ALICE
-	{
-		if (!(new_str = malloc(sizeof(char) * (ft_strlen(str) - 2))))  //ALICE
-			return (NULL);   //ALICE
-		ft_strlcpy(new_str, str, index + 1);   //ALICE
-		after_var = str + index + 2;
-		ft_strlcpy(new_str + ft_strlen(new_str), after_var, ft_strlen(after_var) + 1); // ALICE
-	}
-	
-	else //ALICE
-	{
-		if (var_name[0] == '?' && ft_strlen(var_name) == 2)
-			var_value = ft_itoa(g_exit_status);
-		else if (!(ft_strncmp(var_name, "$_", 3)))
-			var_value = ft_strdup(g_last);
-		else if (find_value(var_name, env, 1))
-			var_value = ft_strdup(find_value(var_name, env, 1) + ft_strlen(var_name));
-		else
-			var_value = ft_strdup("\0");
-		if (!(new_str = malloc(sizeof(char) * (ft_strlen(str) - ft_strlen(var_name) + ft_strlen(var_value)))))
-			return (NULL);
-		ft_strlcpy(new_str, str, index + 1);
-		ft_strlcpy(new_str + ft_strlen(new_str), var_value, ft_strlen(var_value) + 1);
-		after_var = str + index + ft_strlen(var_name);
-		ft_strlcpy(new_str + ft_strlen(new_str), after_var, ft_strlen(after_var) + 1);
-	}
+	if (!(var_name = get_var_name(&str[index + 1])))
+		return (str);
+	if (!ft_strncmp(var_name, "00", 3))
+		var_value = ft_strdup("");
+	else if (var_name[0] == '?' && ft_strlen(var_name) == 2)
+		var_value = ft_itoa(g_exit_status);
+	else if (!ft_strncmp(var_name, "_=", 3))
+		var_value = ft_strdup(g_last);
+	else if (find_value(var_name, env, 1))
+		var_value = ft_strdup(find_value(var_name, env, 1) + ft_strlen(var_name));
+	else
+		var_value = ft_strdup("");
+	if (!(new_str = malloc(sizeof(char) * (ft_strlen(str) - ft_strlen(var_name) + ft_strlen(var_value)))))
+		return (NULL);
+	ft_strlcpy(new_str, str, index + 1);
+	ft_strlcpy(new_str + ft_strlen(new_str), var_value, ft_strlen(var_value) + 1);
+	after_var = str + index + ft_strlen(var_name);
+	ft_strlcpy(new_str + ft_strlen(new_str), after_var, ft_strlen(after_var) + 1);
 	free(var_name);
 	free(var_value);
 	free(str);
@@ -226,7 +214,8 @@ static char		*parse_var(char *str, t_list **env)
 	while (str[++i])
 	{
 		if (str[i] == '$' && !is_valide(str, i, 0) && (i == 0 ||
-			(i > 0 && str[i - 1] != -1)) && str[i + 1] != ' ')
+			(i > 0 && str[i - 1] != -1)) && (ft_isalnum(str[i + 1]) ||
+			str[i + 1] == '_' || str[i + 1] == '{' || str[i + 1] == '?'))
 		{
 			if (str[i + 1] == '{')
 			{
@@ -294,7 +283,6 @@ static int		get_n_args(char *str)
 
 	count = 0;
 	i = -1;
-	
 	while (str[++i] == ' ')
 		;
 	while (str[++i])
@@ -306,6 +294,12 @@ static int		get_n_args(char *str)
 	return (count);
 }
 
+static void		replace_g_last(char **last, char *last_arg)
+{
+	free(*last);
+	*last = ft_strdup(last_arg);
+}
+
 char			**parse(char *str, t_list **env)
 {
 	char		**tab;
@@ -314,8 +308,8 @@ char			**parse(char *str, t_list **env)
 	int			n_args;
 
 	n = 0;
-	if (!str || !ft_strlen(str))    //ICI
-		return (NULL);				//IIC
+	if (!str || !ft_strlen(str))
+		return (NULL);
 	n_args = get_n_args(str) + 1;
 	if (!(tab = malloc(sizeof(char *) * (n_args + 1))))
 		return (NULL);
@@ -335,5 +329,6 @@ char			**parse(char *str, t_list **env)
 		str = str + i;
 	}
 	tab[n] = NULL;
+	replace_g_last(&g_last, tab[n - 1]);
 	return (tab);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utiles.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 23:43:21 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/18 13:43:43 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/17 22:11:07 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ char			*find_value(char *str, t_list **env, int opt)    // opt 1 = chercher key 
 	char		*tmp;
 
 	current = *env;
-	
 	while (current)
 	{
 		if (str[ft_strlen(str) - 1] == '=')

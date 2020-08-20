@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:48:42 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/18 16:43:54 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/20 11:47:15 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,24 +46,14 @@ void			duplicate_fd(t_call *call)
 
 int				execute(t_call *call, char **func, char **env, int *exit_info)
 {//ATTENTION J'AI CHANGE TOUS LES NOMBRES
-	int i;
-	
-	if (!ft_strncmp(func[0], "export", 7))
-		return (ft_export(call, func));
-	i = -1;
-	while (func[++i])   // icic
-		;
-	if (g_last)
-		free(g_last);
-	g_last = ft_strdup(func[i -1]);  //ICI
 	if (!ft_strncmp(func[0], "echo", 5))
 		return (ft_echo(func, call));
 	else if (!ft_strncmp(func[0], "cd", 3))
 		return (ft_cd(func, call));
 	else if (!ft_strncmp(func[0], "pwd", 4))
 		return (ft_pwd());
-//	else if (!ft_strncmp(func[0], "export", 7))
-//		return (ft_export(call, func));
+	else if (!ft_strncmp(func[0], "export", 7))
+		return (ft_export(call, func));
 	else if (!ft_strncmp(func[0], "unset", 6))
 		return (ft_unset(call, func));
 	else if (!ft_strncmp(func[0], "env", 400))
@@ -73,7 +63,6 @@ int				execute(t_call *call, char **func, char **env, int *exit_info)
 	else
 	{
 		execve(func[0], func, env);
-	//	printf("herererere\n");fflush(stdout);
 	//	ft_printf_e("Minishell: execve: %s\n", strerror(errno));
 		return (EXIT_FAILURE);
 	}

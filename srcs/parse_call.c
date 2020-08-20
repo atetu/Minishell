@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 16:15:55 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/19 13:36:14 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/20 11:46:20 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,15 +84,14 @@ static void		get_args(t_call *call)
 
 	i = -1;
 	str = NULL;
+//	printf("ici\n");fflush(stdout);
 	while (call->str[++i] == ' ')
 		;
 	start = i;
-	if (i != -1)
-		i--;
-	//printf("ici");fflush(stdout);
+	i--;
 	while (call->str[++i])
 	{
-		if ((call->str[i] == '>' || call->str[i] == '<')
+		if ((call->str[i] == '>'  || call->str[i] == '<')
 			&& !is_valide(call->str, i, 1) && !is_backslash(call->str, i -1))
 		{
 			if (start == i)
@@ -101,10 +100,10 @@ static void		get_args(t_call *call)
 				str = ft_substr(call->str, 0, i);
 			free(call->str);
 			call->str = str;
-			//	printf("ici");fflush(stdout);
 			return ;
 		}
 	}
+//	printf("str:%s\n", call->str);fflush(stdout);
 }
 
 static int		get_in_and_out(t_call *call, int *input, int *output)
@@ -119,7 +118,10 @@ static int		get_in_and_out(t_call *call, int *input, int *output)
 		{
 			ret = check_input(call, i);
 			if (ret == -1)
+			{
+				*input = -1; //ICI echo test | cat error | echo chat
 				return (EXIT_FAILURE);
+			}
 			else if (ret == 1)
 				*input = 1;
 		}
@@ -146,12 +148,10 @@ void			parse_call(t_call *call, t_list **env)
 	call->env = env;
 	call->in = -1;
 	call->out = -1;
-	//printf("s: %s\n", call->str);
 	get_in_and_out(call, &input, &output);
-	if (!input)
+	if (input == 0) //ICI  echo test | cat error | echo chat
 		call->in = 0;
 	if (!output)
 		call->out = 1;
-	//printf("ici");fflush(stdout);
 	get_args(call);
 }
