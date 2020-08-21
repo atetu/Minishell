@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_test.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 14:48:07 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/19 15:11:27 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/08/21 16:45:08 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,11 @@ static void		parse_backslash(char *str) // replace backslashes by -1
 		{
 			if (!in_quote && !in_dquote)
 				str[i] = -1;
-			else if (in_dquote && str[i + 1] && ft_strchr("$'\\\"", str[i + 1]))
+			else if (in_dquote && str[i + 1] && ft_strchr("$\\\"", str[i + 1]))  // ICI ft_strchr -> pas le simple quote
 				str[i] = -1;
 		}
 	}
+//	printf("str: %s\n", str);fflush(stdout);
 }
 
 static void		parse_quotes(char *str) // replace quotes and dquotes by -2
@@ -122,9 +123,18 @@ static char		*fill_var1(char *str, int index, t_list **env)
 	char		*var_value;
 	char		*new_str;
 	char		*after_var;
+	char *to_find;
 
-	if (!(var_name = get_var_name(&str[index + 1])))
-		return (str);
+	after_var = NULL;
+	//printf("\nstr: %s\n\n", str);fflush(stdout);
+	to_find = ft_strdup(&str[index + 1]); // ICI
+	if (!(var_name = get_var_name(to_find))) // ICI
+		return (str); //ICI
+	free(to_find); // ICI
+	//if (!(var_name = get_var_name(&str[index + 1])))
+	//	return (str);
+//	printf("var_name: %s\n", var_name);fflush(stdout);
+//	printf("str: %s\n\n", str);fflush(stdout);
 	if (!ft_strncmp(var_name, "00", 3))
 		var_value = ft_strdup("");
 	else if (var_name[0] == '?' && ft_strlen(var_name) == 2)
@@ -138,12 +148,25 @@ static char		*fill_var1(char *str, int index, t_list **env)
 	if (!(new_str = malloc(sizeof(char) * (ft_strlen(str) - ft_strlen(var_name) + ft_strlen(var_value)))))
 		return (NULL);
 	ft_strlcpy(new_str, str, index + 1);
+//	printf("new_str1: %s\n", new_str);fflush(stdout);
+//	printf("str1: %s\n", str);fflush(stdout);
 	ft_strlcpy(new_str + ft_strlen(new_str), var_value, ft_strlen(var_value) + 1);
-	after_var = str + index + ft_strlen(var_name);
+//	printf("new_str2: %s\n", new_str);fflush(stdout);
+	if (str[index + ft_strlen(var_name)])
+		after_var = ft_strdup(&str[index + ft_strlen(var_name)]);  // ICI a malloquer sinon erreur pour echo \"\\$TEST\|\"$1\\$444  
+	else
+	{
+			after_var = ft_strdup("");
+	}
+	
+//	after_var = str + index + ft_strlen(var_name);
+//	printf("after_var: %s\n", after_var);fflush(stdout);
 	ft_strlcpy(new_str + ft_strlen(new_str), after_var, ft_strlen(after_var) + 1);
+//	printf("new_str3: %s\n", new_str);fflush(stdout);
 	free(var_name);
 	free(var_value);
 	free(str);
+	free(after_var);
 	return (new_str);
 }
 
@@ -224,6 +247,7 @@ static char		*parse_var(char *str, t_list **env)
 			}
 			else
 				str = fill_var1(str, i, env);
+		//	printf("str: %s\n", str);fflush(stdout);
 			i = -1;
 		}
 		else if (str[i] == '~' && !is_valide(str, i, 1))
@@ -269,8 +293,10 @@ static char		*parse_arg(char *str, t_list **env) // will be used to parse a str 
 		free(str);
 		return (NULL);
 	}
+	//printf("str: %s\n", str);fflush(stdout);
 	if (!(str = parse_var(str, env)))
 		return (NULL);
+//	printf("str: %s\n", str);fflush(stdout);
 	parse_quotes(str);
 	str = replace_marks(str);
 	return (str);
@@ -330,5 +356,6 @@ char			**parse(char *str, t_list **env)
 	}
 	tab[n] = NULL;
 	replace_g_last(&g_last, tab[n - 1]);
+//	printf("tab: %s\n", tab[1]);fflush(stdout);
 	return (tab);
 }

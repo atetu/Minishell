@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_call.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 16:15:55 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/20 11:46:20 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/20 15:20:52 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,13 @@ static void		get_args(t_call *call)
 
 	i = -1;
 	str = NULL;
-//	printf("ici\n");fflush(stdout);
 	while (call->str[++i] == ' ')
 		;
 	start = i;
 	i--;
 	while (call->str[++i])
 	{
-		if ((call->str[i] == '>'  || call->str[i] == '<')
+		if ((call->str[i] == '>' || call->str[i] == '<')
 			&& !is_valide(call->str, i, 1) && !is_backslash(call->str, i -1))
 		{
 			if (start == i)
@@ -103,7 +102,6 @@ static void		get_args(t_call *call)
 			return ;
 		}
 	}
-//	printf("str:%s\n", call->str);fflush(stdout);
 }
 
 static int		get_in_and_out(t_call *call, int *input, int *output)
@@ -118,10 +116,7 @@ static int		get_in_and_out(t_call *call, int *input, int *output)
 		{
 			ret = check_input(call, i);
 			if (ret == -1)
-			{
-				*input = -1; //ICI echo test | cat error | echo chat
 				return (EXIT_FAILURE);
-			}
 			else if (ret == 1)
 				*input = 1;
 		}
@@ -138,7 +133,7 @@ static int		get_in_and_out(t_call *call, int *input, int *output)
 	return (EXIT_SUCCESS);
 }
 
-void			parse_call(t_call *call, t_list **env)
+void				parse_call(t_call *call, t_list **env)
 {
 	int			input;
 	int			output;
@@ -148,8 +143,12 @@ void			parse_call(t_call *call, t_list **env)
 	call->env = env;
 	call->in = -1;
 	call->out = -1;
-	get_in_and_out(call, &input, &output);
-	if (input == 0) //ICI  echo test | cat error | echo chat
+	if (get_in_and_out(call, &input, &output) == 1)
+	{
+		call->in = -1;
+		return ;
+	}
+	if (!input)
 		call->in = 0;
 	if (!output)
 		call->out = 1;

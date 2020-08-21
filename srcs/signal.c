@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 16:10:54 by atetu             #+#    #+#             */
-/*   Updated: 2020/08/19 16:33:39 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/17 14:49:18 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void			control_c(int sig)
 	(void)sig;
 	if (!g_pids)
 	{
-		
 		write(1, "\b\b  \b\b\n", 7);
 		g_exit_status = 1;
 		print();

@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:27:19 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/20 11:47:02 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/21 16:07:39 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@ void			wait_pids(pid_t *pids, int size, t_call *calls)
 	(void)calls;
 	while (++i < size && pids[i] != -1)
 	{
+	//	printf("la\n");fflush(stdout);
 		waitpid(pids[i], &status, 0);
+	//	printf("coucou\n");fflush(stdout);
 		if (WIFEXITED(status))
 		{
+	//		printf("ici\n");fflush(stdout);
 			g_exit_status = WEXITSTATUS(status);
 			g_exit_nb = g_exit_status;
 		}
-	//	printf("ici");
 	}
 }
 
@@ -42,13 +44,9 @@ static void		manage_pipes(t_call *calls, int pipes[][2], char *str, int *exit_in
 		connect_pipes(calls, pipes);   // 3e arg: n_pipes
 	i = -1;
 	while (calls[++i].str)
-	{
 		g_pids[i] = exec1(&calls[i], pipes, get_n_pipes(str, 0), exit_info);
-		//printf("la\n");fflush(stdout);
-	}
 	close_pipes(pipes, get_n_pipes(str, 0));
 	wait_pids(g_pids, get_n_pipes(str, 0) + 1, calls);
-//	ft_printf(" \b");  // WHY?????   echo test | cat < error | echo cha
 }
 
 static int		exec_input(char *str, t_list **env)
@@ -102,6 +100,17 @@ static int		parse_args(char *args, t_list **list)
 	return (ret);
 }
 
+void set_g_home(t_list **list)
+{
+	char		*value;
+	
+	value = find_value("HOME=", list, 1); // ICI
+	if (value)   //ICI
+		g_home = ft_strdup(value + 5); //ICI
+	else
+		g_home = ft_strdup("");
+}
+
 void			prompt(char **env)
 {
 	char		*args;
@@ -111,7 +120,8 @@ void			prompt(char **env)
 
 	go_on = 0;
 	list = tab_to_list(env);
-	g_home = ft_strdup(find_value("HOME=", list, 1) + 5);
+	set_g_home(list);
+	//g_home = ft_strdup(find_value("HOME=", list, 1) + 5); // ICI
 	args = NULL;
 	split_args = NULL;
 	while (1)

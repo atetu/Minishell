@@ -6,7 +6,7 @@
 /*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 23:43:21 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/17 22:11:07 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/08/20 16:05:26 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 char			*get_cwd(void)
 {
-	char		buffer[512];
+	char		buffer[1024];
 	char		*cwd;
 
-	ft_bzero(buffer, 512);
-	cwd = getcwd(buffer, 512);
+	ft_memset(&buffer, 0, 1024);
+	cwd = getcwd(buffer, 1024);
+	if (!cwd)
+		printf("%s\n", strerror(errno));
 	return (cwd);
 }
 

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 21:54:49 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/20 11:46:45 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/19 14:45:39 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int				ft_echo(char **func, t_call *call)
+int				ft_echo(char **func)
 {
 	int			i;
 	int			space;
@@ -34,7 +34,7 @@ int				ft_echo(char **func, t_call *call)
 				write(1, " ", 1);
 		}
 	}
-	if (space && call->in != -1)  // ICI echo test | cat error | echo chat
+	if (space)
 		write(1, "\n", 1);
 	return (EXIT_SUCCESS);
 }

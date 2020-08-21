@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utiles.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:48:42 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/20 11:47:15 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/17 14:49:18 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void			duplicate_fd(t_call *call)
 int				execute(t_call *call, char **func, char **env, int *exit_info)
 {//ATTENTION J'AI CHANGE TOUS LES NOMBRES
 	if (!ft_strncmp(func[0], "echo", 5))
-		return (ft_echo(func, call));
+		return (ft_echo(func));
 	else if (!ft_strncmp(func[0], "cd", 3))
 		return (ft_cd(func, call));
 	else if (!ft_strncmp(func[0], "pwd", 4))
@@ -63,6 +63,7 @@ int				execute(t_call *call, char **func, char **env, int *exit_info)
 	else
 	{
 		execve(func[0], func, env);
+	//	printf("herererere\n");fflush(stdout);
 	//	ft_printf_e("Minishell: execve: %s\n", strerror(errno));
 		return (EXIT_FAILURE);
 	}

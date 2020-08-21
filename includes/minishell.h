@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 10:53:30 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/20 12:37:24 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/20 15:20:46 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <errno.h>
 # include <string.h>
 # include <signal.h>
-# include <dirent.h>
 
 // temporary lib
 # include <stdio.h>
@@ -69,12 +68,6 @@ int					get_n_pipes(char *args, int option);
 // Parse_call.c
 void				parse_call(t_call *call, t_list **env);
 
-// Parse_var.c
-// char				*parse_var(char *str, char *func, t_list **env);  // ICI
-
-// Parse_quotes.c
-// char				*parse_quotes(char *str);
-
 // Parse_exec.c
 char				*parse_exec(t_call *call, char *bin);
 
@@ -89,7 +82,7 @@ int					execute(t_call *call, char **func, char **env, int *exit_info);
 void				exec_knonw(t_call *call, char **func, char **var_env, int *exit_info);
 
 // Builtin.c
-int	 				ft_echo(char **func, t_call *call);
+int	 				ft_echo(char **func);
 int 				ft_cd(char **func, t_call *call);
 int					ft_pwd(void);
 int					ft_builtin_exit(char **func, int *exit_info);
