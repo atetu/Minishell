@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:27:19 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/21 16:07:39 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/22 16:52:10 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ static int		parse_args(char *args, t_list **list)
 void set_g_home(t_list **list)
 {
 	char		*value;
-	
+
 	value = find_value("HOME=", list, 1); // ICI
 	if (value)   //ICI
 		g_home = ft_strdup(value + 5); //ICI
@@ -137,6 +137,5 @@ void			prompt(char **env)
 		free(args);
 	}
 	clear_all(args, list);
-	// system("leaks minishell");
 	exit(g_exit_nb);
 }

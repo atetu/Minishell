@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_test.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 14:48:07 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/21 16:45:08 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/22 16:53:48 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,17 +122,15 @@ static char		*fill_var1(char *str, int index, t_list **env)
 	char		*var_value;
 	char		*new_str;
 	char		*after_var;
-	char *to_find;
-
+	char		*to_find;
+	
 	after_var = NULL;
 	to_find = ft_strdup(&str[index + 1]); // ICI
 	if (!(var_name = get_var_name(to_find))) // ICI
 		return (str); //ICI
 	free(to_find); // ICI
 	//if (!(var_name = get_var_name(&str[index + 1])))
-	//	return (str);
-//	printf("var_name: %s\n", var_name);fflush(stdout);
-//	printf("str: %s\n\n", str);fflush(stdout);
+//		return (str);
 	if (!ft_strncmp(var_name, "00", 3))
 		var_value = ft_strdup("");
 	else if (var_name[0] == '?' && ft_strlen(var_name) == 2)
@@ -143,20 +141,22 @@ static char		*fill_var1(char *str, int index, t_list **env)
 		var_value = ft_strdup(find_value(var_name, env, 1) + ft_strlen(var_name));
 	else
 		var_value = ft_strdup("");
-	if (!(new_str = malloc(sizeof(char) * (ft_strlen(str) - ft_strlen(var_name) + ft_strlen(var_value)))))
+	if (ft_strlen(str) - ft_strlen(var_name) + ft_strlen(var_value) == 0)
+		new_str = ft_strdup("");
+	else if (!(new_str = malloc(sizeof(char) * (ft_strlen(str) - ft_strlen(var_name) + ft_strlen(var_value)))))
 		return (NULL);
 	ft_strlcpy(new_str, str, index + 1);
 	ft_strlcpy(new_str + ft_strlen(new_str), var_value, ft_strlen(var_value) + 1);
 	if (str[index + ft_strlen(var_name)])
-		after_var = ft_strdup(&str[index + ft_strlen(var_name)]);  // ICI a malloquer sinon erreur pour echo \"\\$TEST\|\"$1\\$444  
+		after_var = ft_strdup(&str[index + ft_strlen(var_name)]);  // ICI a malloquer sinon erreur pour echo \"\\$TEST\|\"$1\\$444
 	else
-			after_var = ft_strdup("");
-//	after_var = str + index + ft_strlen(var_name);
+		after_var = ft_strdup("");
 	ft_strlcpy(new_str + ft_strlen(new_str), after_var, ft_strlen(after_var) + 1);
 	free(var_name);
 	free(var_value);
 	free(str);
 	free(after_var);
+//	printf("new: %s\n", new_str);
 	return (new_str);
 }
 
@@ -213,7 +213,7 @@ static char		*fill_tilde(char *str, int index)
 		return (NULL);
 	ft_strlcpy(new_str, str, index + 1);
 	ft_strlcpy(new_str + ft_strlen(new_str), g_home, ft_strlen(g_home) + 1);
-	after_var = ft_strdup(str + index + 1); // a malloquer sinon erreur
+	after_var = ft_strdup(str + index + 1);
 	ft_strlcpy(new_str + ft_strlen(new_str), after_var, ft_strlen(after_var) + 1);
 	free(str);
 	free(after_var);
@@ -238,13 +238,16 @@ static char		*parse_var(char *str, t_list **env)
 			}
 			else
 				str = fill_var1(str, i, env);
-		//	printf("str: %s\n", str);fflush(stdout);
+			if (!is_valide(str, i, 1) && !ft_strlen(str))
+			{
+				free(str);
+				return (ft_strdup("\x80\xf5"));
+			}
 			i = -1;
 		}
 		else if (str[i] == '~' && !is_valide(str, i, 1))
 			str = fill_tilde(str, i);
 	}
-//	printf("str: %s\n", str);fflush(stdout);
 	return (str);
 }
 
@@ -260,46 +263,40 @@ static char		*replace_marks(char *str)
 		if (str[i] > 0)
 			j++;
 	if (!j)
+	{
+		free(str);
 		return (ft_strdup(""));
-	//printf("j: %d\n", j);fflush(stdout);
+	}
 	if (!(new_str = malloc(sizeof(char) * (j + 1))))
 		return (NULL);
 	i = -1;
 	j = 0;
-//	printf("str before : %s\n", str);fflush(stdout);
 	while (str[++i])
 	{
-		//printf("i before : %d - %c\n", i, str[i]);fflush(stdout);
-		// printf("j : %d\n", j);fflush(stdout);
 		if (str[i] < 0)
 		 	;
 		else
 			new_str[j++] = str[i];
-		//	printf("i after : %d - %c\n", i, str[i]);fflush(stdout);
 	}
 	new_str[j] = '\0';
-//	printf("nwe: %s\n", new_str);fflush(stdout);
 	free(str);
 	return (new_str);
 }
 
 static char		*parse_arg(char *str, t_list **env) // will be used to parse a str | need to make a func to cut args before parsing them
 {
-	//parse_backslash(str);
-//	printf("str: %s\n", str);fflush(stdout);
 	if (check_closed(str))
 	{
 		free(str);
 		return (NULL);
 	}
-	//printf("str: %s\n", str);fflush(stdout);
 	if (!(str = parse_var(str, env)))
 		return (NULL);
-//	printf("str after 1 : %s\n", str);fflush(stdout);
-	parse_quotes(str);
-	//printf("str after 2 : %s\n", str);fflush(stdout);
-	str = replace_marks(str);
-//	printf("str after 3 : %s\n", str);fflush(stdout);
+	if (ft_strncmp(str, "\x80\xf5", ft_strlen(str)))
+	{
+		parse_quotes(str);
+		str = replace_marks(str);
+	}
 	return (str);
 }
 
@@ -327,52 +324,42 @@ static void		replace_g_last(char **last, char *last_arg)
 	*last = ft_strdup(last_arg);
 }
 
-char			**parse(char *str, t_list **env)
+char			**parse(char *str, t_list **env) // leaks here with the array (because it change length)
 {
 	char		**tab;
 	int			i;
 	int			n;
 	int			n_args;
-	char		*backslash;
 
 	n = 0;
 	if (!str || !ft_strlen(str))
 		return (NULL);
-	backslash = ft_strdup(str);
-	parse_backslash(backslash);
-	//n_args = get_n_args(str) + 1;
-	n_args = get_n_args(backslash) + 1;
-//	printf("n: %d\n", n_args);fflush(stdout);
+	parse_backslash(str);
+	n_args = get_n_args(str) + 1;
 	if (!(tab = malloc(sizeof(char *) * (n_args + 1))))
 		return (NULL);
 	while (n < n_args)
 	{
 		i = -1;
-		while (*backslash == ' ')
-			backslash++;
-		while (backslash[++i])
-			if (backslash[i] == ' ' && !is_valide(backslash, i, 1))
+		while (*str == ' ')
+			str++;
+		while (str[++i])
+			if (str[i] == ' ' && !is_valide(str, i, 1))
 				break ;
-		if (!(tab[n++] = parse_arg(ft_substr(backslash, 0, i), env)))
+		if (!(tab[n++] = parse_arg(ft_substr(str, 0, i), env)))
 		{
 			clean_array(tab);
 			return (NULL);
 		}
-		backslash = backslash + i;
-		// while (*str == ' ')
-		// 	str++;
-		// while (str[++i])
-		// 	if (str[i] == ' ' && !is_valide(str, i, 1))
-		// 		break ;
-		// if (!(tab[n++] = parse_arg(ft_substr(str, 0, i), env)))
-		// {
-		// 	clean_array(tab);
-		// 	return (NULL);
-		// }
-		// str = str + i;
+		if (!ft_strncmp(tab[n - 1], "\x80\xf5", 3))
+		{
+			free(tab[n - 1]);
+			n--;
+			n_args--;
+		}
+		str = str + i;
 	}
 	tab[n] = NULL;
 	replace_g_last(&g_last, tab[n - 1]);
-//	printf("tab: %s\n", tab[0]);fflush(stdout);
 	return (tab);
 }

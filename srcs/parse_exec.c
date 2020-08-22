@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:45:09 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/21 15:40:20 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/22 15:34:35 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static int		is_dir(char *bin)
 	if (ft_strlen(bin) == 1 && bin[0] == '.')
 	{
 		ft_printf("bash: .: filename argument required .:\n"); // a modifier plus tard
-		ft_printf("usage: . filename [arguments]\n"); 
+		ft_printf("usage: . filename [arguments]\n");
 		g_exit_status = 2;  //ICI
 		g_exit_nb = g_exit_status; // ICI
 		return (-1);
@@ -97,7 +97,7 @@ static int		is_dir(char *bin)
 int				set_exec(char **var, char **bin, char ***paths, t_call *call)  //ICI
 {
 	int ret;
-	
+
 	if ((ret = is_dir(*bin)) == -1)
 		return (-1);
 	*var = find_value("PATH=", call->env, 1); //ICI
@@ -145,16 +145,17 @@ char			*parse_exec(t_call *call, char *bin) // return null si probleme
 	original_bin = ft_strdup(bin);
 	if ((ret = set_exec(&var, &bin, &paths, call)) == -1) //ICI norminette
 		return (NULL);
-	if (!(check_double_points(original_bin)))
+	if (!(check_double_points(bin)))
 		return (NULL);
 	else if (!(path = find_path(paths, bin, original_bin)))
 	{
-		if (ret == 1 || ! var)  // ICI  si PATH est unset, le message d'erreur ne sera jamais "commad not found"
-			ft_printf_e("bash: line 1: %s: %s\n", original_bin, strerror(errno)); 
+		if (ret == 1 || !var)  // ICI  si PATH est unset, le message d'erreur ne sera jamais "commad not found"
+			ft_printf_e("bash: line 1: %s: %s\n", original_bin, strerror(errno));
 		else // ICI
 			ft_printf_e("bash: line 1: %s: command not found\n", original_bin); //ICI
 		g_exit_status = 127; // ICI
 		g_exit_nb = g_exit_status; //ICI
+		clean_exec(&paths, &bin, &original_bin);
 		return (NULL);
 	}
 	if (!(check_existing_path(&path, &paths, &bin, &original_bin))) // ICI
