@@ -66,7 +66,6 @@ static void		parse_backslash(char *str) // replace backslashes by -1
 				str[i] = -1;
 		}
 	}
-//	printf("str: %s\n", str);fflush(stdout);
 }
 
 static void		parse_quotes(char *str) // replace quotes and dquotes by -2
@@ -126,7 +125,6 @@ static char		*fill_var1(char *str, int index, t_list **env)
 	char *to_find;
 
 	after_var = NULL;
-	//printf("\nstr: %s\n\n", str);fflush(stdout);
 	to_find = ft_strdup(&str[index + 1]); // ICI
 	if (!(var_name = get_var_name(to_find))) // ICI
 		return (str); //ICI
@@ -148,21 +146,13 @@ static char		*fill_var1(char *str, int index, t_list **env)
 	if (!(new_str = malloc(sizeof(char) * (ft_strlen(str) - ft_strlen(var_name) + ft_strlen(var_value)))))
 		return (NULL);
 	ft_strlcpy(new_str, str, index + 1);
-//	printf("new_str1: %s\n", new_str);fflush(stdout);
-//	printf("str1: %s\n", str);fflush(stdout);
 	ft_strlcpy(new_str + ft_strlen(new_str), var_value, ft_strlen(var_value) + 1);
-//	printf("new_str2: %s\n", new_str);fflush(stdout);
 	if (str[index + ft_strlen(var_name)])
 		after_var = ft_strdup(&str[index + ft_strlen(var_name)]);  // ICI a malloquer sinon erreur pour echo \"\\$TEST\|\"$1\\$444  
 	else
-	{
 			after_var = ft_strdup("");
-	}
-	
 //	after_var = str + index + ft_strlen(var_name);
-//	printf("after_var: %s\n", after_var);fflush(stdout);
 	ft_strlcpy(new_str + ft_strlen(new_str), after_var, ft_strlen(after_var) + 1);
-//	printf("new_str3: %s\n", new_str);fflush(stdout);
 	free(var_name);
 	free(var_value);
 	free(str);
@@ -223,9 +213,10 @@ static char		*fill_tilde(char *str, int index)
 		return (NULL);
 	ft_strlcpy(new_str, str, index + 1);
 	ft_strlcpy(new_str + ft_strlen(new_str), g_home, ft_strlen(g_home) + 1);
-	after_var = str + index + 1;
+	after_var = ft_strdup(str + index + 1); // a malloquer sinon erreur
 	ft_strlcpy(new_str + ft_strlen(new_str), after_var, ft_strlen(after_var) + 1);
 	free(str);
+	free(after_var);
 	return (new_str);
 }
 
@@ -253,6 +244,7 @@ static char		*parse_var(char *str, t_list **env)
 		else if (str[i] == '~' && !is_valide(str, i, 1))
 			str = fill_tilde(str, i);
 	}
+//	printf("str: %s\n", str);fflush(stdout);
 	return (str);
 }
 
@@ -269,18 +261,24 @@ static char		*replace_marks(char *str)
 			j++;
 	if (!j)
 		return (ft_strdup(""));
+	//printf("j: %d\n", j);fflush(stdout);
 	if (!(new_str = malloc(sizeof(char) * (j + 1))))
 		return (NULL);
 	i = -1;
 	j = 0;
+//	printf("str before : %s\n", str);fflush(stdout);
 	while (str[++i])
 	{
+		//printf("i before : %d - %c\n", i, str[i]);fflush(stdout);
+		// printf("j : %d\n", j);fflush(stdout);
 		if (str[i] < 0)
-			;
+		 	;
 		else
 			new_str[j++] = str[i];
+		//	printf("i after : %d - %c\n", i, str[i]);fflush(stdout);
 	}
 	new_str[j] = '\0';
+//	printf("nwe: %s\n", new_str);fflush(stdout);
 	free(str);
 	return (new_str);
 }
@@ -296,9 +294,11 @@ static char		*parse_arg(char *str, t_list **env) // will be used to parse a str 
 	//printf("str: %s\n", str);fflush(stdout);
 	if (!(str = parse_var(str, env)))
 		return (NULL);
-//	printf("str: %s\n", str);fflush(stdout);
+//	printf("str after 1 : %s\n", str);fflush(stdout);
 	parse_quotes(str);
+	//printf("str after 2 : %s\n", str);fflush(stdout);
 	str = replace_marks(str);
+//	printf("str after 3 : %s\n", str);fflush(stdout);
 	return (str);
 }
 
@@ -356,6 +356,6 @@ char			**parse(char *str, t_list **env)
 	}
 	tab[n] = NULL;
 	replace_g_last(&g_last, tab[n - 1]);
-//	printf("tab: %s\n", tab[1]);fflush(stdout);
+//	printf("tab: %s\n", tab[0]);fflush(stdout);
 	return (tab);
 }
