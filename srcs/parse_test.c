@@ -285,7 +285,8 @@ static char		*replace_marks(char *str)
 
 static char		*parse_arg(char *str, t_list **env) // will be used to parse a str | need to make a func to cut args before parsing them
 {
-	parse_backslash(str);
+	//parse_backslash(str);
+//	printf("str: %s\n", str);fflush(stdout);
 	if (check_closed(str))
 	{
 		free(str);
@@ -332,27 +333,43 @@ char			**parse(char *str, t_list **env)
 	int			i;
 	int			n;
 	int			n_args;
+	char		*backslash;
 
 	n = 0;
 	if (!str || !ft_strlen(str))
 		return (NULL);
-	n_args = get_n_args(str) + 1;
+	backslash = ft_strdup(str);
+	parse_backslash(backslash);
+	//n_args = get_n_args(str) + 1;
+	n_args = get_n_args(backslash) + 1;
+//	printf("n: %d\n", n_args);fflush(stdout);
 	if (!(tab = malloc(sizeof(char *) * (n_args + 1))))
 		return (NULL);
 	while (n < n_args)
 	{
 		i = -1;
-		while (*str == ' ')
-			str++;
-		while (str[++i])
-			if (str[i] == ' ' && !is_valide(str, i, 1))
+		while (*backslash == ' ')
+			backslash++;
+		while (backslash[++i])
+			if (backslash[i] == ' ' && !is_valide(backslash, i, 1))
 				break ;
-		if (!(tab[n++] = parse_arg(ft_substr(str, 0, i), env)))
+		if (!(tab[n++] = parse_arg(ft_substr(backslash, 0, i), env)))
 		{
 			clean_array(tab);
 			return (NULL);
 		}
-		str = str + i;
+		backslash = backslash + i;
+		// while (*str == ' ')
+		// 	str++;
+		// while (str[++i])
+		// 	if (str[i] == ' ' && !is_valide(str, i, 1))
+		// 		break ;
+		// if (!(tab[n++] = parse_arg(ft_substr(str, 0, i), env)))
+		// {
+		// 	clean_array(tab);
+		// 	return (NULL);
+		// }
+		// str = str + i;
 	}
 	tab[n] = NULL;
 	replace_g_last(&g_last, tab[n - 1]);

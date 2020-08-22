@@ -85,6 +85,8 @@ int				is_valide(char *str, int index, int option)
 	i = 0;
 	in_quote = 0;
 	in_dquote = 0;
+//	printf("str: %s\n", str);fflush(stdout);
+//	printf("index: %d\n", index);fflush(stdout);
 	while (str[i] && i < index)
 	{
 		if (str[i] == '"' && (i == 0 || (i > 0 && (str[i - 1] != -1)))
