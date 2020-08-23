@@ -45,7 +45,7 @@ void			control_quit(int sig)
 	int i;
 
 	i = -1;
-	if (g_pids) // variable globale a modifier quand fd = 0
+	if (g_pids)
 	{
 		ft_printf("Quit: %d\n", sig);
 		while (++i)

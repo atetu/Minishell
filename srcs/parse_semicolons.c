@@ -12,6 +12,21 @@
 
 #include "../includes/minishell.h"
 
+int				syntax_error(void)
+{
+	g_exit_status = 258;
+	g_exit_nb = 2;
+	ft_printf_e("bash: line 1: syntax error near unexpected token ';'\n");  // JUSTE POUR LEs TESTS
+	//	ft_printf_e("minihell: syntax error near unexpected token ';'\n");
+	return (-1);
+}
+
+int				result_semicolon(int option, int n_semicolon)
+{
+	if (option == 1)
+		return (-1);
+	return (n_semicolon);
+}
 
 static int		get_n_semicolon(char *args, int option)
 {
@@ -30,24 +45,16 @@ static int		get_n_semicolon(char *args, int option)
 				return (i);
 			if (i > 0)
 			{
-				j = i -1;
-				while (j >=0 && args[j] == ' ')
+				j = i - 1;
+				while (j >= 0 && args[j] == ' ')
 					j--;
 			}
 			if (args[j] == '>' || args[j] == '<')
-			{
-				g_exit_status = 258;
-				g_exit_nb = 2;
-				ft_printf_e("bash: line 1: syntax error near unexpected token ';'\n");  // JUSTE POUR LEs TESTS
-			//	ft_printf_e("minihell: syntax error near unexpected token ';'\n");
-				return (-1);
-			}
+				return (syntax_error());
 			n_semicolon++;
 		}
 	}
-	if (option == 1)
-		return (-1);
-	return (n_semicolon);
+	return (result_semicolon(option, n_semicolon));
 }
 
 char			**parse_semicolon(char *str)

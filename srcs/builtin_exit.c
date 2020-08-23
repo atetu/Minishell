@@ -48,7 +48,7 @@ static int		check_numeric_argument(char *func, int *neg)
 	j = 0;
 	while (func[j] == ' ')
 		j++;
-	if(!(check_sign(func, &j, neg, &sign)))
+	if (!(check_sign(func, &j, neg, &sign)))
 		return (0);
 	while (func[j])
 	{
@@ -77,7 +77,7 @@ static int		check_sec_round_arg(char *func, int arg, int neg)
 	res = ft_atoll(func);
 	if (res > (max + 1))
 	{
-		ft_printf_e("bash: line 1: exit: %s: numeric argument required\n", func);
+		ft_printf_e("bash: exit: %s: numeric argument required\n", func); //enleve line 1 pour norminette
 		//	g_exit_nb = 255;ft_printf_e("bash: ligne 1 : exit: %s: argument numerique necessaire\n", func); // TESTEUR VM
 //	g_exit_nb = 255;ft_printf_e("minishell: exit: %s: argument numerique necessaire\n", func); // VM
 		g_exit_nb = 255;
@@ -95,8 +95,8 @@ static int		check_sec_round_arg(char *func, int arg, int neg)
 
 static void		numeric_error(char *func)
 {
-
-	g_exit_nb = 255;ft_printf_e("bash: line 1: exit: %s: numeric argument required\n", func); // TESTEUR
+	g_exit_nb = 255;
+	ft_printf_e("bash: line 1: exit: %s: numeric argument required\n", func);
 //	g_exit_nb = 255;ft_printf_e("bash: ligne 1 : exit: %s: argument numerique necessaire\n", func); // TESTEUR VM
 //	g_exit_nb = 255;ft_printf_e("minishell: exit: %s: argument numerique necessaire\n", func); // VM
 //g_exit_nb = 2; //VM
@@ -114,7 +114,7 @@ int				ft_builtin_exit(char **func, int *exit_info)
 	neg = 0;
 	while (func[++i])
 		arg++;
-	//ft_printf("exit\n");    // A SUPPRIMER POUR LE TESTEUR UNQUEMENT
+	//ft_printf("exit\n");    // A REINTEGRER SANS LE TESTEUR
 	if (arg >= 2)
 	{
 		if ((ret = check_numeric_argument(func[1], &neg)) != 0)

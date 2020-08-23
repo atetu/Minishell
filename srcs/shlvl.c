@@ -24,8 +24,8 @@ static void		pass_sign(char *shlvl_str, int *i, int *j)
 
 static void		check_shlvl_nb(char *shlvl_str, t_list *current)
 {
-	int shlvl_nb;
-	char *tmp;
+	int		shlvl_nb;
+	char	*tmp;
 
 	tmp = NULL;
 	shlvl_nb = ft_atoi(shlvl_str);
@@ -76,7 +76,7 @@ static int		adapt_shlvl_var(t_list *current)
 	return (1);
 }
 
-void handle_shlvl(t_list **list)
+void			handle_shlvl(t_list **list)
 {
 	t_list	**tmp;
 	t_list	*current;
@@ -90,7 +90,7 @@ void handle_shlvl(t_list **list)
 		if (!(strncmp((char *)current->content, "SHLVL=", 6)))
 		{
 			is_shlvl = adapt_shlvl_var(current);
-			break;
+			break ;
 		}
 		current = current->next;
 	}
