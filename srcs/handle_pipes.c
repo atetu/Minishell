@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:31:11 by thgermai          #+#    #+#             */
-/*   Updated: 2020/07/02 22:32:04 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/08/24 12:12:39 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void			create_pipes(t_call *calls, int pipes[][2])  // DANS VM int creat_pipes
+int			create_pipes(t_call *calls, int pipes[][2])  // DANS VM int creat_pipes
 {
 	int			i;
 	int			size;
@@ -22,7 +22,7 @@ void			create_pipes(t_call *calls, int pipes[][2])  // DANS VM int creat_pipes
 		i++;
 	size = --i;
 	if (size == 0)
-		return ;              // return (0);
+		return (0);              // return (0);
 	i = -1;
 	while (++i < size)
 	{
@@ -32,9 +32,10 @@ void			create_pipes(t_call *calls, int pipes[][2])  // DANS VM int creat_pipes
 			exit(0);
 		}
 	}                      // return (size);
+	return (size);
 }
 
-void			connect_pipes(t_call *calls, int pipes[][2])   //3e arg : int n_pipes
+void			connect_pipes(t_call *calls, int pipes[][2], int n_pipes)   //3e arg : int n_pipes
 {
 	int			i;
 
@@ -47,7 +48,9 @@ void			connect_pipes(t_call *calls, int pipes[][2])   //3e arg : int n_pipes
 			calls[i].in = pipes[i - 1][0];
 		if (calls[i].out != 1)
 			;
-		else if (calls[i].out == 1 && pipes[i + 1][0])    // && i < n_pipes && pipes[i][0]
+	//	else if (calls[i].out == 1 && pipes[i + 1][0])    // && i < n_pipes && pipes[i][0]
+	//		calls[i].out = pipes[i][1];
+		else if (calls[i].out == 1 && i < n_pipes && pipes[i][0])
 			calls[i].out = pipes[i][1];
 	}
 }

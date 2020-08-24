@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 14:48:07 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/24 11:54:04 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/24 11:58:57 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ static char		*create_new_str(char *str, char *key, char *value, int index)
 	if (ft_strlen(str) - ft_strlen(key) + ft_strlen(value) == 0)
 		new_str = ft_strdup("");
 	else if (!(new_str = malloc(sizeof(char) * (ft_strlen(str) -
-		ft_strlen(key) + ft_strlen(value) + 1 ))))  //ICICICI!!!
+		ft_strlen(key) + ft_strlen(value) + 1))))  //ICICICI!!!
 		return (NULL);
 	ft_strlcpy(new_str, str, index + 1);
 	ft_strlcpy(new_str + ft_strlen(new_str), value, ft_strlen(value) + 1);

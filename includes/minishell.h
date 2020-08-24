@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 10:53:30 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/20 15:20:46 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/08/24 12:12:56 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ char				*g_oldpwd; //ICI stocke oldpwd
 int					g_ret;
 char				*g_home;
 char				*g_last;
+//int n_pipes; //a retirer apres
 //char				*var_path;
 
 ///////////////////////////////////////////////////////////////
@@ -99,8 +100,8 @@ int					delete_element(t_call *call, char *key);
 t_list				**sort_var_env(t_list **env);
 
 // Handle_pipes.c
-void				create_pipes(t_call *calls, int pipes[][2]);
-void				connect_pipes(t_call *calls, int pipes[][2]);
+int					create_pipes(t_call *calls, int pipes[][2]); //ICIIC
+void				connect_pipes(t_call *calls, int pipes[][2], int n_pipes);
 
 // Utiles_convert.c
 t_list				**tab_to_list(char **env);

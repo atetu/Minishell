@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:27:19 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/22 16:52:10 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/08/24 12:11:10 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ void			wait_pids(pid_t *pids, int size, t_call *calls)
 static void		manage_pipes(t_call *calls, int pipes[][2], char *str, int *exit_info)
 {
 	int i;
-	//int n_pipes;  a ajouter pour VM
+	int n_pipes;  //a ajouter pour VM
 
-	create_pipes(calls, pipes);    // n_pipes = ....
+	n_pipes = create_pipes(calls, pipes);    // n_pipes = ....
 	i = -1;
 	while (calls[++i].str)
-		connect_pipes(calls, pipes);   // 3e arg: n_pipes
+		connect_pipes(calls, pipes, n_pipes);   // 3e arg: n_pipes
 	i = -1;
 	while (calls[++i].str)
 		g_pids[i] = exec1(&calls[i], pipes, get_n_pipes(str, 0), exit_info);
@@ -67,6 +67,7 @@ static int		exec_input(char *str, t_list **env)
 	parse_pipes(str, calls);
 	while (calls[++i].str)
 		parse_call(&calls[i], env);
+//	n_pipes = get_n_pipes(str, 0); // ICI
 	if (i > 1)
 		manage_pipes(calls, pipes, str, &exit_info);
 	else
