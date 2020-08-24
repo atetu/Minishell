@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 14:48:07 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/24 11:58:57 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/24 13:12:24 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,7 +243,7 @@ static char		*fill_tilde(char *str, int index)
 	char		*after_var;
 
 	if (!(new_str = malloc(sizeof(char) * (ft_strlen(str) - 1 +
-		ft_strlen(g_home)))))
+		ft_strlen(g_home) + 1))))  //ICI
 		return (NULL);
 	ft_strlcpy(new_str, str, index + 1);
 	ft_strlcpy(new_str + ft_strlen(new_str), g_home, ft_strlen(g_home) + 1);
