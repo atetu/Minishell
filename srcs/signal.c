@@ -6,7 +6,7 @@
 /*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 16:10:54 by atetu             #+#    #+#             */
-/*   Updated: 2020/08/17 14:49:18 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/08/24 15:09:23 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void			control_c(int sig)
 int				control_d(void)
 {
 	g_exit_nb = g_exit_status;
-	//	ft_printf("exit\n");  // selon moi a indiquer mais erreur avec le testeur
+	// ft_printf("exit\n");
 	return (1);
 }
 

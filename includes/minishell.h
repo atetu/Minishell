@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 10:53:30 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/24 12:12:56 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/24 18:18:39 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,6 @@
 # include <string.h>
 # include <signal.h>
 
-// temporary lib
-# include <stdio.h>
-
 # define REPLACE_CHAR "\\\"'$"
 
 typedef	struct		s_call
@@ -38,111 +35,118 @@ typedef	struct		s_call
 	int				ret;
 }					t_call;
 
-// variables globales
-pid_t				*g_pids;  //ALICE
+/*
+**	-- Global Variables --
+*/
+
+pid_t				*g_pids;
 int					g_exit_status;
 int					g_exit_nb;
-char				*g_pwd;//ICI stocke pwd de toute facon
-char				*g_oldpwd; //ICI stocke oldpwd
+char				*g_pwd;
+char				*g_oldpwd;
 int					g_ret;
 char				*g_home;
 char				*g_last;
-//int n_pipes; //a retirer apres
-//char				*var_path;
 
-///////////////////////////////////////////////////////////////
+/*
+**	-- Functions --
+*/
 
-// Prompt.c
-void				wait_pids(pid_t *pids, int size, t_call *calls);
-void				prompt(char **env);
-
-//prompt_utiles.c // ici
-void				print(void);
-
-// Parse_semicolons.c
-char				**parse_semicolon(char *str);
-
-// Parse_pipes.c
-void				parse_pipes(char *str, t_call *calls);
-int					get_n_pipes(char *args, int option);
-
-// Parse_call.c
-void				parse_call(t_call *call, t_list **env);
-
-// Parse_exec.c
-char				*parse_exec(t_call *call, char *bin);
-
-// Execute.c
-pid_t				exec1(t_call *call, int pipes[][2], int size,
-						int *exit_info);
-void				exec2(t_call *call, int *exit_info);
-
-// Execute_utiles.c
-void				duplicate_fd(t_call *call);
-int					execute(t_call *call, char **func, char **env, int *exit_info);
-void				exec_knonw(t_call *call, char **func, char **var_env, int *exit_info);
-
-// Builtin.c
-int	 				ft_echo(char **func);
-int 				ft_cd(char **func, t_call *call);
-int					ft_pwd(void);
-int					ft_builtin_exit(char **func, int *exit_info);
-
-// Builtin_env.c
-int					ft_env(t_call *call, char **func);
-int					ft_unset(t_call *call, char **func);
-int					ft_export(t_call *call, char **func);
-
-// Builtin_env_utiles.c
-char				*get_key(char *str);
-int					add_env(t_call *call, char *key, char *value, int option);
-int					delete_element(t_call *call, char *key);
-t_list				**sort_var_env(t_list **env);
-
-// Handle_pipes.c
-int					create_pipes(t_call *calls, int pipes[][2]); //ICIIC
-void				connect_pipes(t_call *calls, int pipes[][2], int n_pipes);
-
-// Utiles_convert.c
-t_list				**tab_to_list(char **env);
-char				**list_to_tab(t_list **lst);
-
-// Utiles.c
-char				*get_cwd(void);
-int					is_valide(char *str, int index, int option);
-char				*find_value(char *str, t_list **env, int opt); // ICI
-int					known_func(char *str);
-int					is_backslash(char *str, int index);
-
-// Clean.c
-void				close_pipes(int	pipes[][2], int size);
-void				clean_calls(t_call *calls);
-void				clean_array(char **array);
-void				clear_all(char *args, t_list **list);
-
-// Signal.c
 void				control_c(int sig);
 int					control_d(void);
 void				control_quit(int sig);
-
-// shlvl.c
+void				prompt(char **env);
+char				**parse_semicolon(char *str);
+int					get_n_pipes(char *args, int option);
+void				parse_pipes(char *str, t_call *calls);
+void				parse_call(t_call *call, t_list **env);
+int					create_pipes(t_call *calls, int pipes[][2]);
+void				connect_pipes(t_call *calls, int pipes[][2], int n_pipes);
+pid_t				exec1(t_call *call, int pipes[][2], int size,
+	int *exit_info);
+void				exec2(t_call *call, int *exit_info);
+void				wait_pids(pid_t *pids, int size, t_call *calls);
+char				*parse_exec(t_call *call, char *bin);
+void				duplicate_fd(t_call *call);
+int					execute(t_call *call, char **func, char **env,
+	int *exit_info);
+void				exec_knonw(t_call *call, char **func, char **var_env,
+	int *exit_info);
 void				handle_shlvl(t_list **list);
-
-// parse_test.c
 char				**parse(char *str, t_list **env);
+
+/*
+** Builtins
+*/
+
+int					ft_pwd(void);
+int					ft_cd(char **func, t_call *call);
+int					ft_echo(char **func);
+int					ft_unset(t_call *call, char **func);
+int					ft_env(t_call *call, char **func);
+int					ft_export(t_call *call, char **func);
+int					add_env(t_call *call, char *key, char *value, int option);
+char				*get_key(char *str);
+int					delete_element(t_call *call, char *key);
+t_list				**sort_var_env(t_list **env);
+int					ft_builtin_exit(char **func, int *exit_info);
+
+/*
+**	-- Utiles functions --
+*/
+
+t_list				**tab_to_list(char **env);
+char				**list_to_tab(t_list **lst);
+void				print(void);
+int					is_valide(char *str, int index, int option);
+int					is_backslash(char *str, int index);
+int					known_func(char *str);
+char				*find_value(char *str, t_list **env, int opt);
+char				*get_cwd(void);
+void				clean_calls(t_call *calls);
+void				close_pipes(int pipes[][2], int size);
+void				clean_array(char **array);
+void				clear_all(char *args, t_list **list);
+
+
+/*
+** Rajout Alice
+*/
+
+int					get_fd(char *str, int option);
+void				refresh_var_underscore(char **func, t_call *call);
+int					check_call_in(int in);
+int					check_double_points(char *original_bin);
+int					check_existing_path(char **path, char ***paths,
+						char **bin, char **original_bin);
+char				*check_is_file(char *bin, char *original_bin);
+void				clean_exec(char **paths[], char **bin, char **original_bin);
+void				handle_error(int ret, char *var, char *original_bin);
+void				manage_pipes(t_call *calls, int pipes[][2],
+						char *str, int *exit_info);
+char				*delete_marks(char *str, int j);
+char				*replace_marks(char *str);
+char				*parse_var(char *str, t_list **env);
+char				*get_var_name(char *str);
+char				*get_var_value(char *key, t_list **env);
+char				*create_new_str(char *str, char *key, char *value,
+						int index);
+char				*create_new_str2(char *str, char *key, char *value,
+						int index);
+char				*parse_arg(char *str, t_list **env);
+int					get_n_args(char *str);
+int					check_closed(char *str);
+void				parse_backslash(char *str);
+void				parse_quotes(char *str);
+int					ft_env1(t_call *call);
+
+
+/*
+** Rajout Thomas
+*/
+
+void				add_env2(t_call *call, char *key, char *value);
+
+
+
 #endif
-
-/*
-	NOTES :
-
-	- Parsing all env var has to be done before everything cause it
-		can be used for redirection for exemple
-	- for ' and " check if !n_quote for n_dquote++ etcpo
-*/
-
-/*
-	PROBLEMES:
-
-	echo espace quand $var pas bon
-	message erreur en double quand fonction pas connu
-*/

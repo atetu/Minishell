@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_semicolons.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/01 15:24:14 by atetu             #+#    #+#             */
-/*   Updated: 2020/08/17 22:13:56 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/08/24 16:42:21 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int				syntax_error(void)
+static int		syntax_error(void)
 {
 	g_exit_status = 258;
 	g_exit_nb = 2;
@@ -21,7 +21,7 @@ int				syntax_error(void)
 	return (-1);
 }
 
-int				result_semicolon(int option, int n_semicolon)
+static int		result_semicolon(int option, int n_semicolon)
 {
 	if (option == 1)
 		return (-1);

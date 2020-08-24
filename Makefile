@@ -6,7 +6,7 @@
 #    By: atetu <atetu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 08:26:20 by thgermai          #+#    #+#              #
-#    Updated: 2020/08/24 11:43:33 by atetu            ###   ########.fr        #
+#    Updated: 2020/08/24 18:09:28 by atetu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,12 +27,21 @@ SRCS = main.c\
 		parse_pipes.c\
 		parse_semicolons.c\
 		prompt.c\
-		prompt_utiles.c\
 		shlvl.c\
 		signal.c\
 		utiles.c\
 		utiles_convert.c\
-		parse_test.c
+		parse_global.c\
+		parse_call_utiles.c\
+		utiles_find_value.c\
+		parse_exec_utiles.c\
+		parse_global_marks.c\
+		parse_global_var.c\
+		parse_global_var_utiles.c\
+		parse_global_args.c\
+		builtin_env_add.c\
+		builtin_env_export.c\
+		builtin_env_unset.c
 OBJS = $(addprefix $(OBJSDIR)/, $(SRCS:.c=.o))
 DPDCS = $(OBJS:.o=.d)
 INCLUDES = -I includes/ -I libft/

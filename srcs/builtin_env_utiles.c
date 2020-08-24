@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env_utiles.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:52:48 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/17 22:15:13 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/08/24 17:57:36 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,43 +23,6 @@ char			*get_key(char *str)
 	if (str[i] == '=')
 		return (ft_substr(str, 0, i + 1));
 	return (ft_strjoin_f1(ft_substr(str, 0, i), "="));
-}
-
-int				replace_env_var(void **content, void *var, char *tmp)
-{
-	free(*content);
-	*content = (void *)var;
-	free(tmp);
-	return (1);
-}
-
-int				add_env(t_call *call, char *key, char *value, int option)
-{
-	char		*var;
-	t_list		*current;
-	char		*tmp;
-
-	var = ft_strjoin(key, value);
-	current = *call->env;
-	if (option == 0)
-		ft_lstadd_back(call->env, ft_lstnew(var));
-	else
-	{
-		while (current)
-		{
-			tmp = ft_substr(key, 0, ft_strlen(key) - 1);
-			if ((!ft_strncmp(key, (char *)current->content, ft_strlen(key))) ||
-			(!ft_strncmp(tmp, (char *)current->content, ft_strlen(tmp)) &&
-			((char *)current->content)[ft_strlen(tmp)] == '\0'))
-				if (replace_env_var(&current->content, (void *)var, tmp))
-					break ;
-			current = current->next;
-			free(tmp);
-		}
-	}
-	if (current)
-		return (EXIT_SUCCESS);
-	return (EXIT_FAILURE);
 }
 
 int				delete_element(t_call *call, char *key)

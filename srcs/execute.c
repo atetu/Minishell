@@ -6,40 +6,13 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:47:56 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/24 14:29:15 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/24 16:23:39 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void		refresh_var_underscore(char **func, t_call *call)
-{
-	int			i;
-
-	i = -1;
-	while (func[++i])
-		;
-	if (!(!ft_strncmp(func[0], "export", ft_strlen(func[0])) && !func[1]))
-	{
-		if (find_value("_=", call->env, 1))
-			add_env(call, "_=", func[i - 1], 1);
-		else
-			add_env(call, "_=", func[i - 1], 0);
-	}
-}
-
-int				check_call_in(int in)
-{
-	if (in == -1)
-	{
-		g_exit_status = 1;
-		g_exit_nb = 1;
-		return (0);
-	}
-	return (1);
-}
-
-pid_t			exit_exec1(char ***func, char ***env_var,
+static pid_t	exit_exec1(char ***func, char ***env_var,
 	int *exit_info, pid_t pid)
 {
 	clean_array(*func);
@@ -78,12 +51,12 @@ pid_t			exec1(t_call *call, int pipes[][2], int size, int *exit_info)
 	return (exit_exec1(&func, &env_var, exit_info, pid));
 }
 
-int				free_exec2(char ***var_env, char ***func)
+static int		free_exec2(char ***var_env, char ***func)
 {
 	int i;
 
 	i = 0;
-	free(*var_env); // pourquoi pas chaque niveau?
+	free(*var_env);
 	i = 1;
 	while ((*func)[i])
 	{
@@ -94,7 +67,7 @@ int				free_exec2(char ***var_env, char ***func)
 	return (1);
 }
 
-int				set_exec2(t_call *call, char ***func, char ***var_env)
+static int		set_exec2(t_call *call, char ***func, char ***var_env)
 {
 	if (!(check_call_in(call->in)))
 		return (0);

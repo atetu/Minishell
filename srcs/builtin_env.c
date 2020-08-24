@@ -3,65 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 17:24:16 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/19 15:42:10 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/08/24 18:08:45 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void		unset_env_var(char *key)
-{
-	if (!(ft_strncmp(key, "PWD=", 5)))
-	{
-		free(g_pwd);
-		g_pwd = ft_strdup("");
-	}
-	if (!(ft_strncmp(key, "OLDPWD=", 8)))
-	{
-		free(g_oldpwd);
-		g_oldpwd = ft_strdup("");
-	}
-}
-
-void		unset_error_message(char c)
-{
-	ft_printf_e("bash: line 1: unset: "); // minishell: unset: 
-	ft_printf_e("`%c': not a valid identifier\n", c);
-}
-
-int			ft_unset(t_call *call, char **func)
-{
-	int			i;
-	char		*key;
-	int			j;
-
-	i = 0;
-	while (func[++i])
-	{
-		j = -1;
-		while (func[i][++j])
-		{
-			if (!ft_isalnum((int)func[i][j]) && func[i][j] != '_')
-			{
-				unset_error_message(func[i][j]);
-				return ((g_exit_nb = EXIT_FAILURE));
-			}
-		}
-		key = ft_strjoin(func[i], "=");
-		unset_env_var(key);
-		if (find_value(key, call->env, 1))
-			delete_element(call, key);
-		if (find_value(key, call->env, 2))
-			delete_element(call, func[i]);
-		free(key);
-	}
-	return (EXIT_SUCCESS);
-}
-
-int			ft_env(t_call *call, char **func)
+int				ft_env(t_call *call, char **func)
 {
 	t_list		*current;
 	char		*key;
@@ -87,7 +38,7 @@ int			ft_env(t_call *call, char **func)
 	return (EXIT_SUCCESS);
 }
 
-void		write_env1(char *key, t_call *call, t_list *current)
+static void		write_env1(char *key, t_call *call, t_list *current)
 {
 	char		*to_print;
 
@@ -104,7 +55,7 @@ void		write_env1(char *key, t_call *call, t_list *current)
 	free(key);
 }
 
-int			ft_env1(t_call *call)
+int				ft_env1(t_call *call)
 {
 	t_list		*current;
 	t_list		**sorted_list;
@@ -127,66 +78,5 @@ int			ft_env1(t_call *call)
 	ft_lstclear(sorted_list, &free);
 	free(sorted_list);
 	free(temp);
-	return (EXIT_SUCCESS);
-}
-
-int			check_export_errors(char *func)
-{
-	int			i;
-
-	if (func[0] == '=')
-	{
-		// ft_printf_e("minishell: export: '%s': not a valid identifier\n", func);
-		ft_printf_e("bash: line 1: export: ");
-		ft_printf_e("`%c': not a valid identifier\n", func[0]);
-		return (EXIT_FAILURE);
-	}
-	i = 0;
-	while (func[i] && func[i] != '=')
-	{
-		if (!ft_isalnum((int)func[i]) && func[i] != '_')
-		{
-			// ft_printf_e("minishell: export: '%s': not a valid identifier\n", func);
-			ft_printf_e("bash: line 1: export: ");
-			ft_printf_e("`%c': not a valid identifier\n", func[i]);
-			return ((g_exit_nb = EXIT_FAILURE));
-		}
-		i++;
-	}
-	return (EXIT_SUCCESS);
-}
-
-void		export_alone(char *str, t_call *call)
-{
-	if (str == NULL)
-		ft_env1(call);
-}
-
-int			ft_export(t_call *call, char **func)
-{
-	int			i;
-	char		*key;
-
-	i = 0;
-	export_alone(func[1], call);
-	while (func[++i])
-	{
-		if (check_export_errors(func[i]))
-			return (EXIT_FAILURE);
-		if (func[i][0] != '=')
-		{
-			key = get_key(func[i]);
-			if (find_value(key, call->env, 1))
-			{
-				if (ft_strchr(func[i], '='))
-					add_env(call, key, ft_strchr(func[i], '=') + 1, 1);
-			}
-			else if (ft_strchr(func[i], '='))
-				add_env(call, key, ft_strchr(func[i], '=') + 1, 0);
-			else
-				add_env(call, func[i], "\0", 0);
-			free(key);
-		}
-	}
 	return (EXIT_SUCCESS);
 }

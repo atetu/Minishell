@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utiles_convert.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:40:46 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/17 15:59:34 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/08/24 17:40:24 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ char			**list_to_tab(t_list **lst)
 	return (tab);
 }
 
-static int		is_pwd_oldpwd(char *env, t_list **list, int *is_pwd, int *is_oldpwd)
+static int		is_pwd_oldpwd(char *env, t_list **list, int *is_pwd,
+	int *is_oldpwd)
 {
 	//char *tmp;  // tous les commentaires pour la version VM
 

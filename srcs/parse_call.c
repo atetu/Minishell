@@ -6,43 +6,11 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 16:15:55 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/24 14:31:18 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/24 15:54:13 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-static int		get_fd(char *str, int option)
-{
-	char		*file_name;
-	int			start;
-	int			i;
-	int			fd;
-
-	i = 0;
-	fd = 0;
-	while (str[i] && str[i] == ' ')
-		i++;
-	start = i;
-	while (str[i] && str[i] != ' ')
-		i++;
-	file_name = ft_substr(str, start, i - start);
-	if (option == 1)
-		fd = open(file_name, O_RDONLY);
-	else if (option == 2)
-		fd = open(file_name, O_RDWR | O_CREAT | O_TRUNC,
-			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-	else if (option == 3)
-		fd = open(file_name, O_RDWR | O_CREAT | O_APPEND,
-			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-	if (fd == -1)
-	{
-		ft_printf_e("bash: line 1: %s: %s\n", file_name, strerror(errno));
-	//	ft_printf_e("minishell: %s: %s\n", file_name, strerror(errno));    //suppression "Error"
-	}
-	free(file_name);
-	return (fd);
-}
 
 static int		check_input(t_call *call, int i)
 {
@@ -133,7 +101,7 @@ static int		get_in_and_out(t_call *call, int *input, int *output)
 	return (EXIT_SUCCESS);
 }
 
-void				parse_call(t_call *call, t_list **env)
+void			parse_call(t_call *call, t_list **env)
 {
 	int			input;
 	int			output;

@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:48:42 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/24 13:56:29 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/24 16:24:22 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,31 @@ int				execute(t_call *call, char **func, char **env, int *exit_info)
 		execve(func[0], func, env);
 		return (EXIT_FAILURE);
 	}
+}
+
+void			refresh_var_underscore(char **func, t_call *call)
+{
+	int			i;
+
+	i = -1;
+	while (func[++i])
+		;
+	if (!(!ft_strncmp(func[0], "export", ft_strlen(func[0])) && !func[1]))
+	{
+		if (find_value("_=", call->env, 1))
+			add_env(call, "_=", func[i - 1], 1);
+		else
+			add_env(call, "_=", func[i - 1], 0);
+	}
+}
+
+int				check_call_in(int in)
+{
+	if (in == -1)
+	{
+		g_exit_status = 1;
+		g_exit_nb = 1;
+		return (0);
+	}
+	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 21:54:49 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/22 14:54:53 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/08/24 17:33:47 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int				ft_echo(char **func)
 	return (EXIT_SUCCESS);
 }
 
-void			handle_env_var(t_call *call)
+static void		handle_env_var(t_call *call)
 {
 	char	buf[512];
 
