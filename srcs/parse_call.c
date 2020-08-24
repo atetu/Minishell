@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_call.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 16:15:55 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/20 15:20:52 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/08/24 14:31:18 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int		get_fd(char *str, int option)
 			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (fd == -1)
 	{
-		ft_printf_e("bash: line 1: %s: %s\n", file_name, strerror(errno));    //suppression "Error"   /// JUSTE POUR LES TESTS !!!!
+		ft_printf_e("bash: line 1: %s: %s\n", file_name, strerror(errno));
 	//	ft_printf_e("minishell: %s: %s\n", file_name, strerror(errno));    //suppression "Error"
 	}
 	free(file_name);
@@ -46,7 +46,7 @@ static int		get_fd(char *str, int option)
 
 static int		check_input(t_call *call, int i)
 {
-	if (call->str[i] == '<' && !is_backslash(call->str, i -1))// && is_backslash(call->str, i-1))
+	if (call->str[i] == '<' && !is_backslash(call->str, i - 1))
 	{
 		if (call->in != -1)
 			close(call->in);
@@ -59,7 +59,7 @@ static int		check_input(t_call *call, int i)
 
 static int		check_output(t_call *call, int i)
 {
-	if (call->str[i] == '>' && !is_backslash(call->str, i -1))
+	if (call->str[i] == '>' && !is_backslash(call->str, i - 1))
 	{
 		if (call->out != -1)
 			close(call->out);
@@ -91,7 +91,7 @@ static void		get_args(t_call *call)
 	while (call->str[++i])
 	{
 		if ((call->str[i] == '>' || call->str[i] == '<')
-			&& !is_valide(call->str, i, 1) && !is_backslash(call->str, i -1))
+			&& !is_valide(call->str, i, 1) && !is_backslash(call->str, i - 1))
 		{
 			if (start == i)
 				str = NULL;

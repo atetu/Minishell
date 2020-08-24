@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utiles.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 23:43:21 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/20 16:05:26 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/08/24 14:48:44 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,20 @@ char			*get_cwd(void)
 	return (cwd);
 }
 
-char			*find_value(char *str, t_list **env, int opt)    // opt 1 = chercher key avec signe = dans vaiable env (en gros pour env) / opt 2 : sans = dans var env (en gros export)
+char			*free_find_value(char **tmp, char *content)
+{
+	free(*tmp);
+	return (content);
+}
+
+int				check_option1(char *str, char *content, int opt)
+{
+	if (!ft_strncmp(str, content, ft_strlen(str)) && opt == 1)
+		return (1);
+	return (0);
+}
+
+char			*find_value(char *str, t_list **env, int opt)
 {
 	t_list		*current;
 	char		*tmp;
@@ -34,16 +47,12 @@ char			*find_value(char *str, t_list **env, int opt)    // opt 1 = chercher key 
 	{
 		if (str[ft_strlen(str) - 1] == '=')
 		{
-			if (!ft_strncmp(str, (char *)current->content, ft_strlen(str)) &&
-			opt == 1)
+			if (check_option1(str, (char *)current->content, opt))
 				return ((char *)current->content);
 			tmp = ft_substr(str, 0, ft_strlen(str) - 1);
 			if (!ft_strncmp(tmp, (char *)current->content, ft_strlen(tmp)) &&
 			((char *)current->content)[ft_strlen(tmp)] == '\0' && opt == 2)
-			{
-				free(tmp);
-				return ((char *)current->content);
-			}
+				return (free_find_value(&tmp, (char*)current->content));
 			free(tmp);
 		}
 		else
@@ -58,7 +67,7 @@ char			*find_value(char *str, t_list **env, int opt)    // opt 1 = chercher key 
 }
 
 int				known_func(char *str)
-{//ATTENTION J'CHANGE TOUS LES NOMBRES
+{
 	if (!ft_strncmp(str, "echo", 5))
 		return (1);
 	else if (!ft_strncmp(str, "cd", 3))
@@ -71,11 +80,11 @@ int				known_func(char *str)
 		return (1);
 	else if (!ft_strncmp(str, "env", 4))
 		return (1);
-	else if (!ft_strncmp(str, "exit", 5)) // ici
-		return (1); //ici
+	else if (!ft_strncmp(str, "exit", 5))
+		return (1);
 	return (0);
 }
-// option 0 out of squote | option 1 out of all quotes
+
 int				is_valide(char *str, int index, int option)
 {
 	int			i;
@@ -85,8 +94,6 @@ int				is_valide(char *str, int index, int option)
 	i = 0;
 	in_quote = 0;
 	in_dquote = 0;
-//	printf("str: %s\n", str);fflush(stdout);
-//	printf("index: %d\n", index);fflush(stdout);
 	while (str[i] && i < index)
 	{
 		if (str[i] == '"' && (i == 0 || (i > 0 && (str[i - 1] != -1)))

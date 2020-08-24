@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:47:56 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/24 13:55:20 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/24 14:29:15 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void			exec2(t_call *call, int *exit_info)
 		exec_knonw(call, func, var_env, exit_info);
 		return ;
 	}
-	if (!(func[0] = parse_exec(call, func[0]))) // pourquoi pas dans exec 1? chose a free ????
+	if (!(func[0] = parse_exec(call, func[0])))
 		if (free_exec2(&var_env, &func))
 			return ;
 	if ((pid = fork()) == 0)
