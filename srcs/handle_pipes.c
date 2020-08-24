@@ -6,13 +6,13 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:31:11 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/24 12:12:39 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/24 13:57:16 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int			create_pipes(t_call *calls, int pipes[][2])  // DANS VM int creat_pipes
+int			create_pipes(t_call *calls, int pipes[][2])//ICI
 {
 	int			i;
 	int			size;
@@ -22,7 +22,7 @@ int			create_pipes(t_call *calls, int pipes[][2])  // DANS VM int creat_pipes
 		i++;
 	size = --i;
 	if (size == 0)
-		return (0);              // return (0);
+		return (0);
 	i = -1;
 	while (++i < size)
 	{
@@ -31,7 +31,7 @@ int			create_pipes(t_call *calls, int pipes[][2])  // DANS VM int creat_pipes
 			ft_printf_e("Error: pipe creation failed\n");
 			exit(0);
 		}
-	}                      // return (size);
+	}
 	return (size);
 }
 

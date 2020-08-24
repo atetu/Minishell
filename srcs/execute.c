@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:47:56 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/22 15:50:15 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/08/24 13:55:20 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int				check_call_in(int in)
 	return (1);
 }
 
-pid_t			exit_exec1(char ***func, char ***env_var, int *exit_info, pid_t pid)
+pid_t			exit_exec1(char ***func, char ***env_var,
+	int *exit_info, pid_t pid)
 {
 	clean_array(*func);
 	free(*env_var);
@@ -77,36 +78,53 @@ pid_t			exec1(t_call *call, int pipes[][2], int size, int *exit_info)
 	return (exit_exec1(&func, &env_var, exit_info, pid));
 }
 
+int				free_exec2(char ***var_env, char ***func)
+{
+	int i;
+
+	i = 0;
+	free(*var_env); // pourquoi pas chaque niveau?
+	i = 1;
+	while ((*func)[i])
+	{
+		free((*func)[i]);
+		i++;
+	}
+	free(*func);
+	return (1);
+}
+
+int				set_exec2(t_call *call, char ***func, char ***var_env)
+{
+	if (!(check_call_in(call->in)))
+		return (0);
+	if (!((*func) = parse(call->str, call->env)))
+		return (0);
+	refresh_var_underscore(*func, call);
+	*var_env = list_to_tab(call->env);
+	return (1);
+}
+
 void			exec2(t_call *call, int *exit_info)
 {
 	char		**func;
 	char		**var_env;
 	pid_t		pid;
 
-	if (!(check_call_in(call->in)))
+	if (!(set_exec2(call, &func, &var_env)))
 		return ;
-	if (!(func = parse(call->str, call->env)))
-		return ;
-	refresh_var_underscore(func, call);
-	var_env = list_to_tab(call->env);
 	if (known_func(func[0]))
 	{
 		exec_knonw(call, func, var_env, exit_info);
 		return ;
 	}
 	if (!(func[0] = parse_exec(call, func[0]))) // pourquoi pas dans exec 1? chose a free ????
-	{
-		free(var_env);
-		for (int i = 1; func[i]; i++)
-			free(func[i]);
-		free(func);
-		return ;
-	}
+		if (free_exec2(&var_env, &func))
+			return ;
 	if ((pid = fork()) == 0)
 	{
 		duplicate_fd(call);
 		execve(func[0], func, var_env);
-	//	ft_printf_e("Minishell: execve: %s\n", strerror(errno));
 		exit(EXIT_FAILURE);
 	}
 	clean_array(func);
