@@ -23,7 +23,8 @@ static int		exec_input(char *str, t_list **env)
 	exit_info = 0;
 	if (!(g_pids = malloc(sizeof(pid_t) * (get_n_pipes(str, 0) + 2))))
 	{
-		ft_printf_e("Minishell: error: malloc failed\n");
+		//ft_printf_e("Minishell: error: malloc failed\n");
+		ft_printf_e("Minishell: ereur: le malloc a échoué\n");
 		return (-1);
 	}
 	g_pids[get_n_pipes(str, 0) + 1] = 0;

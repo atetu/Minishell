@@ -16,7 +16,8 @@ int		check_double_points(char *original_bin)
 {
 	if (!ft_strncmp(original_bin, "..", 3))
 	{
-		ft_printf_e("bash: ..: command not found\n");
+		//ft_printf_e("bash: ..: command not found\n");
+		ft_printf_e("bash: ..: commande introuvable\n");
 		g_exit_status = 127;
 		g_exit_nb = g_exit_status;
 		return (0);
@@ -45,7 +46,8 @@ char	*check_is_file(char *bin, char *original_bin)
 	{
 		if (S_ISDIR(stats.st_mode))
 		{
-			ft_printf_e("bash: %s: is a directory\n", original_bin);
+			//ft_printf_e("bash: %s: is a directory\n", original_bin);
+			ft_printf_e("bash: %s : est un dossier\n", original_bin);
 			return (ft_strdup(""));
 		}
 		return (ft_strdup(bin));
@@ -63,7 +65,10 @@ void	clean_exec(char **paths[], char **bin, char **original_bin)
 void	handle_error(int ret, char *var, char *original_bin)
 {
 	if (ret == 1 || !var)
-		ft_printf_e("bash: line 1: %s: %s\n", original_bin, strerror(errno));
+	{
+		ft_printf_e("bash: ligne 1: %s: Aucun fichier ou dossier de ce type\n", original_bin);
+	//	ft_printf_e("bash: ligne 1: %s : %s\n", original_bin, strerror(errno));
+	}
 	else
-		ft_printf_e("bash: line 1: %s: command not found\n", original_bin);
+		ft_printf_e("bash: ligne 1: %s : commande introuvable\n", original_bin);
 }

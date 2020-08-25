@@ -43,7 +43,8 @@ static char		*fill_var2(char *str, int index, t_list **env)
 	{
 		free(key);
 		free(str);
-		ft_printf_e("Minishell: unexpected EOF while looking for matching }\n");
+		//ft_printf_e("Minishell: unexpected EOF while looking for matching }\n");
+		ft_printf_e("Minishell: erreur : absence de }\n");
 		return (NULL);
 	}
 	value = get_var_value(key, env);

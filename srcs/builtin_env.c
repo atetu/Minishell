@@ -60,16 +60,15 @@ int				ft_env1(t_call *call)
 	t_list		*current;
 	t_list		**sorted_list;
 	char		*key;
-	char		*temp;
+//	char		*temp;
 
 	sorted_list = sort_var_env(call->env);
 	current = *sorted_list;
-	temp = ft_strjoin(get_cwd(), "/./minishell");
+	//temp = ft_strjoin(get_cwd(), "/./minishell");
 	while (current)
 	{
 		key = get_key((char *)current->content);
-		if (!ft_strncmp(key, "_=", 3) && ft_strncmp(find_value(key,
-			call->env, 1) + 2, temp, ft_strlen(temp)))
+		if (!ft_strncmp(key, "_=", 3))// && ft_strncmp(find_value(key, call->env, 1) + 2, temp, ft_strlen(temp))). N'affiche pas dans VM _ pour export
 			free(key);
 		else
 			write_env1(key, call, current);
@@ -77,6 +76,6 @@ int				ft_env1(t_call *call)
 	}
 	ft_lstclear(sorted_list, &free);
 	free(sorted_list);
-	free(temp);
+	//free(temp);
 	return (EXIT_SUCCESS);
 }

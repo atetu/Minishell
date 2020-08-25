@@ -19,8 +19,9 @@ static int		check_export_errors(char *func)
 	if (func[0] == '=' || func[0] == '+')
 	{
 		// ft_printf_e("minishell: export: '%s': not a valid identifier\n", func);
-		ft_printf_e("bash: line 1: export: ");
-		ft_printf_e("`%c': not a valid identifier\n", func[0]);
+		ft_printf_e("bash: ligne 1 : export: ");
+		//ft_printf_e("`%c': not a valid identifier\n", func[0]);
+		ft_printf_e("« %c » : identifiant non valable\n", func[0]);
 		return (EXIT_FAILURE);
 	}
 	i = 0;
@@ -31,8 +32,9 @@ static int		check_export_errors(char *func)
 		else if (!ft_isalnum((int)func[i]) && func[i] != '_' && func[i] != '+') // gere si le + est au milieu de la chaine
 		{
 			// ft_printf_e("minishell: export: '%s': not a valid identifier\n", func);
-			ft_printf_e("bash: line 1: export: ");
-			ft_printf_e("`%c': not a valid identifier\n", func[i]);
+			ft_printf_e("bash: ligne 1 : export: ");
+			//ft_printf_e("`%c': not a valid identifier\n", func[i]);
+			ft_printf_e("« %c » : identifiant non valable\n", func[i]);
 			return ((g_exit_nb = EXIT_FAILURE));
 		}
 		i++;

@@ -35,7 +35,8 @@ int		check_closed(char *str)
 	}
 	if (in_dquote || in_quote)
 	{
-		ft_printf_e("Minishell: error: arguments not closed\n");
+		//ft_printf_e("Minishell: error: arguments not closed\n");
+		ft_printf_e("Minishell: erreur: guillemets non fermés\n");
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);

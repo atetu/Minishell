@@ -16,7 +16,8 @@ static int		syntax_error(void)
 {
 	g_exit_status = 258;
 	g_exit_nb = 2;
-	ft_printf_e("bash: line 1: syntax error near unexpected token ';'\n");  // JUSTE POUR LEs TESTS
+	ft_printf_e("bash: line 1: erreur de syntaxe près du symbole inattendu « ; »\n");
+	//ft_printf_e("bash: line 1: syntax error near unexpected token ';'\n");  // JUSTE POUR LEs TESTS
 	//	ft_printf_e("minihell: syntax error near unexpected token ';'\n");
 	return (-1);
 }

@@ -23,7 +23,8 @@ char			**list_to_tab(t_list **lst)
 	i = -1;
 	if (!(tab = malloc(sizeof(char *) * (size + 1))))
 	{
-		ft_printf_e("Minishell: error: malloc failed\n");
+		//ft_printf_e("Minishell: error: malloc failed\n");
+		ft_printf_e("Minishell: erreur: le malloc a échoué\n");
 		exit(EXIT_FAILURE);
 	}
 	current = *lst;
@@ -53,7 +54,7 @@ static int		is_pwd_oldpwd(char *env, t_list **list, int *is_pwd,
 			free(g_oldpwd);
 			g_oldpwd = tmp;
 		}
-		ft_lstadd_back(list, ft_lstnew(ft_strdup("OLDPWD")));
+		//ft_lstadd_back(list, ft_lstnew(ft_strdup("OLDPWD")));
 		*is_oldpwd = 1;
 		return (1);
 	}
@@ -72,8 +73,8 @@ static void		add_remaining_var(t_list **list, int is_oldpwd, int is_pwd)
 		ft_lstadd_back(list, ft_lstnew(ft_strdup("OLDPWD")));
 	if (!is_pwd)
 		ft_lstadd_back(list, ft_lstnew(ft_strjoin("PWD=", g_pwd)));
-//	ft_lstadd_back(list, ft_lstnew(ft_strdup("LESSCLOSE=/usr/bin/lesspipe %s %s"));  VAR A AJPOUTER DANS LA VM
-//	ft_lstadd_back(list, ft_lstnew(ft_strdup("LESSOPEN=| usr/bin/lesspipe %s"));
+	//ft_lstadd_back(list, ft_lstnew(ft_strdup("LESSCLOSE=/usr/bin/lesspipe %s %s")));//  VAR A AJPOUTER DANS LA VM
+//	ft_lstadd_back(list, ft_lstnew(ft_strdup("LESSOPEN=| usr/bin/lesspipe %s")));
 }
 
 t_list			**tab_to_list(char **env)

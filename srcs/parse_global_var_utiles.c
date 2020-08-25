@@ -42,7 +42,7 @@ char		*get_var_value(char *key, t_list **env)
 
 	if (!ft_strncmp(key, "00", 3))
 		value = ft_strdup("");
-	if (!(ft_strncmp(key, "$0", 3))) //ICI
+	else if (!(ft_strncmp(key, "$0", 3))) //ICI
 		value = ft_strdup("bash"); //ICI
 	else if (key[0] == '?' && ft_strlen(key) == 2)
 		value = ft_itoa(g_exit_status);

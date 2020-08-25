@@ -28,8 +28,9 @@ static void		unset_env_var(char *key)
 
 static void		unset_error_message(char c)
 {
-	ft_printf_e("bash: line 1: unset: "); // minishell: unset:
-	ft_printf_e("`%c': not a valid identifier\n", c);
+	ft_printf_e("bash: ligne 1 : unset: "); // minishell: unset:
+	//ft_printf_e("`%c': not a valid identifier\n", c);
+	ft_printf_e("« %c » : identifiant non valable\n", c);
 }
 
 int			ft_unset(t_call *call, char **func)

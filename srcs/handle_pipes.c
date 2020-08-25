@@ -63,7 +63,8 @@ int				create_pipes(t_call *calls, int pipes[][2])
 	{
 		if (pipe(pipes[i]) == -1)
 		{
-			ft_printf_e("Error: pipe creation failed\n");
+			//ft_printf_e("Error: pipe creation failed\n");
+			ft_printf_e("Erreur: la creation du pipe a echoue\n");
 			exit(0);
 		}
 	}

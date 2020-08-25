@@ -67,8 +67,8 @@ static int		check_sec_round_arg(char *func, int arg, int neg)
 	max = 9223372036854775807;
 	if (arg > 2)
 	{
-		ft_printf_e("bash: line 1: exit: too many arguments\n");
-	//	ft_printf_e("bash: ligne 1 : exit: trop d'arguments\n"); // VM Testeur
+		//ft_printf_e("bash: line 1: exit: too many arguments\n");
+		ft_printf_e("bash: ligne 1 : exit: trop d'arguments\n"); // VM Testeur
 	//	ft_printf_e("minishell : exit: trop d'arguments\n"); // VM sans testeur
 		g_exit_status = 1;
 		g_exit_nb = g_exit_status;
@@ -77,11 +77,12 @@ static int		check_sec_round_arg(char *func, int arg, int neg)
 	res = ft_atoll(func);
 	if (res > (max + 1))
 	{
-		ft_printf_e("bash: exit: %s: numeric argument required\n", func); //enleve line 1 pour norminette
-		//	g_exit_nb = 255;ft_printf_e("bash: ligne 1 : exit: %s: argument numerique necessaire\n", func); // TESTEUR VM
+		//ft_printf_e("bash: exit: %s: numeric argument required\n", func); //enleve line 1 pour norminette
+		//	g_exit_nb = 255;
+		ft_printf_e("bash: ligne 1 : exit: %s : argument numérique nécessaire\n", func); // TESTEUR VM
 //	g_exit_nb = 255;ft_printf_e("minishell: exit: %s: argument numerique necessaire\n", func); // VM
-		g_exit_nb = 255;
-		//g_exit_nb = 2; //VM
+		//g_exit_nb = 255;
+		g_exit_nb = 2;
 	}
 	else
 	{
@@ -95,11 +96,12 @@ static int		check_sec_round_arg(char *func, int arg, int neg)
 
 static void		numeric_error(char *func)
 {
-	g_exit_nb = 255;
-	ft_printf_e("bash: line 1: exit: %s: numeric argument required\n", func);
-//	g_exit_nb = 255;ft_printf_e("bash: ligne 1 : exit: %s: argument numerique necessaire\n", func); // TESTEUR VM
+//	g_exit_nb = 255;
+	//ft_printf_e("bash: line 1: exit: %s: numeric argument required\n", func);
+//	g_exit_nb = 255;
+	ft_printf_e("bash: ligne 1 : exit: %s : argument numérique nécessaire\n", func); // TESTEUR VM
 //	g_exit_nb = 255;ft_printf_e("minishell: exit: %s: argument numerique necessaire\n", func); // VM
-//g_exit_nb = 2; //VM
+	g_exit_nb = 2;
 }
 
 int				ft_builtin_exit(char **func, int *exit_info)
