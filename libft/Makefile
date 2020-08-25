@@ -106,7 +106,7 @@ $(NAME) : $(OBJS) $(PRINTF_OBJS)
 
 $(OBJSDIR)/%.o : %.c | $(OBJSDIR)
 	@(echo "Compiling -> $^")
-	@(gcc $(CFLAGS) $(INCLUDES) -MMD -c $< -o $@)
+	@(clang $(CFLAGS) -MMD -c $< -o $@)
 
 $(OBJSDIR) :
 	@(mkdir -p .objs)

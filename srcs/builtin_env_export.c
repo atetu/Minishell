@@ -26,7 +26,9 @@ static int		check_export_errors(char *func)
 	i = 0;
 	while (func[i] && func[i] != '=')
 	{
-		if (!ft_isalnum((int)func[i]) && func[i] != '_' && func[i] != '+') // gere si le + est au milieu de la chaine
+		if (func[i] == '+' && func[i + 1] == '=')
+			;
+		else if (!ft_isalnum((int)func[i]) && func[i] != '_' && func[i] != '+') // gere si le + est au milieu de la chaine
 		{
 			// ft_printf_e("minishell: export: '%s': not a valid identifier\n", func);
 			ft_printf_e("bash: line 1: export: ");

@@ -39,20 +39,20 @@ char			**list_to_tab(t_list **lst)
 static int		is_pwd_oldpwd(char *env, t_list **list, int *is_pwd,
 	int *is_oldpwd)
 {
-	//char *tmp;  // tous les commentaires pour la version VM
+	char *tmp;  // tous les commentaires pour la version VM
 
-//	tmp = NULL;
+	tmp = NULL;
 	if (!(ft_strncmp(env, "OLDPWD=", 7)))   // dans VM garde le oldpwd qu'on lui envoie a condition que ce soit un vrai chemin
 	{
-	//	tmp = ft_substr(env, 7, ft_strlen(env) - 7);
-	//	if (chdir(tmp)==0)
-	//	{
-	//		chdir(g_pwd);
-	//		ft_lstadd_back(list, ft_lstnew(ft_strdup(env)));
-		//	*is_oldpwd = 1;
-	//		free(g_oldpwd);
-		//	g_oldpwd = tmp;
-	//	}
+		tmp = ft_substr(env, 7, ft_strlen(env) - 7);
+		if (chdir(tmp)==0)
+		{
+			chdir(g_pwd);
+			ft_lstadd_back(list, ft_lstnew(ft_strdup(env)));
+			*is_oldpwd = 1;
+			free(g_oldpwd);
+			g_oldpwd = tmp;
+		}
 		ft_lstadd_back(list, ft_lstnew(ft_strdup("OLDPWD")));
 		*is_oldpwd = 1;
 		return (1);

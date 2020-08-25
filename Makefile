@@ -58,11 +58,11 @@ all : $(NAME)
 -include $(DPDCS)
 
 fg : $(LIB) $(OBJS)
-	@(gcc $(CFLAGS) -g3 -fsanitize=address $(OBJS) $(LIB) $(INCLUDES) -o $(NAME))
+	@(clang $(CFLAGS) -g3 -fsanitize=address $(OBJS) $(LIB) $(INCLUDES) -o $(NAME))
 	@(echo "$(NAME) created")
 
 $(NAME) : $(LIB) $(OBJS)
-	@(gcc $(CFLAGS) $(OBJS) $(LIB) $(INCLUDES) -o $(NAME))
+	@(clang $(CFLAGS) $(OBJS) $(LIB) $(INCLUDES) -o $(NAME))
 	@(echo "$(NAME) created")
 
 $(LIB) :
@@ -70,7 +70,7 @@ $(LIB) :
 
 $(OBJSDIR)/%.o : $(SRCSDIR)/%.c | $(OBJSDIR)
 	@(echo "Compiling -> $^")
-	@(gcc $(CFLAGS) $(INCLUDES) -MMD -c $< -o $@)
+	@(clang $(CFLAGS) $(INCLUDES) -MMD -c $< -o $@)
 
 $(OBJSDIR) :
 	@(mkdir -p .objs)
