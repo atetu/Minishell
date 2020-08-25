@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 10:53:30 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/24 18:18:39 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/25 10:15:38 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,6 @@ char				*create_new_str2(char *str, char *key, char *value,
 char				*parse_arg(char *str, t_list **env);
 int					get_n_args(char *str);
 int					check_closed(char *str);
-void				parse_backslash(char *str);
 void				parse_quotes(char *str);
 int					ft_env1(t_call *call);
 

@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 17:30:13 by atetu             #+#    #+#             */
-/*   Updated: 2020/08/24 17:30:16 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/25 10:14:14 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,33 +39,6 @@ int		check_closed(char *str)
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
-}
-
-void	parse_backslash(char *str)
-{
-	int			i;
-	int			in_quote;
-	int			in_dquote;
-
-	in_quote = 0;
-	in_dquote = 0;
-	i = -1;
-	while (str[++i])
-	{
-		if (str[i] == '"' &&
-			(i == 0 || (i > 0 && str[i - 1] != -1)) && !in_quote)
-			in_dquote == 1 ? in_dquote-- : in_dquote++;
-		else if (str[i] == '\'' &&
-			(i == 0 || (i > 0 && str[i - 1] != -1)) && !in_dquote)
-			in_quote == 1 ? in_quote-- : in_quote++;
-		if (str[i] == '\\' && (i == 0 || (i > 0 && str[i - 1] != -1)))
-		{
-			if (!in_quote && !in_dquote)
-				str[i] = -1;
-			else if (in_dquote && str[i + 1] && ft_strchr("$\\\"", str[i + 1]))
-				str[i] = -1;
-		}
-	}
 }
 
 void	parse_quotes(char *str)

@@ -6,7 +6,7 @@
 /*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 17:31:19 by atetu             #+#    #+#             */
-/*   Updated: 2020/08/24 17:31:28 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/25 10:41:44 by atetu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char		*get_var_name(char *str)
 	i = -1;
 	if (str[0] == '?')
 		return (ft_strdup("?="));
+	if (str[0] == '0') // ICI
+		return (ft_strdup("$0")); //ICI
 	if (!ft_isalpha(str[0]) && str[0] != '_')
 		return (ft_strdup("00"));
 	while (str[++i])
@@ -40,6 +42,8 @@ char		*get_var_value(char *key, t_list **env)
 
 	if (!ft_strncmp(key, "00", 3))
 		value = ft_strdup("");
+	if (!(ft_strncmp(key, "$0", 3))) //ICI
+		value = ft_strdup("bash"); //ICI
 	else if (key[0] == '?' && ft_strlen(key) == 2)
 		value = ft_itoa(g_exit_status);
 	else if (!ft_strncmp(key, "_=", 3))
