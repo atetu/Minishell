@@ -21,6 +21,7 @@ static char		*fill_var1(char *str, int index, t_list **env)
 	if (!(key = get_var_name(&str[index + 1])))
 		return (str);
 	value = get_var_value(key, env);
+//	ft_printf("key: %s\n", key);
 	new_str = create_new_str(str, key, value, index);
 	free(key);
 	free(value);
@@ -77,8 +78,43 @@ static int		is_correct(char *str, int i)
 {
 	if (str[i] == '$' && !is_valide(str, i, 0) && (i == 0 ||
 			(i > 0 && str[i - 1] != -1)) && (ft_isalnum(str[i + 1]) ||
-			str[i + 1] == '_' || str[i + 1] == '{' || str[i + 1] == '?'))
+			str[i + 1] == '_' || str[i + 1] == '{' || str[i + 1] == '?' ||
+			str[i + 1] == '!' || str[i + 1] == '@' || str[i + 1] == '*' || //ICI
+			str[i + 1] == '(' || str[i + 1] == '-')) //ICI
 		return (1);
+	return (0);
+}
+
+int 			check_weird_char(char **str, int i)
+{
+	char *key;
+	char *value;
+	char *new_str;
+//	char *new_str;
+
+//	new_str = NULL;
+	if ((*str)[i + 1] == '!'|| (*str)[i + 1] == '@' || (*str)[i + 1] == '*'
+		|| ((*str)[i + 1] == '(' && (*str)[i + 2] && (*str[i + 2] == '0'))
+		|| (*str)[i + 1] == '-')
+	{
+		if ((*str)[i + 1] == '!')
+			key = ft_strdup("!=");
+		if ((*str)[i + 1] == '@')
+			key = ft_strdup("!=");
+		if ((*str)[i + 1] == '*')
+			key = ft_strdup("!=");
+		if ((*str)[i + 1] == '-')
+			key = ft_strdup("hBs");
+		if ((*str)[i + 1] == '(' && (*str)[i + 2] && (*str[i + 2] == '0'))
+			key = ft_strdup("()=");
+		value = ft_strdup ("");
+		new_str = create_new_str(*str, key, value, i);
+		free(key);
+		free(value);
+		free(*str);
+		*str = new_str;
+		return (1);
+	}
 	return (0);
 }
 
@@ -87,6 +123,7 @@ char			*parse_var(char *str, t_list **env)
 	int			i;
 
 	i = -1;
+	ft_printf("str: %s\n", str);
 	while (str[++i])
 	{
 		if (is_correct(str, i))
@@ -95,6 +132,21 @@ char			*parse_var(char *str, t_list **env)
 			{
 				if (!(str = fill_var2(str, i, env)))
 					return (NULL);
+			}
+			else if (check_weird_char(&str, i))
+			{
+			//	ft_printf("ici");
+				// char *key;
+				// char *value;
+				// char *new_str;
+
+				// key = ft_strdup("!=");
+				// value = ft_strdup ("");
+				// new_str = create_new_str(str, key, value, i);
+				// free(key);
+				// free(value);
+				// free(str);
+				// str = new_str;
 			}
 			else
 				str = fill_var1(str, i, env);
