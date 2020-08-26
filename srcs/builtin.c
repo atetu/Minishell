@@ -19,11 +19,13 @@ int				ft_echo(char **func)
 
 	i = 0;
 	space = 1;
+	if (func[1] && ft_strncmp(func[1], "-n", 3) == 0)
+			space = 0;
 	while (func[++i])
 	{
-		if (ft_strncmp(func[i], "-n", 3) == 0)
-			space = 0;
-		else
+		if (i == 1 && ft_strncmp(func[1], "-n", 3) == 0)
+			;
+		else 
 		{
 			if (write(1, func[i], ft_strlen(func[i])) == -1)
 			{

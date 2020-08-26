@@ -26,11 +26,11 @@ static void		unset_env_var(char *key)
 	}
 }
 
-static void		unset_error_message(char c)
+static void		unset_error_message(char *str)
 {
 	ft_printf_e("bash: ligne 1 : unset: "); // minishell: unset:
 	//ft_printf_e("`%c': not a valid identifier\n", c);
-	ft_printf_e("« %c » : identifiant non valable\n", c);
+	ft_printf_e("« %s » : identifiant non valable\n", str);
 }
 
 int			ft_unset(t_call *call, char **func)
@@ -47,7 +47,7 @@ int			ft_unset(t_call *call, char **func)
 		{
 			if (!ft_isalnum((int)func[i][j]) && func[i][j] != '_')
 			{
-				unset_error_message(func[i][j]);
+				unset_error_message(func[i]);
 				return ((g_exit_nb = EXIT_FAILURE));
 			}
 		}

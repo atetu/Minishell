@@ -19,8 +19,9 @@ void			control_c(int sig)
 	(void)sig;
 	if (!g_pids)
 	{
-		write(1, "\b\b  \b\b\n", 7);
-		g_exit_status = 1;
+	//	write(1, "\b\b  \b\b\n", 7);
+		write(1, "\n", 1);
+		g_exit_status = 130;
 		print();
 	}
 	else
@@ -36,7 +37,7 @@ void			control_c(int sig)
 int				control_d(void)
 {
 	g_exit_nb = g_exit_status;
-	// ft_printf("exit\n");
+	ft_printf("exit\n");
 	return (1);
 }
 
@@ -47,7 +48,7 @@ void			control_quit(int sig)
 	i = -1;
 	if (g_pids)
 	{
-		ft_printf("Quit: %d\n", sig);
+	//	ft_printf("Quit: %d\n", sig); specifique cat
 		while (++i)
 			kill(g_pids[i], 2);
 		g_exit_status = 131;
@@ -56,7 +57,7 @@ void			control_quit(int sig)
 	else
 	{
 		write(1, "\b\b  \b\b", 6);
-		g_exit_status = 0;
+		g_exit_status = 127;
 		g_exit_nb = 127;
 	}
 }
