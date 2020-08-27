@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 21:54:49 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/24 17:33:47 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/27 11:54:41 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int				ft_echo(char **func)
 	i = 0;
 	space = 1;
 	if (func[1] && ft_strncmp(func[1], "-n", 3) == 0)
-			space = 0;
+		space = 0;
 	while (func[++i])
 	{
 		if (i == 1 && ft_strncmp(func[1], "-n", 3) == 0)
 			;
-		else 
+		else
 		{
 			if (write(1, func[i], ft_strlen(func[i])) == -1)
 			{

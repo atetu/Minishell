@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 10:53:30 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/25 10:15:38 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/27 11:52:52 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ void				close_pipes(int pipes[][2], int size);
 void				clean_array(char **array);
 void				clear_all(char *args, t_list **list);
 
-
 /*
 ** Rajout Alice
 */
@@ -138,14 +137,28 @@ int					get_n_args(char *str);
 int					check_closed(char *str);
 void				parse_quotes(char *str);
 int					ft_env1(t_call *call);
-
+char				*fill_var1(char *str, int index, t_list **env);
+char				*fill_var2_error(char **str, int option);
+char				*fill_var2(char *str, int index, t_list **env);
+char				*fill_tilde(char *str, int index);
+int					handle_brackets(char *str, int i, char **key, char **value);
+int					clean_weird(char **key, char **value, char ***str,
+						char **new_str);
+void				check_null_value(char **value);
+int					check_parenthesis(char **str, int i);
+char				*clean_parse_var(char **str);
+char				*check_validity(char *str, int i, t_list **env);
+int					check_first_weird_char(char c, char **key, char **value);
+int					check_second_weird_char(char *str, int i,
+						char **key, char **value);
+int					check_third_weird_char_parenthesis(char *str, int i,
+						int **error);
+int					check_weird_char(char **str, int i, int *error);
 
 /*
 ** Rajout Thomas
 */
 
 void				add_env2(t_call *call, char *key, char *value);
-
-
 
 #endif

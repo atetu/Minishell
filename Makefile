@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: atetu <atetu@student.42.fr>                +#+  +:+       +#+         #
+#    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 08:26:20 by thgermai          #+#    #+#              #
-#    Updated: 2020/08/24 18:09:28 by atetu            ###   ########.fr        #
+#    Updated: 2020/08/27 11:34:10 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,11 +37,16 @@ SRCS = main.c\
 		parse_exec_utiles.c\
 		parse_global_marks.c\
 		parse_global_var.c\
+		parse_global_var_fill.c\
+		parse_global_var_validity.c\
+		parse_global_var_weird.c\
+		parse_global_var_weird_utiles.c\
 		parse_global_var_utiles.c\
 		parse_global_args.c\
 		builtin_env_add.c\
 		builtin_env_export.c\
-		builtin_env_unset.c
+		builtin_env_unset.c\
+		
 OBJS = $(addprefix $(OBJSDIR)/, $(SRCS:.c=.o))
 DPDCS = $(OBJS:.o=.d)
 INCLUDES = -I includes/ -I libft/

@@ -37,7 +37,7 @@ void			control_c(int sig)
 int				control_d(void)
 {
 	g_exit_nb = g_exit_status;
-	ft_printf("exit\n");
+//	ft_printf("exit\n");
 	return (1);
 }
 
@@ -46,6 +46,7 @@ void			control_quit(int sig)
 	int i;
 
 	i = -1;
+	(void)sig;
 	if (g_pids)
 	{
 	//	ft_printf("Quit: %d\n", sig); specifique cat
