@@ -6,11 +6,33 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 21:54:49 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/28 14:45:38 by user42           ###   ########.fr       */
+/*   Updated: 2020/08/28 15:36:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static int		check_flag(char **func, int i)
+{
+	if (i == 1 && !ft_strncmp(func[1], "-n", 3))
+		return (1);
+	if (i > 1)
+	{
+		if (!ft_strncmp(func[i], "-n", 3))
+		{
+			while (i > 1)
+			{
+				if (ft_strncmp(func[i], "-n", 3))
+					break;
+				i--;
+			}
+			if (i == 1)
+				return (1);
+			return (0);
+		}
+	}
+	return (0);
+}
 
 int				ft_echo(char **func)
 {
@@ -23,8 +45,11 @@ int				ft_echo(char **func)
 		space = 0;
 	while (func[++i])
 	{
-		if (i == 1 && ft_strncmp(func[1], "-n", 3) == 0)
+		if (check_flag(func, i))
 			;
+		// if ((i == 1 && !ft_strncmp(func[1], "-n", 3) || (i > 1 &&
+		// 	!ft_strncmp(func[1], "-n", 3) && !ft_strncmp(func[i - 1], "-n", 3))))
+		// 	;
 		else
 		{
 			if (write(1, func[i], ft_strlen(func[i])) == -1)
