@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 18:02:17 by atetu             #+#    #+#             */
-/*   Updated: 2020/08/28 14:32:19 by user42           ###   ########.fr       */
+/*   Updated: 2020/08/28 15:11:23 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ static char		*delete_plus(char *str)
 	return (new_str);
 }
 
-static void	check_add_env(char **func, int i, t_call *call, char *key)
+static void		check_add_env(char **func, int i, t_call *call, char *key)
 {
 	if (ft_strchr(func[i], '='))
 		add_env(call, key, ft_strchr(func[i], '=') + 1, 1);
 }
 
-int			ft_export(t_call *call, char **func)
+int				ft_export(t_call *call, char **func)
 {
 	int			i;
 	char		*key;
