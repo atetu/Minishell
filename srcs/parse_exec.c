@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:45:09 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/24 16:36:38 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/28 14:52:35 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,8 @@ static int		is_dir(char *bin)
 {
 	if (ft_strlen(bin) == 1 && bin[0] == '.')
 	{
-		// ft_printf("bash: .: filename argument required .:\n");
-		// ft_printf("usage: . filename [arguments]\n");
-		ft_printf("bash: .: nom de fichier nécessaire en argument .:\n");
-		ft_printf("utilisation: . nom_fichier [arguments]\n");
+		ft_printf("bash: .: filename argument required .:\n");
+		ft_printf("usage: . filename [arguments]\n");
 		g_exit_status = 2;
 		g_exit_nb = g_exit_status;
 		return (-1);

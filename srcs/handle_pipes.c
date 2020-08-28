@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:31:11 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/24 16:50:46 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/28 14:46:23 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,7 @@ int				create_pipes(t_call *calls, int pipes[][2])
 	{
 		if (pipe(pipes[i]) == -1)
 		{
-			//ft_printf_e("Error: pipe creation failed\n");
-			ft_printf_e("Erreur: la creation du pipe a echoue\n");
+			ft_printf_e("Error: pipe creation failed\n");
 			exit(0);
 		}
 	}

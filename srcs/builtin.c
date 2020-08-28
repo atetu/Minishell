@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 21:54:49 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/27 11:54:41 by user42           ###   ########.fr       */
+/*   Updated: 2020/08/28 14:45:38 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,17 +63,12 @@ int				ft_cd(char **func, t_call *call)
 	i = 0;
 	if (func[1] && func[2])
 	{
-		//ft_printf_e("minishell: cd: too many argments\n");
-		//ft_printf_e("bash: ligne 1: cd: too many argments\n");
-		ft_printf_e("bash: ligne 1 : cd: trop d'arguments\n");
+		ft_printf_e("minishell: cd: too many argments\n");
 		return (EXIT_FAILURE);
 	}
 	else if (func[1] && chdir(func[1]) == -1)
 	{
-		//ft_printf_e("bash: line 1: cd: %s: %s\n", func[1], strerror(errno));
-		//	ft_printf_e("minishell: cd: %s: %s\n", func[1], strerror(errno));
-		ft_printf_e("bash: ligne 1 : cd: %s: Aucun fichier ou dossier de ce type\n", func[1]); // VM Testeur
-		//  ft_printf_e("minishell: cd: %s: Aucun fichier ou dossier de ce type\n", func[1]);i // VM Testeur
+		ft_printf_e("minishell: cd: %s: %s\n", func[1], strerror(errno));
 		return (EXIT_FAILURE);
 	}
 	else if (!func[1])
@@ -95,8 +90,7 @@ int				ft_pwd(void)
 
 	if ((current = getcwd(buf, 512)) == NULL)
 	{
-		//ft_printf_e("Minishell: error: %s\n", strerror(errno));
-		ft_printf_e("bash: line 1: error: %s\n", strerror(errno));
+		ft_printf_e("minishell: error: %s\n", strerror(errno));
 		return (EXIT_FAILURE);
 	}
 	ft_printf("%s\n", current);

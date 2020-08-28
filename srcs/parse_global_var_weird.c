@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 11:22:39 by user42            #+#    #+#             */
-/*   Updated: 2020/08/27 11:44:44 by user42           ###   ########.fr       */
+/*   Updated: 2020/08/28 15:01:31 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int			check_third_weird_char_parenthesis(char *str, int i, int **error)
 	if (!is_valide(str, j, 0) && str[j - 1] != -1)
 	{
 		**error = 1;
-		ft_printf_e("minishell: erreur: parentheses apres le signe $\n");
+		ft_printf_e("minishell: error: parenthesis after $ sign\n");
 		return (1);
 	}
 	else

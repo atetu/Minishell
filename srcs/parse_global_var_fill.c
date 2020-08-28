@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 11:30:50 by user42            #+#    #+#             */
-/*   Updated: 2020/08/27 11:31:52 by user42           ###   ########.fr       */
+/*   Updated: 2020/08/28 14:54:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ char	*fill_var2_error(char **str, int option)
 {
 	free(*str);
 	if (option == 1)
-		ft_printf_e("Minishell: erreur : absence de }\n");
+		ft_printf_e("minishell: error : missing '}'\n");
 	else if (option == 2)
-		ft_printf_e("minishell: ${} : mauvaise substitution\n");
+		ft_printf_e("minishell: ${} : bad substitution\n");
 	else if (option == 3)
-		ft_printf_e("Minishell: erreur : absence de }\n");
+		ft_printf_e("minishell: error : missing '}'\n");
 	return (NULL);
 }
 

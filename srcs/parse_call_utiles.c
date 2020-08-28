@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_call_utiles.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 15:55:52 by atetu             #+#    #+#             */
-/*   Updated: 2020/08/24 15:56:01 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/28 14:49:14 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,7 @@ int		get_fd(char *str, int option)
 		fd = open(file_name, O_RDWR | O_CREAT | O_APPEND,
 			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (fd == -1)
-	{
-		ft_printf_e("bash: ligne 1: %s: Aucun fichier ou dossier de ce type\n", file_name);
-		//ft_printf_e("bash: ligne 1: %s: %s\n", file_name, strerror(errno));
-	//	ft_printf_e("minishell: %s: %s\n", file_name, strerror(errno));    //suppression "Error"
-	}
+		ft_printf_e("minishell: %s: %s\n", file_name, strerror(errno));
 	free(file_name);
 	return (fd);
 }

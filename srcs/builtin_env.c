@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 17:24:16 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/24 18:08:45 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/28 14:42:26 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,13 @@ int				ft_env1(t_call *call)
 	t_list		*current;
 	t_list		**sorted_list;
 	char		*key;
-//	char		*temp;
 
 	sorted_list = sort_var_env(call->env);
 	current = *sorted_list;
-	//temp = ft_strjoin(get_cwd(), "/./minishell");
 	while (current)
 	{
 		key = get_key((char *)current->content);
-		if (!ft_strncmp(key, "_=", 3))// && ft_strncmp(find_value(key, call->env, 1) + 2, temp, ft_strlen(temp))). N'affiche pas dans VM _ pour export
+		if (!ft_strncmp(key, "_=", 3))
 			free(key);
 		else
 			write_env1(key, call, current);
@@ -76,6 +74,5 @@ int				ft_env1(t_call *call)
 	}
 	ft_lstclear(sorted_list, &free);
 	free(sorted_list);
-	//free(temp);
 	return (EXIT_SUCCESS);
 }

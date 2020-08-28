@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:27:19 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/24 17:37:54 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/28 15:02:42 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ static int		exec_input(char *str, t_list **env)
 	exit_info = 0;
 	if (!(g_pids = malloc(sizeof(pid_t) * (get_n_pipes(str, 0) + 2))))
 	{
-		//ft_printf_e("Minishell: error: malloc failed\n");
-		ft_printf_e("Minishell: ereur: le malloc a échoué\n");
+		ft_printf_e("minishell: error: malloc failed\n");
 		return (-1);
 	}
 	g_pids[get_n_pipes(str, 0) + 1] = 0;
@@ -76,7 +75,7 @@ static void		set_g_home(t_list **list)
 
 void			print(void)
 {
-//	ft_printf("\033[1;32mMINISHELL \033[0m 👉 ");
+	ft_printf("\033[1;32mMINISHELL \033[0m 👉 ");
 }
 
 void			prompt(char **env)

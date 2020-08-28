@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_semicolons.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/01 15:24:14 by atetu             #+#    #+#             */
-/*   Updated: 2020/08/24 16:42:21 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/28 15:02:13 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ static int		syntax_error(void)
 {
 	g_exit_status = 258;
 	g_exit_nb = 2;
-	ft_printf_e("bash: line 1: erreur de syntaxe près du symbole inattendu « ; »\n");
-	//ft_printf_e("bash: line 1: syntax error near unexpected token ';'\n");  // JUSTE POUR LEs TESTS
-	//	ft_printf_e("minihell: syntax error near unexpected token ';'\n");
+	ft_printf_e("minihell: syntax error near unexpected token ';'\n");
 	return (-1);
 }
 

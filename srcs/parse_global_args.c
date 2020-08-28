@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_global_args.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 17:30:13 by atetu             #+#    #+#             */
-/*   Updated: 2020/08/25 10:14:14 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/28 14:52:57 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ int		check_closed(char *str)
 	}
 	if (in_dquote || in_quote)
 	{
-		//ft_printf_e("Minishell: error: arguments not closed\n");
-		ft_printf_e("Minishell: erreur: guillemets non fermés\n");
+		ft_printf_e("minishell: error: arguments not closed\n");
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env_unset.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 17:59:26 by atetu             #+#    #+#             */
-/*   Updated: 2020/08/24 17:59:47 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/28 14:34:12 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,8 @@ static void		unset_env_var(char *key)
 
 static void		unset_error_message(char *str)
 {
-	ft_printf_e("bash: ligne 1 : unset: "); // minishell: unset:
-	//ft_printf_e("`%c': not a valid identifier\n", c);
-	ft_printf_e("« %s » : identifiant non valable\n", str);
+	ft_printf_e("minishell : unset: ");
+	ft_printf_e("'%s' : not a valid identifier\n", str);
 }
 
 int			ft_unset(t_call *call, char **func)

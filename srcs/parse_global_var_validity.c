@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/27 11:20:49 by user42            #+#    #+#             */
-/*   Updated: 2020/08/27 11:51:24 by user42           ###   ########.fr       */
+/*   Updated: 2020/08/28 15:00:35 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,21 @@ int			check_parenthesis(char **str, int i)
 	if ((*str)[i + 1] == ')')
 	{
 		ft_printf_e("minishell: ");
-		ft_printf_e("erreur de syntaxe près du symbole inattendu « ) »\n");
+		ft_printf_e("syntax error near unexpected token ')'\n");
 		free(*str);
 		*str = NULL;
 		return (1);
 	}
 	else if (((*str)[i + 1]) == '(')
 	{
-		ft_printf_e("minishell: parenthese non fermee\n");
+		ft_printf_e("minishell: non closed parenthesis\n");
 		free(*str);
 		*str = NULL;
 		return (1);
 	}
 	else if (((*str)[i + 1]) == '[')
 	{
-		ft_printf_e("minishell: crochet non ferme\n");
+		ft_printf_e("minishell: non closed bracket\n");
 		free(*str);
 		*str = NULL;
 		return (1);
