@@ -6,7 +6,7 @@
 #    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 08:26:20 by thgermai          #+#    #+#              #
-#    Updated: 2020/08/27 11:34:10 by user42           ###   ########.fr        #
+#    Updated: 2020/08/30 13:57:00 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,9 +82,11 @@ $(OBJSDIR) :
 
 clean :
 	@(rm -f $(NAME))
+	@(make clean -C libft/)
 
 fclean : clean
 	@(rm -rf $(OBJSDIR))
+	@(make fclean -C libft/)
 
 git : fclean
 	@(make fclean -C libft)

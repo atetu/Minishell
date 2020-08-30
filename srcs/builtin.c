@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 21:54:49 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/28 15:36:26 by user42           ###   ########.fr       */
+/*   Updated: 2020/08/30 12:56:35 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int		check_flag(char **func, int i)
 			while (i > 1)
 			{
 				if (ft_strncmp(func[i], "-n", 3))
-					break;
+					break ;
 				i--;
 			}
 			if (i == 1)
@@ -47,9 +47,6 @@ int				ft_echo(char **func)
 	{
 		if (check_flag(func, i))
 			;
-		// if ((i == 1 && !ft_strncmp(func[1], "-n", 3) || (i > 1 &&
-		// 	!ft_strncmp(func[1], "-n", 3) && !ft_strncmp(func[i - 1], "-n", 3))))
-		// 	;
 		else
 		{
 			if (write(1, func[i], ft_strlen(func[i])) == -1)

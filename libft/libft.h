@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 10:28:33 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/03 15:14:46 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/30 12:48:56 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # define VALID_FLAGS "-.0*"
 # define LEFT 1
 # define RIGHT 0
-
 
 typedef struct		s_list
 {
@@ -59,7 +58,7 @@ int					ft_find_in(char *str, char c);
 int					ft_exit(int ret, int n, ...);
 int					ft_lstsize(t_list	*lst);
 int					ft_atoi(const char *str);
-unsigned long long 	ft_atoll(const char *str);
+unsigned long long	ft_atoll(const char *str);
 int					get_next_line(int fd, char **line, int *go_on);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);

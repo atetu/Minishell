@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:27:19 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/28 15:15:15 by user42           ###   ########.fr       */
+/*   Updated: 2020/08/30 13:43:22 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void		set_g_home(t_list **list)
 
 void			print(void)
 {
-//	ft_printf("\033[1;32mMINISHELL \033[0m 👉 ");
+	ft_printf("\033[1;32mMINISHELL \033[0m 👉 ");
 }
 
 void			prompt(char **env)

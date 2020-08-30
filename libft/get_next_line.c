@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 09:50:56 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/14 16:50:29 by atetu            ###   ########.fr       */
+/*   Updated: 2020/08/30 12:47:38 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int				get_next_line(int fd, char **line, int *go_on)
 		return (ft_exit_ret(-1, &buffer, &stock[fd]));
 	if (!stock[fd])
 		stock[fd] = (char *)ft_calloc(sizeof(char), 1);
-	while (!ft_strchr(buffer, '\n') && ((ret = read(fd, buffer, //ret = 0 et *go_on : cas ou on a tape qqch dans le prompt puis ctrl d -> assimile a EOF mais doit effacer le Ctrl d et continuer
+	while (!ft_strchr(buffer, '\n') && ((ret = read(fd, buffer,
 	BUFFER_SIZE)) > 0 || (ret == 0 && *go_on)))
 	{
 		if (ret == -1)
