@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:27:19 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/30 13:43:22 by user42           ###   ########.fr       */
+/*   Updated: 2020/08/31 15:47:00 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int		exec_input(char *str, t_list **env)
 	return (0);
 }
 
-static int		parse_args(char *args, t_list **list)
+int				parse_args(char *args, t_list **list)
 {
 	char	**split_args;
 	int		i;
@@ -62,7 +62,7 @@ static int		parse_args(char *args, t_list **list)
 	return (ret);
 }
 
-static void		set_g_home(t_list **list)
+void			set_g_home(t_list **list)
 {
 	char		*value;
 
@@ -75,26 +75,24 @@ static void		set_g_home(t_list **list)
 
 void			print(void)
 {
-	ft_printf("\033[1;32mMINISHELL \033[0m 👉 ");
+//	ft_printf_e("\033[1;32mMINISHELL \033[0m👉 ");
 }
 
 void			prompt(char **env)
 {
 	char		*args;
 	t_list		**list;
-	char		**split_args;
 	int			go_on;
 
 	go_on = 0;
 	list = tab_to_list(env);
 	set_g_home(list);
 	args = NULL;
-	split_args = NULL;
 	while (1)
 	{
 		g_pids = NULL;
 		print();
-		if (!(get_next_line(0, &args, &go_on)))
+		if (!get_input(&args, &go_on, 1))
 			if (control_d())
 				break ;
 		if (ft_strlen(args))

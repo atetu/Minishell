@@ -106,7 +106,7 @@ int				ft_builtin_exit(char **func, int *exit_info)
 	neg = 0;
 	while (func[++i])
 		arg++;
-	ft_printf("exit\n");
+	//ft_printf("exit\n");
 	if (arg >= 2)
 	{
 		if ((ret = check_numeric_argument(func[1], &neg)) != 0)

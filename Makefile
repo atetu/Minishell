@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
+#    By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 08:26:20 by thgermai          #+#    #+#              #
-#    Updated: 2020/08/30 13:57:00 by user42           ###   ########.fr        #
+#    Updated: 2020/08/31 14:09:10 by thgermai         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,12 +46,12 @@ SRCS = main.c\
 		builtin_env_add.c\
 		builtin_env_export.c\
 		builtin_env_unset.c\
-		
+		get_input.c
 OBJS = $(addprefix $(OBJSDIR)/, $(SRCS:.c=.o))
 DPDCS = $(OBJS:.o=.d)
 INCLUDES = -I includes/ -I libft/
 LIB = libft/libft.a
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror
 LOGFILE = $(LOGPATH) `date +'%y.%m.%d %H:%M:%S'`
 MSG = ---
 
@@ -63,7 +63,7 @@ all : $(NAME)
 -include $(DPDCS)
 
 fg : $(LIB) $(OBJS)
-	@(clang $(CFLAGS) -g3 -fsanitize=address $(OBJS) $(LIB) $(INCLUDES) -o $(NAME))
+	@(clang $(CFLAGS) $(OBJS) $(LIB) $(INCLUDES) -o $(NAME))
 	@(echo "$(NAME) created")
 
 $(NAME) : $(LIB) $(OBJS)
