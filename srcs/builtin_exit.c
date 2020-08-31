@@ -88,10 +88,18 @@ static int		check_sec_round_arg(char *func, int arg, int neg)
 	return (EXIT_SUCCESS);
 }
 
-static void		numeric_error(char *func)
+static void		print_exit(char *str, int opt)
 {
-	ft_printf_e("minishell: exit: %s: numeric argument required\n", func);
-	g_exit_nb = 2;
+	if (opt == 1)
+	{
+		if (!g_file)
+			ft_printf("%s\n", str);
+	}
+	else if (opt == 2)
+	{
+		ft_printf_e("minishell: exit: %s: numeric argument required\n", str);
+		g_exit_nb = 2;
+	}
 }
 
 int				ft_builtin_exit(char **func, int *exit_info)
@@ -106,14 +114,14 @@ int				ft_builtin_exit(char **func, int *exit_info)
 	neg = 0;
 	while (func[++i])
 		arg++;
-	//ft_printf("exit\n");
+	print_exit("exit", 1);
 	if (arg >= 2)
 	{
 		if ((ret = check_numeric_argument(func[1], &neg)) != 0)
 			if (check_sec_round_arg(func[1], arg, neg))
 				return (EXIT_FAILURE);
 		if (ret == 0)
-			numeric_error(func[1]);
+			print_exit(func[1], 2);
 	}
 	i = -1;
 	if (g_pids)

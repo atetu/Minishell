@@ -36,7 +36,8 @@ void			control_c(int sig)
 int				control_d(void)
 {
 	g_exit_nb = g_exit_status;
-//	ft_printf("exit\n");
+	if (!g_file)
+		ft_printf("exit\n");
 	return (1);
 }
 

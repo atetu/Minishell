@@ -85,7 +85,7 @@ int				ft_cd(char **func, t_call *call)
 	i = 0;
 	if (func[1] && func[2])
 	{
-		ft_printf_e("minishell: cd: too many argments\n");
+		ft_printf_e("minishell: cd: too many arguments\n");
 		return (EXIT_FAILURE);
 	}
 	else if (func[1] && chdir(func[1]) == -1)

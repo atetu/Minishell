@@ -47,6 +47,7 @@ char				*g_oldpwd;
 int					g_ret;
 char				*g_home;
 char				*g_last;
+int					g_file;
 
 /*
 **	-- Functions --
