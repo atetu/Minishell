@@ -18,7 +18,7 @@ static int		ft_exit_ret(int ret, char **buffer, char **stock)
 	{
 		if (*buffer)
 			free(*buffer);
-		if (ret == 0 && *stock)
+		if (*stock)
 			free(*stock);
 	}
 	if (ret == -1)
