@@ -14,7 +14,7 @@
 
 static int		syntax_error(void)
 {
-	g_exit_status = 258;
+	g_exit_status = 2;
 	g_exit_nb = 2;
 	ft_printf_e("minihell: syntax error near unexpected token ';'\n");
 	return (-1);

@@ -18,6 +18,8 @@ int			check_parenthesis(char **str, int i)
 	{
 		ft_printf_e("minishell: ");
 		ft_printf_e("syntax error near unexpected token ')'\n");
+		g_exit_status = 2;
+		g_exit_nb = g_exit_status;
 		free(*str);
 		*str = NULL;
 		return (1);
