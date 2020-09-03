@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 21:54:49 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/30 12:56:35 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/02 17:24:00 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,30 @@ static void		handle_env_var(t_call *call)
 		add_env(call, "OLDPWD=", g_oldpwd, 1);
 }
 
+static int		check_path(char **str)
+{
+	char			buffer[512];
+	struct stat		stat_buff;
+
+	if (!ft_strncmp(*str, ".", 2))
+	{
+		if (!getcwd(buffer, 512))
+		{
+			ft_printf_e("Minishell: getcwd: ");
+			ft_printf_e("%s: %s\n", PARENT_ERR, strerror(errno));
+			return (-1);
+		}
+	}
+	else if (!ft_strncmp(*str, "-", 2))
+	{
+		free(*str);
+		*str = ft_strdup(g_oldpwd);
+		if (!stat(g_oldpwd, &stat_buff))
+			ft_printf("%s\n", *str);
+	}
+	return (0);
+}
+
 int				ft_cd(char **func, t_call *call)
 {
 	int		i;
@@ -88,7 +112,9 @@ int				ft_cd(char **func, t_call *call)
 		ft_printf_e("minishell: cd: too many arguments\n");
 		return (EXIT_FAILURE);
 	}
-	else if (func[1] && chdir(func[1]) == -1)
+	if (func[1] && check_path(&func[1]) == -1)
+		return (EXIT_FAILURE);
+	if (func[1] && chdir(func[1]) == -1)
 	{
 		ft_printf_e("minishell: cd: %s: %s\n", func[1], strerror(errno));
 		return (EXIT_FAILURE);

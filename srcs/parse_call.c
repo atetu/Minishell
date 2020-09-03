@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_call.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 16:15:55 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/24 15:54:13 by atetu            ###   ########.fr       */
+/*   Updated: 2020/09/03 15:22:24 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int		check_input(t_call *call, int i)
 	{
 		if (call->in != -1)
 			close(call->in);
-		if ((call->in = get_fd(&call->str[i + 1], 1)) == -1)
+		if ((call->in = get_fd(&call->str[i], 1)) == -1)
 			return (-1);
 		return (1);
 	}
@@ -33,11 +33,11 @@ static int		check_output(t_call *call, int i)
 			close(call->out);
 		if (call->str[i + 1] && call->str[i + 1] == '>')
 		{
-			if ((call->out = get_fd(&call->str[i + 2], 3)) == -1)
+			if ((call->out = get_fd(&call->str[i], 3)) == -1)
 				return (-1);
 			i++;
 		}
-		else if ((call->out = get_fd(&call->str[i + 1], 2)) == -1)
+		else if ((call->out = get_fd(&call->str[i], 2)) == -1)
 			return (-1);
 		return (1);
 	}

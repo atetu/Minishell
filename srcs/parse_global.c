@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_global.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 14:48:07 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/27 11:49:52 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/03 15:31:31 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void		parse_backslash(char *str)
+void			parse_backslash(char *str)
 {
 	int			i;
 	int			in_quote;

@@ -6,28 +6,39 @@
 /*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:27:19 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/31 15:47:00 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/09/02 16:16:41 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+static t_call	*init_array(char *str)
+{
+	t_call		*calls;
+	if (!(calls = malloc(sizeof(t_call) * (get_n_pipes(str, 0) + 2))))
+		return (NULL);
+	if (!(g_pids = malloc(sizeof(pid_t) * (get_n_pipes(str, 0) + 2))))
+	{
+		ft_printf_e("minishell: error: malloc failed\n");
+		return (NULL);
+	}
+	return (calls);
+}
+
 static int		exec_input(char *str, t_list **env)
 {
-	t_call		calls[get_n_pipes(str, 0) + 2];
-	int			pipes[get_n_pipes(str, 0)][2];
+	t_call		*calls;
+	int			pipes[get_n_pipes(str, 0)][2]; // a modifier
 	int			i;
 	int			exit_info;
 
 	i = -1;
 	exit_info = 0;
-	if (!(g_pids = malloc(sizeof(pid_t) * (get_n_pipes(str, 0) + 2))))
-	{
-		ft_printf_e("minishell: error: malloc failed\n");
+	if (!(calls = init_array(str)))
 		return (-1);
-	}
 	g_pids[get_n_pipes(str, 0) + 1] = 0;
-	parse_pipes(str, calls);
+	if (parse_pipes(str, calls) == -1)
+		return (0);
 	while (calls[++i].str)
 		parse_call(&calls[i], env);
 	if (i > 1)
@@ -75,7 +86,7 @@ void			set_g_home(t_list **list)
 
 void			print(void)
 {
-	ft_printf_e("\033[1;32mMINISHELL \033[0m👉 ");
+//	ft_printf_e("\033[1;32mMINISHELL \033[0m👉 ");
 }
 
 void			prompt(char **env)

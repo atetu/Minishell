@@ -6,7 +6,7 @@
 /*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 21:49:31 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/24 14:34:38 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/09/03 15:46:04 by thgermai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,51 @@ int				get_n_pipes(char *args, int option)
 {
 	int			i;
 	int			n_pipes;
+	char		*temp;
 
-	i = 0;
+	parse_backslash((temp = ft_strdup(args)));
+	i = -1;
 	n_pipes = 0;
-	while (args[++i])
+	while (temp[++i])
 	{
-		if (args[i] == '|' && !is_valide(args, i, 1) && (i == 0 ||
-			(i > 0 && !is_backslash(args, i - 1))))
+		if (temp[i] == '|' && !is_valide(temp, i, 1) && (i == 0 ||
+			(i > 0 && temp[i - 1] != -1)))
 		{
 			if (option == 1)
+			{
+				free(temp);
 				return (i);
+			}
 			n_pipes++;
 		}
 	}
 	if (option == 1)
+	{
+		free(temp);
 		return (-1);
+	}
+	free(temp);
 	return (n_pipes);
 }
 
-void			parse_pipes(char *str, t_call *calls)
+static int		check_pipes_args(t_call *calls)
+{
+	int			i;
+
+	i = -1;
+	while (calls[++i].str)
+	{
+		if (!ft_strlen(calls[i].str)|| !arg_is_valid(calls[i].str))
+		{
+			ft_printf_e("minishell: syntax error near unexpected token `|'\n");
+			clean_calls(calls);
+			return (-1);
+		}
+	}
+	return (0);
+}
+
+int				parse_pipes(char *str, t_call *calls)
 {
 	int			i;
 	int			last_i;
@@ -50,4 +76,7 @@ void			parse_pipes(char *str, t_call *calls)
 	}
 	calls[i].str = ft_substr(str + last_i, 0, ft_strlen(str + last_i));
 	calls[i + 1].str = NULL;
+	if (check_pipes_args(calls) == -1)
+		return (-1);
+	return (0);
 }
