@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_semicolons.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/01 15:24:14 by atetu             #+#    #+#             */
-/*   Updated: 2020/09/03 15:54:15 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/09/04 16:43:52 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-static int		syntax_error(char **str)
-{
-	free(*str);
-	g_exit_status = 2;
-	g_exit_nb = 2;
-	ft_printf_e("minihell: syntax error near unexpected token ';'\n");
-	return (-1);
-}
-
-static int		result_semicolon(int option, int n_semicolon)
-{
-	if (option == 1)
-		return (-1);
-	return (n_semicolon);
-}
 
 static int		get_n_semicolon(char *args, int option)
 {
@@ -44,23 +28,17 @@ static int		get_n_semicolon(char *args, int option)
 		(i > 0 && temp[i - 1] != -1)))
 		{
 			if (option == 1)
-			{
-				free(temp);
-				return (i);
-			}
+				return (exit_get_n_semicolon(&temp, i));
 			if (i > 0)
 			{
-				j = i - 1;
-				while (j >= 0 && args[j] == ' ')
-					j--;
+				j = go_backward(args, i);
+				if (args[j] == '>' || args[j] == '<')
+					return (syntax_error(&temp));
 			}
-			if (args[j] == '>' || args[j] == '<')
-				return (syntax_error(&temp));
 			n_semicolon++;
 		}
 	}
-	free(temp);
-	return (result_semicolon(option, n_semicolon));
+	return (result_semicolon(&temp, option, n_semicolon));
 }
 
 static char		**handle_error_arg(int i, int n_semicolons, char **tab) // risque de leaks sur le valgrind
@@ -113,6 +91,7 @@ char			**parse_semicolon(char *str)
 	last_i = 0;
 	i = 0;
 	j = 0;
+	//write(1, "1", 1);
 	if ((n_semicolons = get_n_semicolon(str, 0)) == -1)
 		return (NULL);
 	if (!(tab = malloc(sizeof(char *) * (n_semicolons + 2))))
@@ -124,7 +103,9 @@ char			**parse_semicolon(char *str)
 		last_i += ft_strlen(tab[j]) + 1;
 		i++;
 		j++;
+	//	ft_printf("J = %d\n", j);
 	}
+	//ft_printf("la");
 	tab[j] = ft_substr(str + last_i, 0, ft_strlen(str + last_i));
 	tab[j + 1] = NULL;
 	tab = check_args(tab, n_semicolons);

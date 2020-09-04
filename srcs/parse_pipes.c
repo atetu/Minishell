@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   parse_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 21:49:31 by thgermai          #+#    #+#             */
-/*   Updated: 2020/09/03 15:46:04 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/09/04 12:09:25 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static int		return_get_n_pipes(char **temp, int i)
+{
+	free(*temp);
+	return (i);
+}
 
 int				get_n_pipes(char *args, int option)
 {
@@ -27,18 +33,12 @@ int				get_n_pipes(char *args, int option)
 			(i > 0 && temp[i - 1] != -1)))
 		{
 			if (option == 1)
-			{
-				free(temp);
-				return (i);
-			}
+				return (return_get_n_pipes(&temp, i));
 			n_pipes++;
 		}
 	}
 	if (option == 1)
-	{
-		free(temp);
-		return (-1);
-	}
+		return (return_get_n_pipes(&temp, -1));
 	free(temp);
 	return (n_pipes);
 }
@@ -50,7 +50,7 @@ static int		check_pipes_args(t_call *calls)
 	i = -1;
 	while (calls[++i].str)
 	{
-		if (!ft_strlen(calls[i].str)|| !arg_is_valid(calls[i].str))
+		if (!ft_strlen(calls[i].str) || !arg_is_valid(calls[i].str))
 		{
 			ft_printf_e("minishell: syntax error near unexpected token `|'\n");
 			clean_calls(calls);

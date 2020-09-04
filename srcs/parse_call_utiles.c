@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_call_utiles.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 15:55:52 by atetu             #+#    #+#             */
-/*   Updated: 2020/09/03 15:24:35 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/09/04 11:59:51 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int		handle_file_name_error(char *str)
+static int	handle_file_name_error(char *str)
 {
 	while (*str && *str != ' ')
 		str++;
@@ -33,7 +33,26 @@ static int		handle_file_name_error(char *str)
 	return (-1);
 }
 
-int		get_fd(char *str, int option)
+static void	initialize_start(char *str, int *i, int *start)
+{
+	while (str[*i] && str[*i] == ' ')
+		(*i)++;
+	*start = *i;
+}
+
+static void	check_option(int option, int *i)
+{
+	if (option == 3)
+		(*i) = (*i) + 1;
+}
+
+static int	get_fd_exit(int fd, char **file_name)
+{
+	free(*file_name);
+	return (fd);
+}
+
+int			get_fd(char *str, int option)
 {
 	char		*file_name;
 	int			start;
@@ -41,12 +60,9 @@ int		get_fd(char *str, int option)
 	int			fd;
 
 	i = 1;
-	if (option == 3)
-		i++;
+	check_option(option, &i);
 	fd = 0;
-	while (str[i] && str[i] == ' ')
-		i++;
-	start = i;
+	initialize_start(str, &i, &start);
 	if (ft_strchr("<>", str[i]))
 		return (handle_file_name_error(str + i - 1));
 	while (str[i] && str[i] != ' ')
@@ -62,6 +78,5 @@ int		get_fd(char *str, int option)
 			S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (fd == -1)
 		ft_printf_e("minishell: %s: %s\n", file_name, strerror(errno));
-	free(file_name);
-	return (fd);
+	return (get_fd_exit(fd, &file_name));
 }

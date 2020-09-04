@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:31:11 by thgermai          #+#    #+#             */
-/*   Updated: 2020/09/02 16:43:01 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/09/04 14:20:43 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void			wait_pids(pid_t *pids, int size, t_call *calls)
 	}
 }
 
-void			manage_pipes(t_call *calls, int pipes[][2],
+void			manage_pipes(t_call *calls, int **pipes,
 	char *str, int *exit_info)
 {
 	int i;
@@ -47,7 +47,7 @@ void			manage_pipes(t_call *calls, int pipes[][2],
 	wait_pids(g_pids, get_n_pipes(str, 0) + 1, calls);
 }
 
-int				create_pipes(t_call *calls, int pipes[][2])
+int				create_pipes(t_call *calls, int **pipes)
 {
 	int			i;
 	int			size;
@@ -70,7 +70,7 @@ int				create_pipes(t_call *calls, int pipes[][2])
 	return (size);
 }
 
-void			connect_pipes(t_call *calls, int pipes[][2], int n_pipes)
+void			connect_pipes(t_call *calls, int **pipes, int n_pipes)
 {
 	int			i;
 

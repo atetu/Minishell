@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:25:17 by thgermai          #+#    #+#             */
-/*   Updated: 2020/09/02 16:15:26 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/09/04 16:17:53 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,24 @@ void			clean_calls(t_call *calls)
 	free(calls);
 }
 
-void			close_pipes(int pipes[][2], int size)
+void			clean_pipes(int **pipes, int n_pipes)
+{
+	int			i;
+
+	i = 0;
+	if (n_pipes)
+	{
+		while (i < n_pipes)
+		{
+			free(pipes[i]);
+			i++;
+		}
+	}
+	if (pipes)
+		free(pipes);
+}
+
+void			close_pipes(int **pipes, int size)
 {
 	int			i;
 

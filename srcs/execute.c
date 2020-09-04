@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:47:56 by thgermai          #+#    #+#             */
-/*   Updated: 2020/09/02 16:36:20 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/09/04 14:23:30 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static pid_t	exit_exec1(char ***func, char ***env_var,
 	return (pid);
 }
 
-pid_t			exec1(t_call *call, int pipes[][2], int size, int *exit_info)
+pid_t			exec1(t_call *call, int **pipes, int size, int *exit_info)
 {
 	char		**func;
 	pid_t		pid;

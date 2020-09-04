@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 10:53:30 by thgermai          #+#    #+#             */
-/*   Updated: 2020/09/03 15:31:56 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/09/04 15:09:04 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ char				**parse_semicolon(char *str);
 int					get_n_pipes(char *args, int option);
 int					parse_pipes(char *str, t_call *calls);
 void				parse_call(t_call *call, t_list **env);
-int					create_pipes(t_call *calls, int pipes[][2]);
-void				connect_pipes(t_call *calls, int pipes[][2], int n_pipes);
-pid_t				exec1(t_call *call, int pipes[][2], int size,
+int					create_pipes(t_call *calls, int **pipes);
+void				connect_pipes(t_call *calls, int **pipes, int n_pipes);
+pid_t				exec1(t_call *call, int **pipes, int size,
 	int *exit_info);
 void				exec2(t_call *call, int *exit_info);
 void				wait_pids(pid_t *pids, int size, t_call *calls);
@@ -100,7 +100,7 @@ int					known_func(char *str);
 char				*find_value(char *str, t_list **env, int opt);
 char				*get_cwd(void);
 void				clean_calls(t_call *calls);
-void				close_pipes(int pipes[][2], int size);
+void				close_pipes(int **pipes, int size);
 void				clean_array(char **array);
 void				clear_all(char *args, t_list **list);
 int					get_fd(char *str, int option);
@@ -112,7 +112,7 @@ int					check_existing_path(char **path, char ***paths,
 char				*check_is_file(char *bin, char *original_bin);
 void				clean_exec(char **paths[], char **bin, char **original_bin);
 void				handle_error(int ret, char *var, char *original_bin);
-void				manage_pipes(t_call *calls, int pipes[][2],
+void				manage_pipes(t_call *calls, int **pipes,
 	char *str, int *exit_info);
 char				*delete_marks(char *str, int j);
 char				*replace_marks(char *str);
@@ -148,5 +148,12 @@ int					check_weird_char(char **str, int i, int *error);
 void				add_env2(t_call *call, char *key, char *value);
 int					arg_is_valid(char *str);
 void				parse_backslash(char *str);
+int					syntax_error(char **str);
+int					result_semicolon(char **temp, int option, int n_semicolon);
+int					exit_get_n_semicolon(char **temp, int i);
+int					go_backward(char *args, int i);
+void				clean_pipes(int **pipes, int n_pipes);
+t_call				*init_array(char *str);
+int					init_pipes(int n_pipes, int ***pipes);
 
 #endif

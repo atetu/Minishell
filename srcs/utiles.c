@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utiles.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: thgermai <thgermai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 23:43:21 by thgermai          #+#    #+#             */
-/*   Updated: 2020/09/02 16:54:23 by thgermai         ###   ########.fr       */
+/*   Updated: 2020/09/04 13:51:25 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,58 +43,6 @@ int				known_func(char *str)
 	return (0);
 }
 
-int				is_valide(char *str, int index, int option)
-{
-	int			i;
-	int			in_quote;
-	int			in_dquote;
-
-	i = 0;
-	in_quote = 0;
-	in_dquote = 0;
-	while (str[i] && i < index)
-	{
-		if (str[i] == '"' && (i == 0 || (i > 0 && (str[i - 1] != -1)))
-			&& !in_quote)
-			in_dquote == 1 ? in_dquote-- : in_dquote++;
-		else if (str[i] == '\'' && (i == 0 || (i > 0 && (str[i - 1] != -1)))
-			&& !in_dquote)
-			in_quote == 1 ? in_quote-- : in_quote++;
-		i++;
-	}
-	if (!option && str[i] && !in_quote)
-		return (EXIT_SUCCESS);
-	if (option && !in_quote && !in_dquote)
-		return (EXIT_SUCCESS);
-	return (EXIT_FAILURE);
-}
-
-int				is_valide2(char *str, int index, int option) // n'est pas bon
-{
-	int			i;
-	int			in_quote;
-	int			in_dquote;
-
-	i = 0;
-	in_quote = 0;
-	in_dquote = 0;
-	while (str[i] && i < index)
-	{
-		if (str[i] == '"' && (i == 0 || (i > 0 && (str[i - 1] != '\\')))
-			&& !in_quote)
-			in_dquote == 1 ? in_dquote-- : in_dquote++;
-		else if (str[i] == '\'' && (i == 0 || (i > 0 && (str[i - 1] != '\\')))
-			&& !in_dquote)
-			in_quote == 1 ? in_quote-- : in_quote++;
-		i++;
-	}
-	if (!option && str[i] && !in_quote)
-		return (EXIT_SUCCESS);
-	if (option && !in_quote && !in_dquote)
-		return (EXIT_SUCCESS);
-	return (EXIT_FAILURE);
-}
-
 int				is_backslash(char *str, int index)
 {
 	int			backslash;
@@ -110,7 +58,7 @@ int				is_backslash(char *str, int index)
 	return (0);
 }
 
-int			arg_is_valid(char *str)
+int				arg_is_valid(char *str)
 {
 	int			i;
 

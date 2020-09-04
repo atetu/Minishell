@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: atetu <atetu@student.42.fr>                +#+  +:+       +#+         #
+#    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/03 14:34:05 by thgermai          #+#    #+#              #
-#    Updated: 2020/08/03 15:04:55 by atetu            ###   ########.fr        #
+#    Updated: 2020/09/04 16:37:27 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,7 +89,7 @@ PRINTF_OBJS = $(addprefix $(OBJSDIR)/, $(PRINTF_SRCS:.c=.o))
 DPDCS = $(OBJS:.o=.d)
 
 INCLUDES = -I ./libft.h
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 LOGFILE = $(LOGPATH) `date +'%y.%m.%d %H:%M:%S'`
 MSG = ---
 
