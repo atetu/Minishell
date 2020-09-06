@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 13:50:56 by user42            #+#    #+#             */
-/*   Updated: 2020/09/04 13:51:28 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/05 11:28:20 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int				is_valide(char *str, int index, int option)
 	return (EXIT_FAILURE);
 }
 
-int				is_valide2(char *str, int index, int option) // n'est pas bon
+int				is_valide2(char *str, int index, int option)
 {
 	int			i;
 	int			in_quote;

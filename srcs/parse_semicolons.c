@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/01 15:24:14 by atetu             #+#    #+#             */
-/*   Updated: 2020/09/04 16:43:52 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/05 11:11:31 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ char			**parse_semicolon(char *str)
 	last_i = 0;
 	i = 0;
 	j = 0;
-	//write(1, "1", 1);
 	if ((n_semicolons = get_n_semicolon(str, 0)) == -1)
 		return (NULL);
 	if (!(tab = malloc(sizeof(char *) * (n_semicolons + 2))))
@@ -103,9 +102,7 @@ char			**parse_semicolon(char *str)
 		last_i += ft_strlen(tab[j]) + 1;
 		i++;
 		j++;
-	//	ft_printf("J = %d\n", j);
 	}
-	//ft_printf("la");
 	tab[j] = ft_substr(str + last_i, 0, ft_strlen(str + last_i));
 	tab[j + 1] = NULL;
 	tab = check_args(tab, n_semicolons);

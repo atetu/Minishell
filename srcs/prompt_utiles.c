@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/04 15:07:15 by user42            #+#    #+#             */
-/*   Updated: 2020/09/04 16:46:13 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/05 11:27:39 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void			print(void)
 //	ft_printf_e("\033[1;32mMINISHELL \033[0m👉 ");
 }
 
-t_call          *init_array(char *str)
+t_call			*init_array(char *str)
 {
 	t_call		*calls;
 
@@ -31,17 +31,15 @@ t_call          *init_array(char *str)
 	return (calls);
 }
 
-int             init_pipes(int n_pipes, int ***pipes)
+int				init_pipes(int n_pipes, int ***pipes)
 {
 	int i;
-	
+
 	i = 0;
-   // ft_printf("n: %d\n", n_pipes);
-    
 	if (n_pipes)
 	{
-        if (!(*pipes = malloc(sizeof(int *) * n_pipes))) // a checker
-                return (0);
+		if (!(*pipes = malloc(sizeof(int *) * n_pipes)))
+			return (0);
 		while (i < n_pipes)
 		{
 			(*pipes)[i] = NULL;

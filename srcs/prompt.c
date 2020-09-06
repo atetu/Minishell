@@ -6,31 +6,39 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:27:19 by thgermai          #+#    #+#             */
-/*   Updated: 2020/09/04 16:39:40 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/05 11:24:40 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+static int		result_exec_input(t_call *calls, int **pipes, int n_pipes,
+					int exit_info)
+{
+	clean_calls(calls);
+	clean_pipes(pipes, n_pipes);
+	free(g_pids);
+	if (exit_info == 1)
+		return (-1);
+	return (0);
+}
+
 static int		exec_input(char *str, t_list **env)
 {
 	t_call		*calls;
-	int 		**pipes;
+	int			**pipes;
 	int			i;
 	int			exit_info;
-	int 		n_pipes;
+	int			n_pipes;
 
 	i = -1;
 	exit_info = 0;
 	if (!(calls = init_array(str)))
 		return (-1);
-	//ft_printf("1\n");
 	pipes = NULL;
 	n_pipes = get_n_pipes(str, 0);
-//	ft_printf("2\n");
 	if (!(init_pipes(n_pipes, &pipes)))
 		return (-1);
-//	ft_printf("3\n");
 	g_pids[get_n_pipes(str, 0) + 1] = 0;
 	if (parse_pipes(str, calls) == -1)
 		return (0);
@@ -38,15 +46,9 @@ static int		exec_input(char *str, t_list **env)
 		parse_call(&calls[i], env);
 	if (i > 1)
 		manage_pipes(calls, pipes, str, &exit_info);
-	
 	else
 		exec2(&calls[0], &exit_info);
-	clean_calls(calls);
-	clean_pipes(pipes, n_pipes);
-	free(g_pids);
-	if (exit_info == 1)
-		return (-1);
-	return (0);
+	return (result_exec_input(calls, pipes, n_pipes, exit_info));
 }
 
 int				parse_args(char *args, t_list **list)
@@ -61,15 +63,10 @@ int				parse_args(char *args, t_list **list)
 	if (ft_strlen(args))
 	{
 		split_args = parse_semicolon(args);
-	//	ft_printf("ici\n");
 		if (split_args)
 			while (split_args[++i])
-			{
-			//	ft_printf("entree\n");
 				if ((ret = exec_input(split_args[i], list)) == -1)
 					break ;
-			//	ft_printf("sortie\n");
-			}
 	}
 	clean_array(split_args);
 	return (ret);
