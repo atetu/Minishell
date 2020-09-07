@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:27:19 by thgermai          #+#    #+#             */
-/*   Updated: 2020/09/05 11:24:40 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/07 16:02:56 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ static int		exec_input(char *str, t_list **env)
 	pipes = NULL;
 	n_pipes = get_n_pipes(str, 0);
 	if (!(init_pipes(n_pipes, &pipes)))
-		return (-1);
+		return (result_exec_input(calls, pipes, n_pipes, -1));
 	g_pids[get_n_pipes(str, 0) + 1] = 0;
 	if (parse_pipes(str, calls) == -1)
-		return (0);
+		return (result_exec_input(calls, pipes, n_pipes, 0));
 	while (calls[++i].str)
 		parse_call(&calls[i], env);
 	if (i > 1)
@@ -96,6 +96,7 @@ void			prompt(char **env)
 	while (1)
 	{
 		g_pids = NULL;
+		g_error = 0;
 		print();
 		if (!get_input(&args, &go_on, 1))
 			if (control_d())

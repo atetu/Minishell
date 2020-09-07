@@ -6,7 +6,7 @@
 #    By: user42 <user42@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/09 08:26:20 by thgermai          #+#    #+#              #
-#    Updated: 2020/09/04 16:35:34 by user42           ###   ########.fr        #
+#    Updated: 2020/09/07 17:42:13 by user42           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRCS = main.c\
 		parse_pipes.c\
 		parse_semicolons.c\
 		parse_semicolons_utiles.c\
+		parse_semicolons_utiles_errors.c\
 		prompt.c\
 		prompt_utiles.c\
 		shlvl.c\
@@ -55,7 +56,7 @@ OBJS = $(addprefix $(OBJSDIR)/, $(SRCS:.c=.o))
 DPDCS = $(OBJS:.o=.d)
 INCLUDES = -I includes/ -I libft/
 LIB = libft/libft.a
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror
 LOGFILE = $(LOGPATH) `date +'%y.%m.%d %H:%M:%S'`
 MSG = ---
 

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/30 16:10:54 by atetu             #+#    #+#             */
-/*   Updated: 2020/08/30 13:48:05 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/07 17:47:54 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void			control_c(int sig)
 int				control_d(void)
 {
 	g_exit_nb = g_exit_status;
-//	if (!g_file)
-//		ft_printf("exit\n");
+	if (!g_file)
+		ft_printf("exit\n");
 	return (1);
 }
 

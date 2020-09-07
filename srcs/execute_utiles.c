@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_utiles.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atetu <atetu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 22:48:42 by thgermai          #+#    #+#             */
-/*   Updated: 2020/08/24 16:24:22 by atetu            ###   ########.fr       */
+/*   Updated: 2020/09/07 16:01:14 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,16 @@ int				check_call_in(int in)
 {
 	if (in == -1)
 	{
-		g_exit_status = 1;
-		g_exit_nb = 1;
+		if (g_error)
+		{
+			g_exit_status = 2;
+			g_exit_nb = 2;
+		}
+		else
+		{
+			g_exit_status = 1;
+			g_exit_nb = 1;
+		}
 		return (0);
 	}
 	return (1);

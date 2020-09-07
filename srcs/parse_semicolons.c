@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/01 15:24:14 by atetu             #+#    #+#             */
-/*   Updated: 2020/09/05 11:11:31 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/07 15:05:46 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,43 +41,66 @@ static int		get_n_semicolon(char *args, int option)
 	return (result_semicolon(&temp, option, n_semicolon));
 }
 
-static char		**handle_error_arg(int i, int n_semicolons, char **tab) // risque de leaks sur le valgrind
+static void		check_pipes(char **tab, int i, char *s, int *pipe)
 {
-	if (i < n_semicolons)
+	int j;
+	int x;
+
+	j = -1;
+	if (!s && *pipe)
+		return ;
+	while (tab[++j] && j <= i)
 	{
-		i = -1;
-		while (tab[++i])
-			free(tab[i]);
-		free(tab);
-		return (NULL);
+		if (ft_strnstr(tab[j], "||", ft_strlen(tab[j])))
+		{
+			error_pipe(pipe);
+			return ;
+		}
+		x = 0;
+		while (tab[j][x] == ' ')
+			x++;
+		if (tab[j][x] == '|')
+		{
+			error_pipe(pipe);
+			return ;
+		}
 	}
-	return (tab);
+	error_semi(s);
+}
+
+static void		free_tab(char ***tab, int n_semicolons)
+{
+	free((*tab)[n_semicolons + 1]);
+	(*tab)[n_semicolons] = NULL;
 }
 
 static char		**check_args(char **tab, int n_semicolons)
 {
 	int			i;
+	int			pipe;
 
 	i = -1;
+	pipe = 0;
 	while (tab[++i + 1])
 	{
 		if (tab[i + 1] && !ft_strlen(tab[i + 1]) && i < n_semicolons - 1)
 		{
-			ft_printf_e("bash: syntax error near unexpected token `;;'\n");
+			check_pipes(tab, i, ";;", &pipe);
 			break ;
 		}
 		else if (!ft_strlen(tab[i]) || !arg_is_valid(tab[i]))
 		{
-			ft_printf_e("bash: syntax error near unexpected token `;'\n");
+			check_pipes(tab, i, ";", &pipe);
 			break ;
 		}
 	}
-	if (!ft_strlen(tab[n_semicolons]) && i == n_semicolons)
+	if (!ft_strlen(tab[n_semicolons]) && i == n_semicolons && !pipe)
 	{
-		free(tab[n_semicolons + 1]);
-		tab[n_semicolons] = NULL;
+		check_pipes(tab, i, NULL, &pipe);
+		if (!pipe)
+			free_tab(&tab, n_semicolons);
 	}
-	return (handle_error_arg(i, n_semicolons, tab));
+	return (handle_error_arg(i, n_semicolons, tab, pipe));
 }
 
 char			**parse_semicolon(char *str)

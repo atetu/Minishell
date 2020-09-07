@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 10:53:30 by thgermai          #+#    #+#             */
-/*   Updated: 2020/09/04 15:09:04 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/07 17:49:13 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <signal.h>
 
 # define PARENT_ERR "can't access to parent directory"
-# define SYNTAX_ERR "sytanx error near unexpected token"
+# define SYNTAX_ERR "syntax error near unexpected token"
 
 typedef	struct		s_call
 {
@@ -49,6 +49,7 @@ int					g_ret;
 char				*g_home;
 char				*g_last;
 int					g_file;
+int					g_error;
 
 /*
 **	-- Functions --
@@ -155,5 +156,10 @@ int					go_backward(char *args, int i);
 void				clean_pipes(int **pipes, int n_pipes);
 t_call				*init_array(char *str);
 int					init_pipes(int n_pipes, int ***pipes);
+void				exit_status_nb(void);
+char				**handle_error_arg(int i, int n_semicolons, char **tab,
+	int pipe);
+void				error_semi(char *s);
+void				error_pipe(int *pipe);
 
 #endif

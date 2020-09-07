@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/24 15:55:52 by atetu             #+#    #+#             */
-/*   Updated: 2020/09/04 11:59:51 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/07 16:02:20 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static int	handle_file_name_error(char *str)
 		ft_printf_e("minishell: %s `>'\n", SYNTAX_ERR);
 	else
 		ft_printf_e("minishell: %s `newline'\n", SYNTAX_ERR);
+	g_error = 1;
 	return (-1);
 }
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.c                                          :+:      :+:    :+:   */
+/*   builtin_cd_pwd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/29 21:54:49 by thgermai          #+#    #+#             */
-/*   Updated: 2020/09/04 10:27:31 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/07 15:22:18 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int		check_path(char **str)
 	{
 		if (!getcwd(buffer, 512))
 		{
-			ft_printf_e("Minishell: getcwd: ");
+			ft_printf_e("cd: error retrieving current directory: getcwd: ");
 			ft_printf_e("%s: %s\n", PARENT_ERR, strerror(errno));
 			return (-1);
 		}

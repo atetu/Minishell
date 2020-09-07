@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/18 21:49:31 by thgermai          #+#    #+#             */
-/*   Updated: 2020/09/04 12:09:25 by user42           ###   ########.fr       */
+/*   Updated: 2020/09/07 11:06:32 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static int		check_pipes_args(t_call *calls)
 		if (!ft_strlen(calls[i].str) || !arg_is_valid(calls[i].str))
 		{
 			ft_printf_e("minishell: syntax error near unexpected token `|'\n");
+			exit_status_nb();
 			clean_calls(calls);
 			return (-1);
 		}
