@@ -54,7 +54,6 @@ static int		check_pipes_args(t_call *calls)
 		{
 			ft_printf_e("minishell: syntax error near unexpected token `|'\n");
 			exit_status_nb();
-			clean_calls(calls);
 			return (-1);
 		}
 	}

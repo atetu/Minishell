@@ -71,6 +71,7 @@ static void		check_pipes(char **tab, int i, char *s, int *pipe)
 static void		free_tab(char ***tab, int n_semicolons)
 {
 	free((*tab)[n_semicolons + 1]);
+	free((*tab)[n_semicolons]);
 	(*tab)[n_semicolons] = NULL;
 }
 
