@@ -161,5 +161,6 @@ char				**handle_error_arg(int i, int n_semicolons, char **tab,
 	int pipe);
 void				error_semi(char *s);
 void				error_pipe(int *pipe);
+int					check_function(char **func, t_call *call);
 
 #endif

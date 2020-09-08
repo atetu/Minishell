@@ -85,3 +85,20 @@ int				get_input(char **line, int *go, int opt)
 		return (ft_exit_ret(1, &buffer, &stock));
 	return (ft_exit_ret(0, &buffer, &stock));
 }
+
+int				check_function(char **func, t_call *call)
+{
+	pid_t		pid;
+
+	if (!known_func(func[0]))
+	{
+		if (!(func[0] = parse_exec(call, func[0])))
+		{
+			clean_array(func);
+			if ((pid = fork()) == 0)
+				exit(1);
+			return (pid);
+		}
+	}
+	return (-1);
+}

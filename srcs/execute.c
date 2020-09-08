@@ -33,14 +33,9 @@ pid_t			exec1(t_call *call, int **pipes, int size, int *exit_info)
 	if (!(func = parse(call->str, call->env)))
 		return (-1);
 	refresh_var_underscore(func, call);
-	if (!known_func(func[0]))
-	{
-		if (!(func[0] = parse_exec(call, func[0])))
-		{
-			clean_array(func);
-			return (-1);
-		}
-	}
+	pid = check_function(func, call);
+	if (pid != -1)
+		return (pid);
 	env_var = list_to_tab(call->env);
 	if ((pid = fork()) == 0)
 	{
