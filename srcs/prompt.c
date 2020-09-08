@@ -105,7 +105,6 @@ void			prompt(char **env)
 			if (parse_args(args, list) == -1)
 				break ;
 		free(args);
-		system("leaks minishell");
 	}
 	clear_all(args, list);
 	exit(g_exit_nb);

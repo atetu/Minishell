@@ -14,7 +14,7 @@
 
 void			print(void)
 {
-	ft_printf_e("\033[1;32mMINISHELL \033[0m👉 ");
+	//ft_printf_e("\033[1;32mMINISHELL \033[0m👉 ");
 }
 
 t_call			*init_array(char *str)

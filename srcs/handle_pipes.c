@@ -19,13 +19,18 @@ void			wait_pids(pid_t *pids, int size, t_call *calls)
 
 	i = -1;
 	(void)calls;
-	while (++i < size && pids[i] != -1)
+	while (++i < size)
 	{
-		waitpid(pids[i], &status, 0);
-		if (WIFEXITED(status))
+		if (pids[i] == -1)
+			;
+		else
 		{
-			g_exit_status = WEXITSTATUS(status);
-			g_exit_nb = g_exit_status;
+			waitpid(pids[i], &status, 0);
+			if (WIFEXITED(status))
+			{
+				g_exit_status = WEXITSTATUS(status);
+				g_exit_nb = g_exit_status;
+			}
 		}
 	}
 }
